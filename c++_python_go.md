@@ -688,5 +688,462 @@ func main() {
 
 ---
 
+# Object-Oriented Programming (OOP) – C++, Python, Go
+
+This document covers **all major OOP concepts** across:
+
+* C++
+* Python
+* Go (OOP-like features)
+
+---
+
+# 1. Class & Object
+
+## C++
+
+```cpp
+class Car {
+public:
+    string brand;
+    void show() { cout << brand; }
+};
+
+Car c;
+c.brand = "BMW";
+c.show();
+```
+
+## Python
+
+```python
+class Car:
+    def __init__(self, brand):
+        self.brand = brand
+
+    def show(self):
+        print(self.brand)
+
+c = Car("BMW")
+c.show()
+```
+
+## Go (Struct instead of class)
+
+```go
+type Car struct {
+    brand string
+}
+
+func (c Car) show() {
+    fmt.Println(c.brand)
+}
+```
+
+---
+
+# 2. Encapsulation (Data Hiding)
+
+## C++
+
+```cpp
+class Person {
+private:
+    int age;
+public:
+    void setAge(int a){ age = a; }
+    int getAge(){ return age; }
+};
+```
+
+## Python
+
+```python
+class Person:
+    def __init__(self):
+        self.__age = 0   # private
+
+    def set_age(self, a):
+        self.__age = a
+
+    def get_age(self):
+        return self.__age
+```
+
+## Go
+
+```go
+type Person struct {
+    age int   // lowercase = private
+}
+```
+
+---
+
+# 3. Abstraction
+
+## C++
+
+```cpp
+class Shape {
+public:
+    virtual void draw() = 0; // pure virtual
+};
+```
+
+## Python
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def draw(self):
+        pass
+```
+
+## Go (Interface)
+
+```go
+type Shape interface {
+    draw()
+}
+```
+
+---
+
+# 4. Inheritance
+
+## C++
+
+```cpp
+class Animal {
+public:
+    void eat(){ cout<<"Eating"; }
+};
+
+class Dog : public Animal {};
+```
+
+## Python
+
+```python
+class Animal:
+    def eat(self):
+        print("Eating")
+
+class Dog(Animal):
+    pass
+```
+
+## Go
+
+❌ No inheritance
+✔ Uses composition instead
+
+```go
+type Animal struct{}
+
+func (a Animal) eat() {
+    fmt.Println("Eating")
+}
+
+type Dog struct {
+    Animal
+}
+```
+
+---
+
+# 5. Polymorphism
+
+## (a) Compile-time (Function Overloading)
+
+### C++
+
+```cpp
+int add(int a, int b);
+double add(double a, double b);
+```
+
+### Python
+
+```python
+def add(a, b, c=0):
+    return a + b + c
+```
+
+### Go
+
+❌ Not supported directly
+
+---
+
+## (b) Runtime (Method Overriding)
+
+### C++
+
+```cpp
+class Base {
+public:
+    virtual void show(){ cout<<"Base"; }
+};
+
+class Derived : public Base {
+public:
+    void show(){ cout<<"Derived"; }
+};
+```
+
+### Python
+
+```python
+class Base:
+    def show(self):
+        print("Base")
+
+class Derived(Base):
+    def show(self):
+        print("Derived")
+```
+
+### Go
+
+```go
+type Shape interface {
+    area() float64
+}
+```
+
+---
+
+# 6. Constructor
+
+## C++
+
+```cpp
+class A {
+public:
+    A(){ cout<<"Constructor"; }
+};
+```
+
+## Python
+
+```python
+class A:
+    def __init__(self):
+        print("Constructor")
+```
+
+## Go
+
+```go
+func NewA() *A {
+    return &A{}
+}
+```
+
+---
+
+# 7. Destructor
+
+## C++
+
+```cpp
+~A(){ cout<<"Destructor"; }
+```
+
+## Python
+
+```python
+def __del__(self):
+    print("Destructor")
+```
+
+## Go
+
+❌ No destructor (Garbage Collector handles memory)
+
+---
+
+# 8. Access Specifiers
+
+| Concept   | C++       | Python  | Go             |
+| --------- | --------- | ------- | -------------- |
+| Public    | public    | default | Capital letter |
+| Private   | private   | __var   | lowercase      |
+| Protected | protected | _var    | not supported  |
+
+---
+
+# 9. Static Members
+
+## C++
+
+```cpp
+class A {
+public:
+    static int count;
+};
+```
+
+## Python
+
+```python
+class A:
+    count = 0
+```
+
+## Go
+
+```go
+var count int
+```
+
+---
+
+# 10. Interface / Abstract Class
+
+## C++
+
+```cpp
+class A {
+    virtual void show() = 0;
+};
+```
+
+## Python
+
+```python
+from abc import ABC
+```
+
+## Go
+
+```go
+type A interface {
+    show()
+}
+```
+
+---
+
+# 11. Operator Overloading
+
+## C++
+
+```cpp
+class A {
+public:
+    A operator+(A obj) { }
+};
+```
+
+## Python
+
+```python
+def __add__(self, other):
+    return self.value + other.value
+```
+
+## Go
+
+❌ Not supported
+
+---
+
+# 12. Method Overloading
+
+| Language | Support                |
+| -------- | ---------------------- |
+| C++      | Yes                    |
+| Python   | No (default args used) |
+| Go       | No                     |
+
+---
+
+# 13. Multiple Inheritance
+
+| Language | Support              |
+| -------- | -------------------- |
+| C++      | Yes                  |
+| Python   | Yes                  |
+| Go       | No (uses interfaces) |
+
+---
+
+# 14. Composition
+
+## C++
+
+```cpp
+class Engine {};
+class Car {
+    Engine e;
+};
+```
+
+## Python
+
+```python
+class Engine: pass
+class Car:
+    def __init__(self):
+        self.e = Engine()
+```
+
+## Go
+
+```go
+type Engine struct{}
+type Car struct {
+    Engine
+}
+```
+
+---
+
+# 15. Message Passing
+
+* Objects communicate via method calls.
+
+---
+
+# 16. Dynamic Binding
+
+* Method resolved at runtime (virtual functions / overriding)
+
+---
+
+# 17. Friend Function (C++ only)
+
+```cpp
+class A {
+    friend void func(A obj);
+};
+```
+
+---
+
+# 18. Garbage Collection
+
+| Language | GC       |
+| -------- | -------- |
+| C++      | ❌ Manual |
+| Python   | ✔ Yes    |
+| Go       | ✔ Yes    |
+
+---
+
+# Final Notes
+
+* C++ → Fully OOP
+* Python → Fully OOP + dynamic
+* Go → Not pure OOP, uses composition & interfaces
+
+---
+
+
 ---
 
