@@ -1,0 +1,7 @@
+Choosing the right type depends on your needs:
+
+List: Sequential, ordered, modifiable/mutable, duplicate
+Tuple: Fixed, ordered, immutable.
+Set: Unique, unordered, mutable, mathematical operations.
+Dictionary: Key-value mappings for fast lookups.
+
