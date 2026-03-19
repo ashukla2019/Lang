@@ -556,7 +556,7 @@ m := map[string]int{"a":1}
 
 # 6. ERROR HANDLING
 
-
+```
 Exception handling c++, python and go in single md
 
 Here’s a single clean .md file covering Exception Handling in C++, Python, and Go in a structured, practical way:
