@@ -435,22 +435,33 @@ for x in count():
 
 ---
 
-## 🔹 GO FUNCTIONS
+# Go Functions
 
-### basic
+## Basic
 
-``a) Basic function
+### a) Basic function
+```go
 func add(a int, b int) int {
     return a + b
 }
-b) Multiple return values
+```
+
+---
+
+### b) Multiple return values
+```go
 func divide(a int, b int) (int, int) {
     return a / b, a % b
 }
 
 q, r := divide(10, 3)
 fmt.Println(q, r) // 3 1
-*c) Variadic functions (like Python args)
+```
+
+---
+
+### c) Variadic functions (like Python *args)
+```go
 func sum(nums ...int) int {
     total := 0
     for _, n := range nums {
@@ -459,14 +470,24 @@ func sum(nums ...int) int {
     return total
 }
 
-fmt.Println(sum(1,2,3,4)) // 10
-d) Named return values
+fmt.Println(sum(1, 2, 3, 4)) // 10
+```
+
+---
+
+### d) Named return values
+```go
 func swap(a, b int) (x int, y int) {
     x = b
     y = a
     return
 }
-e) Recursive function
+```
+
+---
+
+### e) Recursive function
+```go
 func factorial(n int) int {
     if n == 1 {
         return 1
@@ -475,14 +496,23 @@ func factorial(n int) int {
 }
 
 fmt.Println(factorial(5)) // 120
-f) Anonymous functions and closures
+```
+
+---
+
+### f) Anonymous functions and closures
+
+#### Anonymous function
+```go
 adder := func(a, b int) int {
     return a + b
 }
 
 fmt.Println(adder(5, 3)) // 8
+```
 
-// Closure example
+#### Closure example
+```go
 funcCounter := func() func() int {
     count := 0
     return func() int {
@@ -494,6 +524,7 @@ funcCounter := func() func() int {
 counter := funcCounter()
 fmt.Println(counter()) // 1
 fmt.Println(counter()) // 2
+```
 ```
 
 ---
