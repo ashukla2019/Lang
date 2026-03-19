@@ -1290,6 +1290,139 @@ func main() {
 * **Go** → Simple model using **packages instead of classes**
 
 ---
+# Templates / Generics (C++ vs Python vs Go)
+
+This document explains whether **templates** exist and how each language handles **generic programming**.
+
+---
+
+# 🔹 C++
+
+## ✔ Yes — Templates Supported
+
+C++ provides **templates** for generic programming.
+
+### Example (Function Template)
+
+```cpp id="cpptemp1"
+#include <iostream>
+using namespace std;
+
+template <typename T>
+T add(T a, T b) {
+    return a + b;
+}
+
+int main() {
+    cout << add(2, 3) << endl;        // int
+    cout << add(2.5, 3.5) << endl;    // double
+}
+```
+
+### Example (Class Template)
+
+```cpp id="cpptemp2"
+template <class T>
+class Box {
+public:
+    T value;
+};
+```
+
+### Key Points
+
+* Compile-time polymorphism
+* Type-safe
+* Works for functions and classes
+
+---
+
+# 🔹 Python
+
+## ❌ No Templates (Dynamic Typing Instead)
+
+Python does **not need templates** because it is dynamically typed.
+
+### Example
+
+```python id="pytemp1"
+def add(a, b):
+    return a + b
+
+print(add(2, 3))        # int
+print(add(2.5, 3.5))    # float
+print(add("A", "B"))    # string
+```
+
+### Optional: Type Hints (Generic Style)
+
+```python id="pytemp2"
+from typing import TypeVar
+
+T = TypeVar('T')
+
+def add(a: T, b: T) -> T:
+    return a + b
+```
+
+### Key Points
+
+* No compile-time templates
+* Uses **duck typing**
+* Generics only for **type hints (optional)**
+
+---
+
+# 🔹 Go
+
+## ✔ Yes — Generics (Since Go 1.18)
+
+Go introduced **generics**, similar to templates but simpler.
+
+### Example
+
+```go id="gotemp1"
+package main
+
+import "fmt"
+
+func add[T int | float64](a T, b T) T {
+    return a + b
+}
+
+func main() {
+    fmt.Println(add(2, 3))
+    fmt.Println(add(2.5, 3.5))
+}
+```
+
+### Key Points
+
+* Introduced in Go 1.18
+* Uses **type parameters**
+* More restricted than C++ templates
+* Safer and simpler
+
+---
+
+# 🔥 Comparison Table
+
+| Feature       | C++          | Python    | Go               |
+| ------------- | ------------ | --------- | ---------------- |
+| Templates     | ✔ Yes        | ❌ No      | ✔ Yes (Generics) |
+| Type Checking | Compile-time | Runtime   | Compile-time     |
+| Flexibility   | Very high    | Very high | Moderate         |
+| Complexity    | High         | Low       | Medium           |
+
+---
+
+# 🧠 Summary
+
+* **C++** → Powerful templates (full generic programming)
+* **Python** → No templates (dynamic typing replaces need)
+* **Go** → Supports generics (modern, simplified approach)
+
+---
 
 
 ---
