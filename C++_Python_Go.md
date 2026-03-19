@@ -1,8 +1,8 @@
-# 🚀 C++ vs Python vs Go — COMPLETE PRACTICAL GUIDE
+# C++ vs Python vs Go — COMPLETE PRACTICAL GUIDE
 
 ---
 
-# 📌 1. VARIABLES & DATA TYPES
+# 1. VARIABLES & DATA TYPES
 
 ## Concept
 
@@ -50,7 +50,7 @@ func main() {
 
 ---
 
-# 🔀 2. CONTROL FLOW (if / else)
+# 2. CONTROL FLOW (if / else)
 
 ### C++
 
@@ -91,7 +91,7 @@ if a > 5 {
 
 ---
 
-# 🔁 3. LOOPS (ALL TYPES)
+# 3. LOOPS (ALL TYPES)
 
 ---
 
@@ -285,11 +285,11 @@ for i, ch := range s {
 
 ---
 
-# 🔧 4. FUNCTIONS (FULL PYTHON COVERAGE)
+# 4. FUNCTIONS (FULL PYTHON COVERAGE)
 
 ---
 
-## 🔹 C++
+## C++
 
 ```cpp
 int add(int a, int b) {
@@ -299,7 +299,7 @@ int add(int a, int b) {
 
 ---
 
-## 🔹 PYTHON FUNCTIONS (ALL TYPES WITH REAL USE)
+## PYTHON FUNCTIONS (ALL TYPES WITH REAL USE)
 
 ### 1. Basic
 
@@ -529,7 +529,7 @@ fmt.Println(counter()) // 2
 
 ---
 
-# 📦 5. DATA STRUCTURES
+# 5. DATA STRUCTURES
 
 ### C++
 
@@ -554,7 +554,7 @@ m := map[string]int{"a":1}
 
 ---
 
-# ⚠️ 6. ERROR HANDLING
+# 6. ERROR HANDLING
 
 ### C++
 
@@ -585,7 +585,7 @@ if err != nil {
 
 ---
 
-# 🧵 7. CONCURRENCY
+# 7. CONCURRENCY
 
 ### Go (example)
 
