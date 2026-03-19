@@ -554,93 +554,131 @@ m := map[string]int{"a":1}
 
 ---
 
-# 6. ERROR HANDLING
+# 🚀 Exception Handling — C++ vs Python vs Go
 
-```
-Exception handling c++, python and go in single md
+---
 
-Here’s a single clean .md file covering Exception Handling in C++, Python, and Go in a structured, practical way:
+## 📌 1. What is Exception Handling?
 
-🚀 Exception Handling — C++ vs Python vs Go
-📌 1. What is Exception Handling?
-Exception handling is used to handle runtime errors gracefully without crashing the program.
+Exception handling is used to **handle runtime errors gracefully** without crashing the program.
 
-Common Goals:
-Prevent crashes
+### ✅ Common Goals
 
-Handle unexpected situations
+* Prevent crashes
+* Handle unexpected situations
+* Maintain program flow
 
-```
-Maintain program flow
+---
 
-📌 2. C++ Exception Handling
-🔹 Syntax
+## 📌 2. C++ Exception Handling
+
+### 🔹 Syntax
+
+```cpp
 try {
     // code that may throw exception
 } catch (exception_type e) {
     // handle exception
 }
-🔹 Example
+```
+
+### 🔹 Example
+
+```cpp
 #include <iostream>
 using namespace std;
 
 int main() {
     try {
         int a = 10, b = 0;
+
         if (b == 0)
             throw "Division by zero!";
+
         cout << a / b;
-    } catch (const char* msg) {
+    } 
+    catch (const char* msg) {
         cout << "Error: " << msg;
     }
 }
-🔹 Multiple Catch
+```
+
+### 🔹 Multiple Catch
+
+```cpp
 try {
     throw 10;
-} catch (int e) {
+} 
+catch (int e) {
     cout << "Integer exception";
-} catch (...) {
+} 
+catch (...) {
     cout << "Unknown exception";
 }
-🔹 Standard Exceptions
-#include <stdexcept>
-
-try {
-    throw runtime_error("Runtime error occurred");
-} catch (exception &e) {
-    cout << e.what();
-}
-🔹 Key Points
-Uses try, catch, throw
-
-Can catch multiple types
-
-catch(...) handles all exceptions
-
-Uses <exception> library
-
 ```
-📌 3. Python Exception Handling
-🔹 Syntax
+
+### 🔹 Standard Exceptions
+
+```cpp
+#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+int main() {
+    try {
+        throw runtime_error("Runtime error occurred");
+    } 
+    catch (exception &e) {
+        cout << e.what();
+    }
+}
+```
+
+### 🔹 Key Points
+
+* Uses `try`, `catch`, `throw`
+* Can catch multiple types
+* `catch(...)` handles all exceptions
+* Uses `<exception>` / `<stdexcept>`
+
+---
+
+## 📌 3. Python Exception Handling
+
+### 🔹 Syntax
+
+```python
 try:
     # risky code
 except ExceptionType:
     # handle error
-🔹 Example
+```
+
+### 🔹 Example
+
+```python
 try:
     a = 10
     b = 0
     print(a / b)
 except ZeroDivisionError:
     print("Cannot divide by zero")
-🔹 Multiple Exceptions
+```
+
+### 🔹 Multiple Exceptions
+
+```python
 try:
     x = int("abc")
 except ValueError:
     print("Invalid conversion")
 except Exception:
     print("Some error occurred")
-🔹 else & finally
+```
+
+### 🔹 else & finally
+
+```python
 try:
     x = 10 / 2
 except:
@@ -649,30 +687,42 @@ else:
     print("Success:", x)
 finally:
     print("Always runs")
-🔹 Raising Exception
-raise ValueError("Custom error")
-🔹 Key Points
-Uses try, except, finally, else
-
-No need to declare exception types strictly
-
-Dynamic and flexible
-
-Built-in exceptions are rich
-
 ```
-📌 4. Go Error Handling (No Exceptions 🚨)
-Go does NOT use exceptions like C++/Python.
 
-Instead, it uses error values.
+### 🔹 Raising Exception
 
-🔹 Basic Pattern
+```python
+raise ValueError("Custom error")
+```
+
+### 🔹 Key Points
+
+* Uses `try`, `except`, `else`, `finally`
+* No strict type declaration required
+* Dynamic and flexible
+* Rich built-in exceptions
+
+---
+
+## 📌 4. Go Error Handling (No Exceptions 🚨)
+
+Go does **NOT use exceptions** like C++/Python.
+Instead, it uses **error values**.
+
+### 🔹 Basic Pattern
+
+```go
 result, err := function()
 if err != nil {
     // handle error
 }
-🔹 Example
+```
+
+### 🔹 Example
+
+```go
 package main
+
 import (
     "fmt"
     "errors"
@@ -687,13 +737,19 @@ func divide(a, b int) (int, error) {
 
 func main() {
     res, err := divide(10, 0)
+
     if err != nil {
         fmt.Println("Error:", err)
         return
     }
+
     fmt.Println("Result:", res)
 }
-🔹 Custom Error
+```
+
+### 🔹 Custom Error
+
+```go
 type MyError struct {
     msg string
 }
@@ -701,7 +757,15 @@ type MyError struct {
 func (e MyError) Error() string {
     return e.msg
 }
-🔹 Panic & Recover (Advanced)
+```
+
+### 🔹 Panic & Recover (Advanced)
+
+```go
+package main
+
+import "fmt"
+
 func main() {
     defer func() {
         if r := recover(); r != nil {
@@ -711,39 +775,48 @@ func main() {
 
     panic("Something went wrong")
 }
-🔹 Key Points
-No try-catch
+```
 
-Errors are explicit values
+### 🔹 Key Points
 
-Encourages clean and predictable flow
+* No `try-catch`
+* Errors are explicit return values
+* Encourages predictable flow
+* `panic` = crash
+* `recover` = handle panic
 
-panic = crash (like exception)
+---
 
-recover = catch panic
+## 📌 5. Side-by-Side Comparison
+
+| Feature           | C++         | Python     | Go                  |
+| ----------------- | ----------- | ---------- | ------------------- |
+| Mechanism         | try-catch   | try-except | error return values |
+| Throw Error       | throw       | raise      | return error        |
+| Catch Error       | catch       | except     | if err != nil       |
+| Multiple Handling | Yes         | Yes        | Manual              |
+| Finally Block     | RAII        | Yes        | defer               |
+| Crash Handling    | terminate() | Exception  | panic               |
+
+---
+
+## 📌 6. Mental Model (Easy Way to Remember)
 
 ```
-📌 5. Side-by-Side Comparison
-Feature	C++	Python	Go
-Mechanism	try-catch	try-except	error return values
-Throw Error	throw	raise	return error
-Catch Error	catch	except	if err != nil
-Multiple Handling	Yes	Yes	Manual
-Finally Block	No (RAII used)	Yes	defer
-Crash Handling	terminate()	Exception	panic
-
-```
-📌 6. Mental Model (Easy Way to Remember)
 C++    → THROW → CATCH
 Python → TRY → EXCEPT → FINALLY
 Go     → RETURN error → CHECK manually
 ```
-📌 7. When to Use What?
-C++ → System-level control, performance-critical apps
 
-Python → Fast development, flexible handling
+---
 
-Go → Clean, predictable backend systems
+## 📌 7. When to Use What?
+
+* **C++** → System-level, performance-critical applications
+* **Python** → Fast development, flexible handling
+* **Go** → Clean, scalable backend systems
+
+---
 
 
 ```
