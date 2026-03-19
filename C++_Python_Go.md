@@ -127,7 +127,7 @@ do {
 
 ---
 
-## 🔹 PYTHON LOOPS (FULL PRACTICAL COVERAGE)
+## PYTHON LOOPS (FULL PRACTICAL COVERAGE)
 
 ### 1. for loop with range
 
@@ -230,7 +230,7 @@ print(squares)
 
 ---
 
-## 🔹 GO LOOPS
+## GO LOOPS
 
 ### basic for
 
@@ -554,15 +554,15 @@ m := map[string]int{"a":1}
 
 ---
 
-# 🚀 Exception Handling — C++ vs Python vs Go
+# Exception Handling — C++ vs Python vs Go
 
 ---
 
-## 📌 1. What is Exception Handling?
+## 1. What is Exception Handling?
 
 Exception handling is used to **handle runtime errors gracefully** without crashing the program.
 
-### ✅ Common Goals
+### Common Goals
 
 * Prevent crashes
 * Handle unexpected situations
@@ -570,9 +570,9 @@ Exception handling is used to **handle runtime errors gracefully** without crash
 
 ---
 
-## 📌 2. C++ Exception Handling
+## 2. C++ Exception Handling
 
-### 🔹 Syntax
+### Syntax
 
 ```cpp
 try {
@@ -582,7 +582,7 @@ try {
 }
 ```
 
-### 🔹 Example
+### Example
 
 ```cpp
 #include <iostream>
@@ -603,7 +603,7 @@ int main() {
 }
 ```
 
-### 🔹 Multiple Catch
+### Multiple Catch
 
 ```cpp
 try {
@@ -617,7 +617,7 @@ catch (...) {
 }
 ```
 
-### 🔹 Standard Exceptions
+### Standard Exceptions
 
 ```cpp
 #include <iostream>
@@ -634,7 +634,7 @@ int main() {
 }
 ```
 
-### 🔹 Key Points
+### Key Points
 
 * Uses `try`, `catch`, `throw`
 * Can catch multiple types
@@ -643,9 +643,9 @@ int main() {
 
 ---
 
-## 📌 3. Python Exception Handling
+## 3. Python Exception Handling
 
-### 🔹 Syntax
+### Syntax
 
 ```python
 try:
@@ -654,7 +654,7 @@ except ExceptionType:
     # handle error
 ```
 
-### 🔹 Example
+### Example
 
 ```python
 try:
@@ -665,7 +665,7 @@ except ZeroDivisionError:
     print("Cannot divide by zero")
 ```
 
-### 🔹 Multiple Exceptions
+### Multiple Exceptions
 
 ```python
 try:
@@ -676,7 +676,7 @@ except Exception:
     print("Some error occurred")
 ```
 
-### 🔹 else & finally
+### else & finally
 
 ```python
 try:
@@ -689,13 +689,13 @@ finally:
     print("Always runs")
 ```
 
-### 🔹 Raising Exception
+### Raising Exception
 
 ```python
 raise ValueError("Custom error")
 ```
 
-### 🔹 Key Points
+### Key Points
 
 * Uses `try`, `except`, `else`, `finally`
 * No strict type declaration required
@@ -704,7 +704,7 @@ raise ValueError("Custom error")
 
 ---
 
-## 📌 4. Go Error Handling (No Exceptions 🚨)
+## 4. Go Error Handling (No Exceptions )
 
 Go does **NOT use exceptions** like C++/Python.
 Instead, it uses **error values**.
@@ -787,7 +787,7 @@ func main() {
 
 ---
 
-## 📌 5. Side-by-Side Comparison
+## 5. Side-by-Side Comparison
 
 | Feature           | C++         | Python     | Go                  |
 | ----------------- | ----------- | ---------- | ------------------- |
@@ -800,7 +800,7 @@ func main() {
 
 ---
 
-## 📌 6. Mental Model (Easy Way to Remember)
+## 6. Mental Model (Easy Way to Remember)
 
 ```
 C++    → THROW → CATCH
@@ -810,7 +810,7 @@ Go     → RETURN error → CHECK manually
 
 ---
 
-## 📌 7. When to Use What?
+## 7. When to Use What?
 
 * **C++** → System-level, performance-critical applications
 * **Python** → Fast development, flexible handling
@@ -1077,8 +1077,8 @@ class Dog(Animal):
 
 ## Go
 
-❌ No inheritance
-✔ Uses composition instead
+No inheritance
+Uses composition instead
 
 ```go
 type Animal struct{}
@@ -1114,7 +1114,7 @@ def add(a, b, c=0):
 
 ### Go
 
-❌ Not supported directly
+Not supported directly
 
 ---
 
@@ -1202,7 +1202,7 @@ def __del__(self):
 
 ## Go
 
-❌ No destructor (Garbage Collector handles memory)
+No destructor (Garbage Collector handles memory)
 
 ---
 
@@ -1288,7 +1288,7 @@ def __add__(self, other):
 
 ## Go
 
-❌ Not supported
+Not supported
 
 ---
 
@@ -1369,9 +1369,9 @@ class A {
 
 | Language | GC       |
 | -------- | -------- |
-| C++      | ❌ Manual |
-| Python   | ✔ Yes    |
-| Go       | ✔ Yes    |
+| C++      | Manual |
+| Python   | Yes    |
+| Go       | Yes    |
 
 ---
 
@@ -1435,9 +1435,9 @@ int main() {
 
 ---
 
-# 🔹 Python
+# Python
 
-## ❌ No `friend` keyword
+## No `friend` keyword
 
 Python does **not enforce strict access control**.
 
@@ -1476,7 +1476,7 @@ class A:
 
 # 🔹 Go
 
-## ❌ No `friend`, No `protected`
+## No `friend`, No `protected`
 
 Go controls access using **package-level visibility**.
 
@@ -1511,18 +1511,18 @@ func main() {
 
 ---
 
-# 🔥 Comparison Table
+# Comparison Table
 
 | Feature           | C++      | Python            | Go                       |
 | ----------------- | -------- | ----------------- | ------------------------ |
-| Private Members   | ✔ Strict | ⚠ Weak            | ✔ Package-level          |
-| Protected Members | ✔ Yes    | ⚠ Convention      | ❌ No                     |
-| Friend Support    | ✔ Yes    | ❌ No              | ❌ No                     |
+| Private Members   | Strict | Weak            | Package-level          |
+| Protected Members | Yes    | Convention      | No                     |
+| Friend Support    | Yes    | No              | No                     |
 | Access Mechanism  | Keywords | Naming convention | Capitalization + package |
 
 ---
 
-# 🧠 Summary
+# Summary
 
 * **C++** → Strong encapsulation + `friend` for controlled access
 * **Python** → Flexible, relies on developer discipline
@@ -1578,7 +1578,7 @@ public:
 
 # 🔹 Python
 
-## ❌ No Templates (Dynamic Typing Instead)
+##  No Templates (Dynamic Typing Instead)
 
 Python does **not need templates** because it is dynamically typed.
 
@@ -1638,15 +1638,15 @@ func main() {
 
 ---
 
-## 📌 1. What is Concurrency?
+## 1. What is Concurrency?
 
 Concurrency is the ability of a program to **handle multiple tasks at the same time**.
 
-> ⚠️ Not always parallel (true parallelism = multiple CPUs/cores)
+> Not always parallel (true parallelism = multiple CPUs/cores)
 
 ---
 
-## 📌 2. Key Concepts
+## 2. Key Concepts
 
 ### 🔹 Process vs Thread
 
@@ -1684,7 +1684,7 @@ Concurrency is the ability of a program to **handle multiple tasks at the same t
 
 ---
 
-## 📌 3. C++ Concurrency (Threads)
+##  3. C++ Concurrency (Threads)
 
 ### 🔹 Thread Creation
 
@@ -1769,9 +1769,9 @@ t.join();
 
 ---
 
-## 📌 4. Python Concurrency
+##  4. Python Concurrency
 
-> ⚠️ Python has **GIL (Global Interpreter Lock)**
+>  Python has **GIL (Global Interpreter Lock)**
 > → Only one thread executes Python bytecode at a time
 
 ---
@@ -1854,7 +1854,7 @@ asyncio.run(task())
 
 ---
 
-## 📌 5. Go Concurrency (Best 🔥)
+##  5. Go Concurrency (Best )
 
 > Go is built for concurrency
 
@@ -1958,7 +1958,7 @@ case msg := <-ch2:
 
 ---
 
-## 📌 6. Comparison Table
+## 6. Comparison Table
 
 | Feature       | C++ Threads   | Python        | Go         |
 | ------------- | ------------- | ------------- | ---------- |
@@ -1970,7 +1970,7 @@ case msg := <-ch2:
 
 ---
 
-## 📌 7. Mental Model (Easy Trick)
+## 7. Mental Model (Easy Trick)
 
 ```id="mental1"
 C++    → Threads + Mutex (Manual control)
@@ -1980,7 +1980,7 @@ Go     → Goroutines + Channels (Built-in magic)
 
 ---
 
-## 📌 8. When to Use What?
+## 8. When to Use What?
 
 * **C++** → High-performance systems, game engines
 * **Python** → Scripts, IO-bound apps, data pipelines
@@ -1988,17 +1988,17 @@ Go     → Goroutines + Channels (Built-in magic)
 
 ---
 
-## 📌 9. Real-World Tips 🚀
+## 9. Real-World Tips 
 
 * Avoid shared state when possible
 * Prefer message passing (Go style)
 * Always use locks carefully
-* Debugging concurrency is hard ⚠️
+* Debugging concurrency is hard 
 * Start simple → then optimize
 
 ---
 
-## 📌 10. Common Interview Questions
+## 10. Common Interview Questions
 
 * What is race condition?
 * What is deadlock?
@@ -2009,7 +2009,7 @@ Go     → Goroutines + Channels (Built-in magic)
 
 ---
 
-## 🎯 Final Summary
+##  Final Summary
 
 * **C++** → Powerful but complex
 * **Python** → Easy but limited (GIL)
@@ -2028,18 +2028,18 @@ Go     → Goroutines + Channels (Built-in magic)
 
 ---
 
-# 🔥 Comparison Table
+#  Comparison Table
 
 | Feature       | C++          | Python    | Go               |
 | ------------- | ------------ | --------- | ---------------- |
-| Templates     | ✔ Yes        | ❌ No      | ✔ Yes (Generics) |
+| Templates     | Yes        | No      | ✔ Yes (Generics) |
 | Type Checking | Compile-time | Runtime   | Compile-time     |
 | Flexibility   | Very high    | Very high | Moderate         |
 | Complexity    | High         | Low       | Medium           |
 
 ---
 
-# 🧠 Summary
+# Summary
 
 * **C++** → Powerful templates (full generic programming)
 * **Python** → No templates (dynamic typing replaces need)
