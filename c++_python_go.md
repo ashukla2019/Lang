@@ -260,10 +260,26 @@ for {
 
 ### range loop
 
-```go
-nums := []int{1,2,3}
-for i, v := range nums {
-    fmt.Println(i, v)
+```nums := []int{10, 20, 30}
+for index, value := range nums {
+    fmt.Println(index, value)
+}
+
+// Only values
+for _, value := range nums {
+    fmt.Println(value)
+}
+
+// Map iteration
+m := map[string]int{"a":1,"b":2}
+for k, v := range m {
+    fmt.Println(k, v)
+}
+
+// String iteration (runes)
+s := "Go"
+for i, ch := range s {
+    fmt.Println(i, string(ch))
 }
 ```
 
@@ -423,18 +439,61 @@ for x in count():
 
 ### basic
 
-```go
+``a) Basic function
 func add(a int, b int) int {
     return a + b
 }
-```
-
-### multiple return
-
-```go
-func divide(a, b int) (int, int) {
-    return a/b, a%b
+b) Multiple return values
+func divide(a int, b int) (int, int) {
+    return a / b, a % b
 }
+
+q, r := divide(10, 3)
+fmt.Println(q, r) // 3 1
+*c) Variadic functions (like Python args)
+func sum(nums ...int) int {
+    total := 0
+    for _, n := range nums {
+        total += n
+    }
+    return total
+}
+
+fmt.Println(sum(1,2,3,4)) // 10
+d) Named return values
+func swap(a, b int) (x int, y int) {
+    x = b
+    y = a
+    return
+}
+e) Recursive function
+func factorial(n int) int {
+    if n == 1 {
+        return 1
+    }
+    return n * factorial(n-1)
+}
+
+fmt.Println(factorial(5)) // 120
+f) Anonymous functions and closures
+adder := func(a, b int) int {
+    return a + b
+}
+
+fmt.Println(adder(5, 3)) // 8
+
+// Closure example
+funcCounter := func() func() int {
+    count := 0
+    return func() int {
+        count++
+        return count
+    }
+}
+
+counter := funcCounter()
+fmt.Println(counter()) // 1
+fmt.Println(counter()) // 2
 ```
 
 ---
