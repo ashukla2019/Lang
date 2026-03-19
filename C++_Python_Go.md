@@ -556,23 +556,189 @@ m := map[string]int{"a":1}
 
 # 6. ERROR HANDLING
 
-### C++
 
-```cpp
+Exception handling c++, python and go in single md
+
+Here’s a single clean .md file covering Exception Handling in C++, Python, and Go in a structured, practical way:
+
+🚀 Exception Handling — C++ vs Python vs Go
+📌 1. What is Exception Handling?
+Exception handling is used to handle runtime errors gracefully without crashing the program.
+
+Common Goals:
+Prevent crashes
+
+Handle unexpected situations
+
+Maintain program flow
+
+📌 2. C++ Exception Handling
+🔹 Syntax
 try {
-    throw 1;
-} catch(int e) {
-    cout << "Error";
+    // code that may throw exception
+} catch (exception_type e) {
+    // handle exception
 }
-```
+🔹 Example
+#include <iostream>
+using namespace std;
 
-### Python
+int main() {
+    try {
+        int a = 10, b = 0;
+        if (b == 0)
+            throw "Division by zero!";
+        cout << a / b;
+    } catch (const char* msg) {
+        cout << "Error: " << msg;
+    }
+}
+🔹 Multiple Catch
+try {
+    throw 10;
+} catch (int e) {
+    cout << "Integer exception";
+} catch (...) {
+    cout << "Unknown exception";
+}
+🔹 Standard Exceptions
+#include <stdexcept>
 
-```python
+try {
+    throw runtime_error("Runtime error occurred");
+} catch (exception &e) {
+    cout << e.what();
+}
+🔹 Key Points
+Uses try, catch, throw
+
+Can catch multiple types
+
+catch(...) handles all exceptions
+
+Uses <exception> library
+
+📌 3. Python Exception Handling
+🔹 Syntax
 try:
-    x = 1/0
+    # risky code
+except ExceptionType:
+    # handle error
+🔹 Example
+try:
+    a = 10
+    b = 0
+    print(a / b)
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+🔹 Multiple Exceptions
+try:
+    x = int("abc")
+except ValueError:
+    print("Invalid conversion")
+except Exception:
+    print("Some error occurred")
+🔹 else & finally
+try:
+    x = 10 / 2
 except:
     print("Error")
+else:
+    print("Success:", x)
+finally:
+    print("Always runs")
+🔹 Raising Exception
+raise ValueError("Custom error")
+🔹 Key Points
+Uses try, except, finally, else
+
+No need to declare exception types strictly
+
+Dynamic and flexible
+
+Built-in exceptions are rich
+
+📌 4. Go Error Handling (No Exceptions 🚨)
+Go does NOT use exceptions like C++/Python.
+
+Instead, it uses error values.
+
+🔹 Basic Pattern
+result, err := function()
+if err != nil {
+    // handle error
+}
+🔹 Example
+package main
+import (
+    "fmt"
+    "errors"
+)
+
+func divide(a, b int) (int, error) {
+    if b == 0 {
+        return 0, errors.New("division by zero")
+    }
+    return a / b, nil
+}
+
+func main() {
+    res, err := divide(10, 0)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    fmt.Println("Result:", res)
+}
+🔹 Custom Error
+type MyError struct {
+    msg string
+}
+
+func (e MyError) Error() string {
+    return e.msg
+}
+🔹 Panic & Recover (Advanced)
+func main() {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("Recovered:", r)
+        }
+    }()
+
+    panic("Something went wrong")
+}
+🔹 Key Points
+No try-catch
+
+Errors are explicit values
+
+Encourages clean and predictable flow
+
+panic = crash (like exception)
+
+recover = catch panic
+
+📌 5. Side-by-Side Comparison
+Feature	C++	Python	Go
+Mechanism	try-catch	try-except	error return values
+Throw Error	throw	raise	return error
+Catch Error	catch	except	if err != nil
+Multiple Handling	Yes	Yes	Manual
+Finally Block	No (RAII used)	Yes	defer
+Crash Handling	terminate()	Exception	panic
+📌 6. Mental Model (Easy Way to Remember)
+C++    → THROW → CATCH
+Python → TRY → EXCEPT → FINALLY
+Go     → RETURN error → CHECK manually
+📌 7. When to Use What?
+C++ → System-level control, performance-critical apps
+
+Python → Fast development, flexible handling
+
+Go → Clean, predictable backend systems
+
+
 ```
 
 ### Go
