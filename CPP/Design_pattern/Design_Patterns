@@ -1,0 +1,25 @@
+1. Creational Patterns:
+provide a way to create objects without specifying how they are created, making the creation process more
+flexible and less complex. They abstract the object creation logic, making it easier to manage and modify.
+
+Singleton Pattern
+Factory Pattern
+Abstract Factory Pattern
+Builder Pattern
+
+2. Structural Patterns: 
+Structural design patterns deal with how classes or objects are put together to form larger structures. 
+They help you add new features to these structures without affecting the existing ones. So, if you need to change 
+something in one part of the structure, you can do it without having to change everything else.
+
+Adapter pattern
+Proxy Pattern
+
+3. Behavioral design patterns:
+focus on how different objects in a system communicate with each other. They simplify communication and make sure that 
+information is consistent and up-to-date between these objects. In other words, they help objects interact with each other
+in a more organized and efficient way.
+
+Observer Pattern (Publisher Subscriber)
+Strategy Pattern
+Chain of Responsibility
