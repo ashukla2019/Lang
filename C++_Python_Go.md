@@ -1,11 +1,9 @@
-# C++ vs Python vs Go — COMPLETE PRACTICAL GUIDE
 
-
-# 🚀 C++ vs Python vs Go — Compilation Process & Memory Model
+#  C++ vs Python vs Go — Compilation Process & Memory Model
 
 ---
 
-# 📌 1. COMPILATION PROCESS
+#  1. COMPILATION PROCESS
 
 ---
 
@@ -13,7 +11,7 @@
 
 C++ is a statically compiled language → converted directly into machine code.
 
-### 🔄 Steps
+###  Steps
 
 Source Code (.cpp)  
 ↓  
@@ -42,21 +40,21 @@ Executable (a.out / .exe)
 - Combines object files + libraries
 - Produces final executable
 
-### 📌 Example
+###  Example
 g++ main.cpp -o app
 
-### ⚡ Key Features
+### Key Features
 - Ahead-of-Time (AOT)
 - Very fast
 - Manual memory control
 
 ---
 
-## 🟨 Python Compilation Process (Interpreted + Bytecode)
+##  Python Compilation Process (Interpreted + Bytecode)
 
 Python is interpreted but internally compiles to bytecode.
 
-### 🔄 Steps
+###  Steps
 
 Source Code (.py)  
 ↓  
@@ -75,21 +73,21 @@ Execution
 ### 🔹 Python Virtual Machine
 - Executes bytecode line-by-line
 
-### 📌 Example
+###  Example
 python main.py
 
-### ⚡ Key Features
+### Key Features
 - Interpreted at runtime
 - Slower than C++
 - Highly portable
 
 ---
 
-## 🟩 Go Compilation Process (Fast Compiled Language)
+## Go Compilation Process (Fast Compiled Language)
 
 Go is a compiled language optimized for speed.
 
-### 🔄 Steps
+###  Steps
 
 Source Code (.go)  
 ↓  
@@ -99,17 +97,17 @@ Machine Code
 ↓  
 Executable  
 
-### 📌 Example
+###  Example
 go build main.go
 
-### ⚡ Key Features
+### Key Features
 - Very fast compilation
 - Static binaries
 - Simple build system
 
 ---
 
-# 📊 Compilation Comparison
+#  Compilation Comparison
 
 | Feature      | C++        | Python      | Go         |
 |-------------|------------|-------------|------------|
@@ -120,15 +118,15 @@ go build main.go
 
 ---
 
-# 📌 2. MEMORY MODEL
+#  2. MEMORY MODEL
 
 ---
 
-## 🟦 C++ Memory Model (Manual Control)
+##  C++ Memory Model (Manual Control)
 
 C++ provides full control over memory.
 
-### 🧠 Memory Layout
+###  Memory Layout
 
 Text Segment → Program code  
 Data Segment → Global/static variables  
@@ -146,17 +144,17 @@ Example:
 int* p = new int(10);
 delete p;
 
-### ⚡ Features
+###  Features
 - Manual memory management
 - Risks: memory leaks, dangling pointers
 
 ---
 
-## 🟨 Python Memory Model (Automatic + GC)
+##  Python Memory Model (Automatic + GC)
 
 Python manages memory automatically.
 
-### 🧠 Memory Structure
+###  Memory Structure
 - Stack → function calls
 - Heap → all objects
 
@@ -177,11 +175,11 @@ b = a
 
 ---
 
-## 🟩 Go Memory Model (Hybrid + GC)
+##  Go Memory Model (Hybrid + GC)
 
 Go uses a hybrid memory model.
 
-### 🧠 Memory Structure
+###  Memory Structure
 - Stack → small, fast allocations
 - Heap → large/escaping variables
 
@@ -198,13 +196,13 @@ func test() *int {
 - Automatically frees memory
 - Low-latency design
 
-### ⚡ Features
+### Features
 - Automatic memory management
 - High performance + safety
 
 ---
 
-# 📊 Memory Comparison
+#  Memory Comparison
 
 | Feature            | C++        | Python     | Go         |
 |-------------------|------------|------------|------------|
@@ -217,19 +215,19 @@ func test() *int {
 
 ---
 
-# 🎯 FINAL SUMMARY
+#  FINAL SUMMARY
 
-## 🟦 C++
+##  C++
 - Highest performance
 - Full control
 - Unsafe if misused
 
-## 🟨 Python
+##  Python
 - Easiest to use
 - Fully automatic memory
 - Slower execution
 
-## 🟩 Go
+##  Go
 - Balanced approach
 - Fast + safe
 - Modern system design
