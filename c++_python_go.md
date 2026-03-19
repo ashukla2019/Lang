@@ -594,19 +594,99 @@ go func() {
     fmt.Println("Running in goroutine")
 }()
 ```
+# File Handling (C++, Python, Go)
+
+This document shows basic file operations: **write, read, and append** in C++, Python, and Go.
 
 ---
 
-# 🔑 FINAL TAKEAWAY
+## C++
 
-If you master:
+```cpp
+#include <fstream>
+#include <iostream>
+using namespace std;
 
-* Loops
-* Functions
-* Data structures
+int main() {
+    // Write to file
+    ofstream outfile("example.txt");
+    outfile << "Hello C++ File!\n";
+    outfile.close();
 
-👉 You can switch between languages easily.
+    // Read from file
+    ifstream infile("example.txt");
+    string line;
+    while (getline(infile, line)) {
+        cout << line << endl;
+    }
+    infile.close();
+
+    return 0;
+}
+```
 
 ---
 
-# ✅ END
+## Python
+
+```python
+# Write to file
+with open("example.txt", "w") as f:
+    f.write("Hello Python File!\n")
+
+# Read from file
+with open("example.txt", "r") as f:
+    for line in f:
+        print(line.strip())
+```
+
+---
+
+## Go
+
+```go
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "os"
+)
+
+func main() {
+    // Write to file
+    ioutil.WriteFile("example.txt", []byte("Hello Go File!\n"), 0644)
+
+    // Read from file
+    data, _ := ioutil.ReadFile("example.txt")
+    fmt.Println(string(data))
+
+    // Append to file
+    f, _ := os.OpenFile("example.txt", os.O_APPEND|os.O_WRONLY, 0644)
+    defer f.Close()
+    f.WriteString("Appending new line\n")
+}
+```
+
+---
+
+## Summary
+
+| Language | Write              | Read              | Append                   |
+| -------- | ------------------ | ----------------- | ------------------------ |
+| C++      | `ofstream`         | `ifstream`        | Requires manual handling |
+| Python   | `open(..., "w")`   | `open(..., "r")`  | `open(..., "a")`         |
+| Go       | `ioutil.WriteFile` | `ioutil.ReadFile` | `os.OpenFile`            |
+
+---
+
+## Notes
+
+* Always close files after use.
+* Prefer proper error handling in real applications.
+* File paths can be relative or absolute.
+
+---
+
+---
+
