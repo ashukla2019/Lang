@@ -831,14 +831,7 @@ if err != nil {
 
 ---
 
-# 7. CONCURRENCY
 
-### Go (example)
-
-```go
-go func() {
-    fmt.Println("Running in goroutine")
-}()
 ```
 # File Handling (C++, Python, Go)
 
@@ -1641,6 +1634,390 @@ func main() {
     fmt.Println(add(2.5, 3.5))
 }
 ```
+# 🚀 Concurrency & Threads — C++ vs Python vs Go (Complete Notes)
+
+---
+
+## 📌 1. What is Concurrency?
+
+Concurrency is the ability of a program to **handle multiple tasks at the same time**.
+
+> ⚠️ Not always parallel (true parallelism = multiple CPUs/cores)
+
+---
+
+## 📌 2. Key Concepts
+
+### 🔹 Process vs Thread
+
+| Concept | Description                                    |
+| ------- | ---------------------------------------------- |
+| Process | Independent program with its own memory        |
+| Thread  | Lightweight unit of execution inside a process |
+
+---
+
+### 🔹 Concurrency vs Parallelism
+
+| Type        | Meaning                                    |
+| ----------- | ------------------------------------------ |
+| Concurrency | Multiple tasks managed at once             |
+| Parallelism | Tasks executed simultaneously (multi-core) |
+
+---
+
+### 🔹 Common Problems
+
+* Race Condition
+* Deadlock
+* Starvation
+* Data inconsistency
+
+---
+
+### 🔹 Synchronization Tools
+
+* Mutex (Lock)
+* Semaphore
+* Condition Variable
+* Atomic Operations
+
+---
+
+## 📌 3. C++ Concurrency (Threads)
+
+### 🔹 Thread Creation
+
+```cpp id="cpp1"
+#include <iostream>
+#include <thread>
+using namespace std;
+
+void task() {
+    cout << "Thread running\n";
+}
+
+int main() {
+    thread t(task);
+    t.join(); // wait for thread
+}
+```
+
+---
+
+### 🔹 Passing Arguments
+
+```cpp id="cpp2"
+void print(int x) {
+    cout << x;
+}
+
+thread t(print, 5);
+t.join();
+```
+
+---
+
+### 🔹 Mutex (Synchronization)
+
+```cpp id="cpp3"
+#include <mutex>
+
+mutex m;
+
+void safe_task() {
+    m.lock();
+    // critical section
+    m.unlock();
+}
+```
+
+---
+
+### 🔹 Lock Guard (Better Way)
+
+```cpp id="cpp4"
+#include <mutex>
+
+mutex m;
+
+void safe_task() {
+    lock_guard<mutex> lock(m);
+    // auto unlock
+}
+```
+
+---
+
+### 🔹 Lambda Thread
+
+```cpp id="cpp5"
+thread t([]() {
+    cout << "Lambda thread";
+});
+t.join();
+```
+
+---
+
+### 🔹 Key Points
+
+* Uses `<thread>` library
+* Requires manual synchronization
+* Powerful but complex
+* Risk of race conditions
+
+---
+
+## 📌 4. Python Concurrency
+
+> ⚠️ Python has **GIL (Global Interpreter Lock)**
+> → Only one thread executes Python bytecode at a time
+
+---
+
+### 🔹 Threading
+
+```python id="py1"
+import threading
+
+def task():
+    print("Thread running")
+
+t = threading.Thread(target=task)
+t.start()
+t.join()
+```
+
+---
+
+### 🔹 Multiple Threads
+
+```python id="py2"
+for i in range(3):
+    t = threading.Thread(target=task)
+    t.start()
+```
+
+---
+
+### 🔹 Lock
+
+```python id="py3"
+import threading
+
+lock = threading.Lock()
+
+def safe_task():
+    with lock:
+        # critical section
+        pass
+```
+
+---
+
+### 🔹 Multiprocessing (True Parallelism)
+
+```python id="py4"
+from multiprocessing import Process
+
+def task():
+    print("Process running")
+
+p = Process(target=task)
+p.start()
+p.join()
+```
+
+---
+
+### 🔹 Async (Modern Concurrency)
+
+```python id="py5"
+import asyncio
+
+async def task():
+    print("Hello")
+    await asyncio.sleep(1)
+
+asyncio.run(task())
+```
+
+---
+
+### 🔹 Key Points
+
+* Threading limited by GIL
+* Use multiprocessing for CPU tasks
+* Use asyncio for IO tasks
+* Easy to use
+
+---
+
+## 📌 5. Go Concurrency (Best 🔥)
+
+> Go is built for concurrency
+
+---
+
+### 🔹 Goroutine
+
+```go id="go1"
+package main
+
+import "fmt"
+
+func task() {
+    fmt.Println("Running")
+}
+
+func main() {
+    go task()
+}
+```
+
+---
+
+### 🔹 WaitGroup (Wait for Threads)
+
+```go id="go2"
+package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+func task(wg *sync.WaitGroup) {
+    defer wg.Done()
+    fmt.Println("Done")
+}
+
+func main() {
+    var wg sync.WaitGroup
+
+    wg.Add(1)
+    go task(&wg)
+
+    wg.Wait()
+}
+```
+
+---
+
+### 🔹 Channel (Communication)
+
+```go id="go3"
+package main
+
+import "fmt"
+
+func main() {
+    ch := make(chan int)
+
+    go func() {
+        ch <- 10
+    }()
+
+    val := <-ch
+    fmt.Println(val)
+}
+```
+
+---
+
+### 🔹 Buffered Channel
+
+```go id="go4"
+ch := make(chan int, 2)
+ch <- 1
+ch <- 2
+```
+
+---
+
+### 🔹 Select (Multiple Channels)
+
+```go id="go5"
+select {
+case msg := <-ch1:
+    fmt.Println(msg)
+case msg := <-ch2:
+    fmt.Println(msg)
+}
+```
+
+---
+
+### 🔹 Key Points
+
+* Lightweight goroutines
+* Channels instead of locks
+* Built-in concurrency model
+* Very efficient
+
+---
+
+## 📌 6. Comparison Table
+
+| Feature       | C++ Threads   | Python        | Go         |
+| ------------- | ------------- | ------------- | ---------- |
+| Thread Model  | OS Threads    | Threads + GIL | Goroutines |
+| Parallelism   | Yes           | Limited (GIL) | Yes        |
+| Ease of Use   | Medium/Hard   | Easy          | Very Easy  |
+| Communication | Shared memory | Shared memory | Channels   |
+| Performance   | High          | Medium        | Very High  |
+
+---
+
+## 📌 7. Mental Model (Easy Trick)
+
+```id="mental1"
+C++    → Threads + Mutex (Manual control)
+Python → Threads + GIL / Async / Multiprocessing
+Go     → Goroutines + Channels (Built-in magic)
+```
+
+---
+
+## 📌 8. When to Use What?
+
+* **C++** → High-performance systems, game engines
+* **Python** → Scripts, IO-bound apps, data pipelines
+* **Go** → Backend, microservices, scalable systems
+
+---
+
+## 📌 9. Real-World Tips 🚀
+
+* Avoid shared state when possible
+* Prefer message passing (Go style)
+* Always use locks carefully
+* Debugging concurrency is hard ⚠️
+* Start simple → then optimize
+
+---
+
+## 📌 10. Common Interview Questions
+
+* What is race condition?
+* What is deadlock?
+* Difference between concurrency and parallelism?
+* What is GIL in Python?
+* Goroutines vs Threads?
+* Mutex vs Channel?
+
+---
+
+## 🎯 Final Summary
+
+* **C++** → Powerful but complex
+* **Python** → Easy but limited (GIL)
+* **Go** → Best for concurrency
+
+---
+
+
 
 ### Key Points
 
