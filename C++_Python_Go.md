@@ -570,6 +570,7 @@ Prevent crashes
 
 Handle unexpected situations
 
+```
 Maintain program flow
 
 📌 2. C++ Exception Handling
@@ -618,6 +619,7 @@ catch(...) handles all exceptions
 
 Uses <exception> library
 
+```
 📌 3. Python Exception Handling
 🔹 Syntax
 try:
@@ -658,6 +660,7 @@ Dynamic and flexible
 
 Built-in exceptions are rich
 
+```
 📌 4. Go Error Handling (No Exceptions 🚨)
 Go does NOT use exceptions like C++/Python.
 
@@ -719,6 +722,7 @@ panic = crash (like exception)
 
 recover = catch panic
 
+```
 📌 5. Side-by-Side Comparison
 Feature	C++	Python	Go
 Mechanism	try-catch	try-except	error return values
@@ -727,10 +731,13 @@ Catch Error	catch	except	if err != nil
 Multiple Handling	Yes	Yes	Manual
 Finally Block	No (RAII used)	Yes	defer
 Crash Handling	terminate()	Exception	panic
+
+```
 📌 6. Mental Model (Easy Way to Remember)
 C++    → THROW → CATCH
 Python → TRY → EXCEPT → FINALLY
 Go     → RETURN error → CHECK manually
+```
 📌 7. When to Use What?
 C++ → System-level control, performance-critical apps
 
