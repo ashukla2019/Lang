@@ -1143,6 +1143,153 @@ class A {
 * Go → Not pure OOP, uses composition & interfaces
 
 ---
+# Accessing Private / Protected Members
+
+### (C++ vs Python vs Go)
+
+This document explains how **private/protected members** are accessed and whether a **`friend`-like mechanism** exists.
+
+---
+
+# 🔹 C++
+
+## ✔ Supports `friend`
+
+C++ allows controlled access to private/protected members using the `friend` keyword.
+
+### Example
+
+```cpp id="cppfriend1"
+#include <iostream>
+using namespace std;
+
+class A {
+private:
+    int x;
+
+public:
+    A() { x = 10; }
+
+    // Friend function declaration
+    friend void show(A obj);
+};
+
+// Friend function
+void show(A obj) {
+    cout << obj.x << endl; // Allowed
+}
+
+int main() {
+    A a;
+    show(a);
+}
+```
+
+### Key Points
+
+* `friend` can access **private + protected**
+* Can be:
+
+  * Friend function
+  * Friend class
+* Breaks strict encapsulation (use carefully)
+
+---
+
+# 🔹 Python
+
+## ❌ No `friend` keyword
+
+Python does **not enforce strict access control**.
+
+### Example
+
+```python id="pyfriend1"
+class A:
+    def __init__(self):
+        self.__x = 10  # "private" (name mangling)
+
+def show(obj):
+    # Accessing mangled name
+    print(obj._A__x)
+
+a = A()
+show(a)
+```
+
+### Key Points
+
+* `__x` → name mangling (`_ClassName__x`)
+* Still accessible (not truly private)
+* Uses **convention, not restriction**
+
+### Protected Convention
+
+```python id="pyprotected1"
+class A:
+    def __init__(self):
+        self._x = 10  # protected (by convention)
+```
+
+* `_x` → should not be accessed outside class/subclass (but still possible)
+
+---
+
+# 🔹 Go
+
+## ❌ No `friend`, No `protected`
+
+Go controls access using **package-level visibility**.
+
+### Example
+
+```go id="gofriend1"
+package main
+
+import "fmt"
+
+type A struct {
+    x int // private (unexported)
+}
+
+// Function in same package can access
+func show(a A) {
+    fmt.Println(a.x)
+}
+
+func main() {
+    a := A{x: 10}
+    show(a)
+}
+```
+
+### Key Points
+
+* `x` → private (lowercase)
+* `X` → public (uppercase)
+* No class-level access control
+* Access allowed **within same package**
+
+---
+
+# 🔥 Comparison Table
+
+| Feature           | C++      | Python            | Go                       |
+| ----------------- | -------- | ----------------- | ------------------------ |
+| Private Members   | ✔ Strict | ⚠ Weak            | ✔ Package-level          |
+| Protected Members | ✔ Yes    | ⚠ Convention      | ❌ No                     |
+| Friend Support    | ✔ Yes    | ❌ No              | ❌ No                     |
+| Access Mechanism  | Keywords | Naming convention | Capitalization + package |
+
+---
+
+# 🧠 Summary
+
+* **C++** → Strong encapsulation + `friend` for controlled access
+* **Python** → Flexible, relies on developer discipline
+* **Go** → Simple model using **packages instead of classes**
+
+---
 
 
 ---
