@@ -423,20 +423,14 @@ do {
 
 ## PYTHON LOOPS (FULL PRACTICAL COVERAGE)
 
-### 1. for loop with range
-
-# Python For Loops — Complete Guide
-
----
-
-## 1. Iterating Over a List
-
-```python
-fruits = ["apple", "banana", "cherry"]
-
-for fruit in fruits:
-    print(fruit)
-
+1. Iterating Over a List:
+        fruits = ["apple", "banana", "cherry"]
+                for fruit in fruits:
+                    print(fruit)
+        Output:
+        apple
+        banana
+        cherry
 2. Iterating Over a String:
         word = "Python"
         for letter in word:
@@ -531,7 +525,6 @@ for fruit in fruits:
         2
         3
         4
-        Loop finished without a break.
 ```
 
 ---
