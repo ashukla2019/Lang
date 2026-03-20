@@ -281,6 +281,65 @@ func main() {
 
     fmt.Println(a, b, name)
 }
+
+Difference Between
+var a int = 10
+b := 3.5
+🔹 1. var a int = 10
+✅ Explicit Declaration
+You declare type manually
+
+Syntax:
+var <name> <type> = <value>
+Behavior
+a is explicitly int
+
+Compiler does not need to infer type
+
+Use When:
+You want clarity
+
+You want a specific type (even if value could imply another)
+
+🔹 2. b := 3.5
+✅ Short Variable Declaration
+Type is automatically inferred
+
+Syntax:
+
+<name> := <value>
+Behavior
+b becomes float64 (default for decimal numbers)
+
+Type decided by compiler
+
+Key Differences
+Feature	var a int = 10	b := 3.5
+Type declaration	Explicit	Inferred
+Syntax	Verbose	Short
+Usage scope	Anywhere	Only inside functions
+Flexibility	High control	Quick & convenient
+Important Rule (Very Important)
+:= can only be used inside functions
+
+package main
+var x := 10 // ERROR
+Correct:
+var x = 10
+
+🧠 Mental Model
+var → "I decide the type"
+:=  → "Compiler decides the type"
+🚀 Interview Insight
+Go prefers:
+
+:= → for most local variables
+
+var → for:
+global variables
+explicit typing
+zero values
+
 ```
 
 ---
