@@ -85,8 +85,6 @@ python main.py
 
 ## Go Compilation Process (Fast Compiled Language)
 
-Go is a compiled language optimized for speed.
-
 ###  Steps
 
 .go file
