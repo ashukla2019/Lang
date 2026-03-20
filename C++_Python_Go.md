@@ -89,13 +89,17 @@ Go is a compiled language optimized for speed.
 
 ###  Steps
 
-Source Code (.go)  
-↓  
-Compilation  
-↓  
-Machine Code  
-↓  
-Executable  
+.go file
+↓
+go build
+↓
+Compiler (frontend + backend)
+↓
+Machine Code
+↓
+Linker (adds runtime, dependencies)
+↓
+Standalone Executable
 
 ###  Example
 go build main.go
