@@ -271,7 +271,7 @@ print(a, b, name)
 ### Go
 
 ```go
-package main // defines the entry point package (required to run a program)
+package main //package main tells the Go compiler: This package should be built as an executable program.
 import "fmt" //Import standard I/O
 
 func main() {
