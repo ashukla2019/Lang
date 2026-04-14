@@ -246,7 +246,7 @@ Store and manipulate data.
 ### C++
 
 ```cpp
-#include <iostream>
+#include <iostream> //includes the standard input/output library
 using namespace std;
 
 int main() {
@@ -271,8 +271,8 @@ print(a, b, name)
 ### Go
 
 ```go
-package main
-import "fmt"
+package main // defines the entry point package (required to run a program)
+import "fmt" //Import standard I/O
 
 func main() {
     var a int = 10
