@@ -82,7 +82,7 @@ python main.py
 - Highly portable
 
 ---
-
+```
 ## Go Compilation Process (Fast Compiled Language)
 
 ###  Steps
@@ -98,7 +98,7 @@ Machine Code
 Linker (adds runtime, dependencies)
 ↓
 Standalone Executable
-
+```
 ###  Example
 go build main.go
 
