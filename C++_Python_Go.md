@@ -649,7 +649,8 @@ for {
 
 ### range loop
 
-```nums := []int{10, 20, 30}
+```
+nums := []int{10, 20, 30}
 for index, value := range nums {
     fmt.Println(index, value)
 }
