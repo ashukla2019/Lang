@@ -736,7 +736,7 @@ print(total(1,2,3,4))
 
 ---
 
-### 5. **kwargs
+### 5. **kwargs(keyword arguments)
 
 ```python
 def show(**data):
