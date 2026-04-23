@@ -741,6 +741,8 @@ print(total(1,2,3,4))
 ```python
 def show(**data):
     print(data)
+    print(data.get("name")
+    print(data.get("age")
 
 show(name="Ashu", age=20)
 ```
