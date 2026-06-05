@@ -1085,6 +1085,12 @@ finally:
 
 ```python
 raise ValueError("Custom error")
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Division by zero is not allowed")
+    return a / b
+
+result = divide(10, 0)
 ```
 
 ### Key Points
