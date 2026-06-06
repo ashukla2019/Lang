@@ -1308,9 +1308,17 @@ using namespace std;
 int main() {
     // Write to file
     ofstream outfile("example.txt");
-    outfile << "Hello C++ File!\n";
-    outfile.close();
+    
+    while (true) {
+        getline(cin, line);
 
+        if (line == "exit")
+            break;
+
+        outfile << line << '\n';
+    }
+
+    outfile.close();
     // Read from file
     ifstream infile("example.txt");
     string line;
