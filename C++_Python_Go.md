@@ -1,3 +1,59 @@
+---------------------------,-
+
+```
+Better: Group by Concept
+Basics
+C V C L F E F
+
+Compilation
+Variables
+Control Flow
+Loops
+Functions
+Exceptions
+Files
+
+OOP Fundamentals
+C E A I P
+
+Class & Object
+Encapsulation
+Abstraction
+Inheritance
+Polymorphism
+
+Object Lifecycle
+C D
+
+Constructor
+Destructor
+
+Advanced OOP
+A S A O F C
+Access Specifier
+Static Member
+Abstract Class
+Operator Overloading
+Function Overloading
+Composition
+
+Generic & Parallel Programming
+T C
+
+Templates
+Concurrency
+
+This grouping is often easier to remember than a single 22-item mnemonic:
+
+Basics → OOP → Lifecycle → Advanced OOP → Generic/Parallel
+
+or
+
+CVCLFEF → CEAIP → CD → ASAOFC → TC
+```
+--------------------------,,,,,
+
+
 
 #  C++ vs Python vs Go — Compilation Process & Memory Model
 
