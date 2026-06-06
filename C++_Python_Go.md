@@ -12,6 +12,7 @@ Loops
 Functions
 Exceptions
 Files
+---------------
 
 OOP Fundamentals
 C E A I P
@@ -22,12 +23,15 @@ Abstraction
 Inheritance
 Polymorphism
 
+-----------------
+
 Object Lifecycle
 C D
 
 Constructor
 Destructor
 
+------------------
 Advanced OOP
 A S A O F C
 Access Specifier
@@ -37,6 +41,7 @@ Operator Overloading
 Function Overloading
 Composition
 
+--------------------
 Generic & Parallel Programming
 T C
 
