@@ -1709,6 +1709,315 @@ func main() {
 * Prefer proper error handling in real applications.
 * File paths can be relative or absolute.
 
+
+# Advanced C++ Casts
+
+C-style casts:
+
+```cpp
+(Type)value
+```
+
+Example:
+
+```cpp
+double x = 10.5;
+
+int y = (int)x;
+```
+
+Modern C++ prefers explicit cast operators because they are safer and make intent clear.
+
+---
+
+# 1. static_cast
+
+Used for:
+
+- Numeric conversions
+- Related pointer conversions
+- Upcasting
+- Explicit conversions
+
+Example: Numeric Conversion
+
+```cpp
+double x = 10.5;
+
+int y = static_cast<int>(x);
+```
+
+Output:
+
+```text
+10
+```
+
+Example: Upcasting
+
+```cpp
+class Base {};
+class Derived : public Base {};
+
+Derived d;
+
+Base* ptr = static_cast<Base*>(&d);
+```
+
+---
+
+# 2. dynamic_cast
+
+Used for:
+
+- Safe downcasting
+- Runtime type checking
+- Polymorphic classes
+
+Requires at least one virtual function.
+
+Example:
+
+```cpp
+class Base
+{
+public:
+    virtual ~Base() {}
+};
+
+class Derived : public Base
+{
+public:
+    void show()
+    {
+        cout << "Derived";
+    }
+};
+
+Base* ptr = new Derived();
+
+Derived* dptr = dynamic_cast<Derived*>(ptr);
+
+if(dptr)
+{
+    dptr->show();
+}
+```
+
+Output:
+
+```text
+Derived
+```
+
+Failed Cast
+
+```cpp
+Base* ptr = new Base();
+
+Derived* dptr = dynamic_cast<Derived*>(ptr);
+
+if(dptr == nullptr)
+{
+    cout << "Invalid Cast";
+}
+```
+
+Output:
+
+```text
+Invalid Cast
+```
+
+---
+
+# 3. const_cast
+
+Used for:
+
+- Adding const
+- Removing const
+
+Example:
+
+```cpp
+int x = 10;
+
+const int* ptr = &x;
+
+int* p = const_cast<int*>(ptr);
+
+*p = 20;
+```
+
+Now:
+
+```text
+x = 20
+```
+
+Common Use Case
+
+```cpp
+void print(char* str)
+{
+    cout << str;
+}
+
+const char* name = "John";
+
+print(const_cast<char*>(name));
+```
+
+Warning:
+
+Removing const from an actually constant object and modifying it causes Undefined Behavior.
+
+Bad Example:
+
+```cpp
+const int x = 10;
+
+int* p = const_cast<int*>(&x);
+
+*p = 20;   // Undefined Behavior
+```
+
+---
+
+# 4. reinterpret_cast
+
+Used for:
+
+- Low-level memory manipulation
+- Converting unrelated pointer types
+- Integer ↔ Pointer conversions
+
+Example:
+
+```cpp
+int x = 10;
+
+int* ptr = &x;
+
+char* cptr = reinterpret_cast<char*>(ptr);
+```
+
+Example:
+
+```cpp
+uintptr_t addr = reinterpret_cast<uintptr_t>(ptr);
+```
+
+Example:
+
+```cpp
+int* ptr = reinterpret_cast<int*>(0x12345678);
+```
+
+Warning:
+
+Very dangerous.
+
+Compiler performs almost no safety checks.
+
+Use only in low-level systems programming.
+
+---
+
+# Cast Comparison
+
+| Cast | Safe | Runtime Check | Typical Usage |
+|--------|--------|--------|--------|
+| static_cast | Yes | No | Numeric conversion, upcasting |
+| dynamic_cast | Yes | Yes | Safe downcasting |
+| const_cast | Limited | No | Add/remove const |
+| reinterpret_cast | No | No | Low-level memory operations |
+
+---
+
+# C-style Cast vs Modern Cast
+
+Old Style:
+
+```cpp
+int y = (int)x;
+```
+
+Modern Style:
+
+```cpp
+int y = static_cast<int>(x);
+```
+
+Modern C++ recommends:
+
+```cpp
+static_cast
+dynamic_cast
+const_cast
+reinterpret_cast
+```
+
+instead of C-style casts because intent is explicit and safer.
+
+---
+
+# Python Equivalent
+
+Python does not have:
+
+```text
+static_cast
+dynamic_cast
+const_cast
+reinterpret_cast
+```
+
+Instead it uses conversion functions:
+
+```python
+int()
+float()
+str()
+bool()
+```
+
+Python references are type-safe and managed by the runtime.
+
+---
+
+# Go Equivalent
+
+Go does not have:
+
+```text
+static_cast
+dynamic_cast
+const_cast
+reinterpret_cast
+```
+
+Most conversions use:
+
+```go
+Type(value)
+```
+
+Example:
+
+```go
+float64(x)
+int(y)
+```
+
+Low-level reinterpretation exists through:
+
+```go
+unsafe.Pointer
+```
+
+which is similar in spirit to C++'s `reinterpret_cast`.
 ---
 
 # Object-Oriented Programming (OOP) – C++, Python, Go
