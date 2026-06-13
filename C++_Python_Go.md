@@ -401,24 +401,18 @@ zero values
 
 ```
 
-#2. User Input Methods in C++, Python, and Go
+# 2. User Input Methods in C++, Python, and Go
+
+---
+# User Input Comparison: C++ vs Python vs Go
 
 ---
 
-# C++
+# 1. Single Integer Input
 
-## 1. Formatted Input (`cin`)
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x;
-    cin >> x;
-    cout << x;
-}
-```
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp int x; cin >> x; ``` | ```python x = int(input()) ``` | ```go var x int; fmt.Scan(&x) ``` |
 
 Input:
 
@@ -428,27 +422,25 @@ Input:
 
 ---
 
-## 2. Multiple Values
+# 2. Single Float Input
 
-```cpp
-int a, b;
-cin >> a >> b;
-```
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp double x; cin >> x; ``` | ```python x = float(input()) ``` | ```go var x float64; fmt.Scan(&x) ``` |
 
 Input:
 
 ```text
-10 20
+10.5
 ```
 
 ---
 
-## 3. Single Word String
+# 3. Single Word String
 
-```cpp
-string name;
-cin >> name;
-```
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp string s; cin >> s; ``` | ```python s = input() ``` | ```go var s string; fmt.Scan(&s) ``` |
 
 Input:
 
@@ -458,135 +450,21 @@ John
 
 ---
 
-## 4. Entire Line (`getline`)
+# 4. Character Input
 
-```cpp
-string line;
-getline(cin, line);
-```
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp char ch; cin >> ch; ``` | ```python ch = input()[0] ``` | ```go ch, _ := reader.ReadByte() ``` |
 
 Input:
 
 ```text
-Hello World
+A
 ```
 
 ---
 
-## 5. Mixing `cin` and `getline`
-
-```cpp
-int age;
-cin >> age;
-cin.ignore();
-
-string name;
-getline(cin, name);
-```
-
----
-
-## 6. Character Input
-
-```cpp
-char ch;
-cin >> ch;
-```
-
----
-
-## 7. File Input (`ifstream`)
-
-```cpp
-#include <fstream>
-
-ifstream file("data.txt");
-
-int x;
-file >> x;
-```
-
----
-
-## 8. Read File Line by Line
-
-```cpp
-string line;
-
-while (getline(file, line))
-{
-    cout << line << endl;
-}
-```
-
----
-
-## 9. Command-Line Arguments
-
-```cpp
-int main(int argc, char* argv[])
-{
-    cout << argv[1];
-}
-```
-
-Run:
-
-```bash
-./app hello
-```
-
----
-
-## 10. C-Style Input (`scanf`)
-
-```cpp
-int x;
-scanf("%d", &x);
-```
-
----
-
-## 11. C-Style Line Input (`fgets`)
-
-```cpp
-char str[100];
-fgets(str, sizeof(str), stdin);
-```
-
----
-
-# Python
-
-## 1. Basic Input
-
-```python
-name = input("Enter name: ")
-```
-
----
-
-## 2. Integer Input
-
-```python
-x = int(input())
-```
-
----
-
-## 3. Float Input
-
-```python
-x = float(input())
-```
-
----
-
-## 4. Multiple Inputs
-
-```python
-a, b = map(int, input().split())
-```
+# 5. Multiple Inputs in One Line
 
 Input:
 
@@ -594,13 +472,13 @@ Input:
 10 20
 ```
 
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp int a,b; cin >> a >> b; ``` | ```python a,b = map(int,input().split()) ``` | ```go var a,b int; fmt.Scan(&a,&b) ``` |
+
 ---
 
-## 5. List Input
-
-```python
-arr = list(map(int, input().split()))
-```
+# 6. Array/List Input
 
 Input:
 
@@ -608,28 +486,57 @@ Input:
 1 2 3 4 5
 ```
 
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp vector<int> arr(5); for(int &x:arr) cin>>x; ``` | ```python arr=list(map(int,input().split())) ``` | ```go nums:=strings.Fields(line) ``` |
+
 ---
 
-## 6. Multiple Lines
+# 7. Entire Line Input
 
-```python
-line1 = input()
-line2 = input()
+Input:
+
+```text
+Hello World
 ```
 
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp getline(cin,line); ``` | ```python line=input() ``` | ```go line,_:=reader.ReadString('\n') ``` |
+
 ---
 
-## 7. Read All Remaining Input
+# 8. Multiple Lines Input
 
-```python
-import sys
+Input:
 
-data = sys.stdin.read()
+```text
+Hello
+World
 ```
 
+| C++ | Python | Go |
+|------|---------|-----|
+| ```cpp getline(cin,l1); getline(cin,l2); ``` | ```python l1=input(); l2=input() ``` | ```go scanner.Scan(); l1:=scanner.Text() ``` |
+
 ---
 
-## 8. Read Line by Line
+# 9. Read Until EOF
+
+Useful for competitive programming.
+
+## C++
+
+```cpp
+int x;
+
+while(cin >> x)
+{
+    cout << x << endl;
+}
+```
+
+## Python
 
 ```python
 import sys
@@ -638,113 +545,7 @@ for line in sys.stdin:
     print(line)
 ```
 
----
-
-## 9. File Input
-
-```python
-with open("data.txt") as f:
-    content = f.read()
-```
-
----
-
-## 10. Command-Line Arguments
-
-```python
-import sys
-
-print(sys.argv[1])
-```
-
-Run:
-
-```bash
-python app.py hello
-```
-
----
-
-# Go
-
-## 1. Single Value (`fmt.Scan`)
-
-```go
-var x int
-fmt.Scan(&x)
-```
-
----
-
-## 2. Multiple Values
-
-```go
-var a, b int
-fmt.Scan(&a, &b)
-```
-
----
-
-## 3. Input Until Newline (`fmt.Scanln`)
-
-```go
-var name string
-fmt.Scanln(&name)
-```
-
----
-
-## 4. Formatted Input (`fmt.Scanf`)
-
-```go
-var x int
-fmt.Scanf("%d", &x)
-```
-
----
-
-## 5. Buffered Reader (`ReadString`)
-
-```go
-reader := bufio.NewReader(os.Stdin)
-
-text, _ := reader.ReadString('\n')
-```
-
----
-
-## 6. Read Entire Line
-
-```go
-reader := bufio.NewReader(os.Stdin)
-
-line, _ := reader.ReadString('\n')
-```
-
----
-
-## 7. Character / Byte Input
-
-```go
-reader := bufio.NewReader(os.Stdin)
-
-ch, _ := reader.ReadByte()
-```
-
----
-
-## 8. Scanner Input
-
-```go
-scanner := bufio.NewScanner(os.Stdin)
-
-scanner.Scan()
-text := scanner.Text()
-```
-
----
-
-## 9. Multiple Lines Using Scanner
+## Go
 
 ```go
 scanner := bufio.NewScanner(os.Stdin)
@@ -757,11 +558,56 @@ for scanner.Scan()
 
 ---
 
-## 10. File Input
+# 10. File Input
+
+## C++
+
+```cpp
+ifstream file("data.txt");
+
+int x;
+file >> x;
+```
+
+## Python
+
+```python
+with open("data.txt") as f:
+    data = f.read()
+```
+
+## Go
 
 ```go
 file, _ := os.Open("data.txt")
+```
 
+---
+
+# 11. Read File Line by Line
+
+## C++
+
+```cpp
+string line;
+
+while(getline(file,line))
+{
+    cout << line << endl;
+}
+```
+
+## Python
+
+```python
+with open("data.txt") as f:
+    for line in f:
+        print(line)
+```
+
+## Go
+
+```go
 scanner := bufio.NewScanner(file)
 
 for scanner.Scan()
@@ -772,67 +618,107 @@ for scanner.Scan()
 
 ---
 
-## 11. Command-Line Arguments
-
-```go
-package main
-
-import (
-    "fmt"
-    "os"
-)
-
-func main()
-{
-    fmt.Println(os.Args[1])
-}
-```
+# 12. Command-Line Arguments
 
 Run:
 
 ```bash
-go run main.go hello
+app hello
 ```
-
----
-
-# Quick Comparison
-
-| Purpose | C++ | Python | Go |
-|----------|----------|----------|----------|
-| Single Value | `cin` | `input()` | `fmt.Scan()` |
-| Multiple Values | `cin >> a >> b` | `map(int, input().split())` | `fmt.Scan()` |
-| Entire Line | `getline()` | `input()` | `bufio.Reader` |
-| Character | `cin >> ch` | `input()[0]` | `ReadByte()` |
-| File Input | `ifstream` | `open()` | `os.Open()` |
-| Command-Line Args | `argc/argv` | `sys.argv` | `os.Args` |
-| Fast Input | `ios::sync_with_stdio(false)` | `sys.stdin.readline()` | `bufio.Reader` |
-
----
-
-# Most Commonly Used in Practice
 
 ## C++
 
 ```cpp
-cin >> value;
-getline(cin, line);
+int main(int argc, char* argv[])
+{
+    cout << argv[1];
+}
 ```
 
 ## Python
 
 ```python
-input()
-int(input())
-list(map(int, input().split()))
+import sys
+
+print(sys.argv[1])
 ```
 
 ## Go
 
 ```go
-fmt.Scan()
-bufio.NewReader(os.Stdin)
-bufio.NewScanner(os.Stdin)
+fmt.Println(os.Args[1])
+```
+
+---
+
+# 13. Fast Input
+
+## C++
+
+```cpp
+ios::sync_with_stdio(false);
+cin.tie(nullptr);
+```
+
+## Python
+
+```python
+import sys
+
+line = sys.stdin.readline()
+```
+
+## Go
+
+```go
+reader := bufio.NewReader(os.Stdin)
+```
+
+---
+
+# Summary
+
+| Purpose | C++ | Python | Go |
+|----------|----------|----------|----------|
+| Integer | `cin` | `input()` + `int()` | `fmt.Scan()` |
+| Float | `cin` | `input()` + `float()` | `fmt.Scan()` |
+| String Word | `cin` | `input()` | `fmt.Scan()` |
+| Character | `cin` | `input()[0]` | `ReadByte()` |
+| Full Line | `getline()` | `input()` | `ReadString()` |
+| Multiple Values | `cin >> a >> b` | `split()` | `fmt.Scan()` |
+| Array/List | loop + `cin` | `map()` | `Fields()` |
+| File Input | `ifstream` | `open()` | `os.Open()` |
+| EOF Input | `while(cin>>x)` | `sys.stdin` | `Scanner()` |
+| Command-Line Args | `argv` | `sys.argv` | `os.Args` |
+| Fast Input | `cin.tie(nullptr)` | `readline()` | `bufio.Reader` |
+
+---
+
+# Rule of Thumb
+
+## C++
+
+```cpp
+cin >> value;        // formatted input
+getline(cin, line);  // full line
+```
+
+## Python
+
+```python
+input()                    # line
+int(input())               # integer
+input().split()            # multiple values
+```
+
+## Go
+
+```go
+fmt.Scan()                 // formatted input
+bufio.Reader               // line input
+bufio.Scanner              // multiple lines
+```
+
 ```
 ---
 
