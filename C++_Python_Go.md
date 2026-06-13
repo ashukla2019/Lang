@@ -1710,7 +1710,7 @@ func main() {
 * File paths can be relative or absolute.
 
 
-# Advanced C++ Casts
+# Type casting
 
 C-style casts:
 
