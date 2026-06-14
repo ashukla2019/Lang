@@ -1709,6 +1709,423 @@ func main() {
 * Prefer proper error handling in real applications.
 * File paths can be relative or absolute.
 
+# Dynamic memory allocation:
+# Dynamic Memory Allocation in C++, Python, and Go
+
+## What is Dynamic Memory Allocation?
+
+Dynamic memory allocation means memory is allocated at **runtime** instead of compile time.
+
+Advantages:
+
+- Size can be determined during execution.
+- Memory can outlive the current scope.
+- Useful for large data structures.
+- Supports dynamic containers such as lists, vectors, maps, etc.
+
+---
+
+# C++
+
+## Stack Allocation
+
+```cpp
+int x = 10;
+```
+
+Memory is allocated automatically on the stack.
+
+Destroyed automatically when scope ends.
+
+---
+
+## Heap Allocation Using new
+
+```cpp
+int* ptr = new int(10);
+
+std::cout << *ptr << std::endl;
+
+delete ptr;
+```
+
+Output:
+
+```text
+10
+```
+
+Memory Layout:
+
+```text
+Stack                 Heap
+-----                 ----
+ptr  ------------->   10
+```
+
+---
+
+## Dynamic Array
+
+```cpp
+int n = 5;
+
+int* arr = new int[n];
+
+for(int i = 0; i < n; i++)
+{
+    arr[i] = i + 1;
+}
+
+delete[] arr;
+```
+
+---
+
+## Modern C++ (Recommended)
+
+### unique_ptr
+
+```cpp
+#include <memory>
+
+auto ptr = std::make_unique<int>(10);
+
+std::cout << *ptr;
+```
+
+No manual delete required.
+
+---
+
+### shared_ptr
+
+```cpp
+#include <memory>
+
+auto ptr = std::make_shared<int>(100);
+
+std::cout << *ptr;
+```
+
+Reference-counted ownership.
+
+---
+
+## When Memory Is Released?
+
+```cpp
+int* ptr = new int(10);
+
+delete ptr;
+```
+
+Programmer is responsible.
+
+Failure to delete causes:
+
+```text
+Memory Leak
+```
+
+---
+
+# Python
+
+## Everything is Dynamically Allocated
+
+```python
+x = 10
+```
+
+Python creates an integer object and stores a reference.
+
+Memory Layout:
+
+```text
+x ------> Integer Object(10)
+```
+
+---
+
+## List Allocation
+
+```python
+arr = [1, 2, 3, 4, 5]
+```
+
+List object is allocated dynamically.
+
+---
+
+## Dictionary Allocation
+
+```python
+data = {
+    "name": "John",
+    "age": 25
+}
+```
+
+Dictionary is allocated dynamically.
+
+---
+
+## Object Allocation
+
+```python
+class Employee:
+    def __init__(self, name):
+        self.name = name
+
+emp = Employee("John")
+```
+
+Memory is allocated automatically.
+
+---
+
+## Explicit Allocation Example
+
+```python
+arr = [0] * 1000000
+```
+
+Creates a dynamically allocated list containing one million elements.
+
+---
+
+## Memory Release
+
+Python uses:
+
+```text
+Reference Counting
++
+Garbage Collection (GC)
+```
+
+Example:
+
+```python
+arr = [1, 2, 3]
+
+del arr
+```
+
+Memory becomes eligible for cleanup.
+
+Programmer usually does not free memory manually.
+
+---
+
+# Go
+
+## Dynamic Allocation Using new
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    ptr := new(int)
+
+    *ptr = 10
+
+    fmt.Println(*ptr)
+}
+```
+
+Output:
+
+```text
+10
+```
+
+Memory Layout:
+
+```text
+ptr -----> 10
+```
+
+---
+
+## Struct Allocation
+
+```go
+type Employee struct {
+    Name string
+}
+
+func main() {
+    emp := new(Employee)
+
+    emp.Name = "John"
+}
+```
+
+Allocated dynamically.
+
+---
+
+## Using Address Operator
+
+```go
+x := 10
+
+ptr := &x
+
+fmt.Println(*ptr)
+```
+
+Output:
+
+```text
+10
+```
+
+---
+
+## Slice Allocation
+
+```go
+nums := make([]int, 5)
+```
+
+Creates:
+
+```text
+Length = 5
+Capacity = 5
+```
+
+Dynamic memory allocated internally.
+
+---
+
+## Map Allocation
+
+```go
+data := make(map[string]int)
+
+data["age"] = 25
+```
+
+Maps must usually be initialized using `make()`.
+
+---
+
+## Channel Allocation
+
+```go
+ch := make(chan int)
+```
+
+Channels are dynamically allocated.
+
+---
+
+## Memory Release
+
+Go uses:
+
+```text
+Garbage Collection (GC)
+```
+
+Example:
+
+```go
+func create() {
+    arr := make([]int, 1000000)
+}
+```
+
+After function returns:
+
+```text
+No references remain
+↓
+Garbage Collector frees memory
+```
+
+---
+
+# Comparison
+
+| Feature | C++ | Python | Go |
+|----------|----------|----------|----------|
+| Dynamic Allocation Keyword | new | Automatic | new / make |
+| Manual Free Required | Yes | No | No |
+| Garbage Collection | No | Yes | Yes |
+| Smart Pointers | Yes | No | No |
+| Dynamic Arrays | new[] / vector | list | slice |
+| Dynamic Maps | unordered_map | dict | map |
+| Memory Leak Possible | Yes | Rare | Rare |
+
+---
+
+# Interview Question
+
+## Why is C++ Faster?
+
+Because:
+
+```text
+C++
+    Manual Memory Management
+
+Python
+    Object Creation
+    Reference Counting
+    Garbage Collection
+
+Go
+    Garbage Collection
+```
+
+Less runtime overhead generally means higher performance.
+
+---
+
+# Rule of Thumb
+
+## C++
+
+```text
+Use:
+vector
+string
+unique_ptr
+shared_ptr
+
+Avoid raw new/delete unless necessary.
+```
+
+## Python
+
+```text
+Memory management is automatic.
+
+Focus on:
+list
+dict
+set
+tuple
+```
+
+## Go
+
+```text
+Use:
+slice
+map
+channel
+
+Use new() rarely.
+Use make() for slices, maps, and channels.
+```
 
 # Type casting
 
