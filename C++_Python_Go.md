@@ -2671,61 +2671,548 @@ type Shape interface {
 
 # 6. Constructor
 
+# Constructors and Object Lifecycle
+
+## C++ vs Python vs Go
+
+---
+
+# 1. Default Constructor
+
+Creates an object with default values.
+
 ## C++
 
 ```cpp
-class A {
+class Employee
+{
 public:
-    A(){ cout<<"Constructor"; }
+    int id;
+
+    Employee()
+    {
+        id = 0;
+    }
+};
+
+Employee e;
+```
+
+## Python
+
+```python
+class Employee:
+    def __init__(self):
+        self.id = 0
+
+e = Employee()
+```
+
+## Go
+
+```go
+type Employee struct {
+    Id int
+}
+
+func NewEmployee() Employee {
+    return Employee{Id: 0}
+}
+
+e := NewEmployee()
+```
+
+---
+
+# 2. Parameterized Constructor
+
+Pass values during object creation.
+
+## C++
+
+```cpp
+class Employee
+{
+public:
+    int id;
+
+    Employee(int i)
+    {
+        id = i;
+    }
+};
+
+Employee e(10);
+```
+
+## Python
+
+```python
+class Employee:
+    def __init__(self, id):
+        self.id = id
+
+e = Employee(10)
+```
+
+## Go
+
+```go
+type Employee struct {
+    Id int
+}
+
+func NewEmployee(id int) Employee {
+    return Employee{Id: id}
+}
+
+e := NewEmployee(10)
+```
+
+---
+
+# 3. Copy Constructor
+
+Creates a new object from another object.
+
+## C++
+
+```cpp
+class Employee
+{
+public:
+    int id;
+
+    Employee(int i)
+    {
+        id = i;
+    }
+
+    Employee(const Employee& other)
+    {
+        id = other.id;
+    }
+};
+
+Employee e1(10);
+Employee e2(e1);
+```
+
+## Python
+
+```python
+import copy
+
+class Employee:
+    def __init__(self, id):
+        self.id = id
+
+e1 = Employee(10)
+e2 = copy.copy(e1)
+```
+
+## Go
+
+```go
+type Employee struct {
+    Id int
+}
+
+e1 := Employee{Id: 10}
+e2 := e1
+```
+
+---
+
+# 4. Copy Assignment Operator
+
+Assign existing object to another existing object.
+
+## C++
+
+```cpp
+class Employee
+{
+public:
+    int id;
+
+    Employee& operator=(const Employee& other)
+    {
+        id = other.id;
+        return *this;
+    }
+};
+
+Employee e1(10);
+Employee e2(20);
+
+e2 = e1;
+```
+
+## Python
+
+```python
+e2 = e1
+```
+
+Actual copy:
+
+```python
+import copy
+
+e2 = copy.copy(e1)
+```
+
+## Go
+
+```go
+e2 = e1
+```
+
+---
+
+# 5. Move Constructor
+
+Transfers ownership instead of copying.
+
+## C++
+
+```cpp
+#include <vector>
+
+class Employee
+{
+public:
+    std::vector<int> data;
+
+    Employee(Employee&& other)
+    {
+        data = std::move(other.data);
+    }
+};
+
+Employee e1;
+Employee e2(std::move(e1));
+```
+
+## Python
+
+Not supported.
+
+Python uses references and garbage collection.
+
+```python
+a = [1, 2, 3]
+b = a
+```
+
+## Go
+
+Not supported.
+
+Go uses value semantics and garbage collection.
+
+---
+
+# 6. Move Assignment Operator
+
+Move data into an existing object.
+
+## C++
+
+```cpp
+class Employee
+{
+public:
+    std::vector<int> data;
+
+    Employee& operator=(Employee&& other)
+    {
+        data = std::move(other.data);
+        return *this;
+    }
+};
+
+e2 = std::move(e1);
+```
+
+## Python
+
+Not available.
+
+## Go
+
+Not available.
+
+---
+
+# 7. Delegating Constructor
+
+One constructor calls another.
+
+## C++
+
+```cpp
+class Employee
+{
+public:
+    int id;
+
+    Employee() : Employee(0)
+    {
+    }
+
+    Employee(int i)
+    {
+        id = i;
+    }
 };
 ```
 
 ## Python
 
 ```python
-class A:
-    def __init__(self):
-        print("Constructor")
+class Employee:
+    def __init__(self, id=0):
+        self.id = id
 ```
 
 ## Go
 
 ```go
-func NewA() *A {
-    return &A{}
+func NewEmployee() Employee {
+    return NewEmployeeWithId(0)
+}
+
+func NewEmployeeWithId(id int) Employee {
+    return Employee{Id: id}
 }
 ```
 
 ---
 
-# 7. Destructor
+# 8. Conversion Constructor
+
+Converts one type into another.
 
 ## C++
 
 ```cpp
-~A(){ cout<<"Destructor"; }
+class Employee
+{
+public:
+    int id;
+
+    Employee(int i)
+    {
+        id = i;
+    }
+};
+
+Employee e = 10;
+```
+
+Prevent implicit conversion:
+
+```cpp
+class Employee
+{
+public:
+    int id;
+
+    explicit Employee(int i)
+    {
+        id = i;
+    }
+};
 ```
 
 ## Python
 
 ```python
-def __del__(self):
-    print("Destructor")
+class Employee:
+    def __init__(self, value):
+        self.id = int(value)
+
+e = Employee("10")
 ```
 
 ## Go
 
-No destructor (Garbage Collector handles memory)
+```go
+func NewEmployee(value string) Employee {
+    id, _ := strconv.Atoi(value)
+    return Employee{Id: id}
+}
+```
 
 ---
 
-# 8. Access Specifiers
+# 9. Destructor
 
-| Concept   | C++       | Python  | Go             |
-| --------- | --------- | ------- | -------------- |
-| Public    | public    | default | Capital letter |
-| Private   | private   | __var   | lowercase      |
-| Protected | protected | _var    | not supported  |
+Called when object is destroyed.
+
+## C++
+
+```cpp
+class Employee
+{
+public:
+    ~Employee()
+    {
+        std::cout << "Destroyed\n";
+    }
+};
+```
+
+## Python
+
+```python
+class Employee:
+    def __del__(self):
+        print("Destroyed")
+```
+
+## Go
+
+No destructor.
+
+Use:
+
+```go
+defer file.Close()
+```
+
+---
+
+# Rule of 3
+
+If a class manages resources and defines one of these:
+
+```text
+Destructor
+Copy Constructor
+Copy Assignment Operator
+```
+
+it usually needs all three.
+
+---
+
+# Rule of 5
+
+Modern C++ adds move semantics.
+
+```text
+Destructor
+Copy Constructor
+Copy Assignment Operator
+Move Constructor
+Move Assignment Operator
+```
+
+Example:
+
+```cpp
+class Employee
+{
+public:
+    Employee();
+
+    ~Employee();
+
+    Employee(const Employee&);
+    Employee& operator=(const Employee&);
+
+    Employee(Employee&&);
+    Employee& operator=(Employee&&);
+};
+```
+
+---
+
+# Rule of 0
+
+Prefer letting the compiler generate everything.
+
+```cpp
+class Employee
+{
+public:
+    std::string name;
+    int age;
+};
+```
+
+No destructor.
+No copy constructor.
+No move constructor.
+No assignment operators.
+
+Compiler-generated versions are sufficient.
+
+---
+
+# Quick Comparison
+
+| Feature                   | C++ | Python               | Go               |
+| ------------------------- | --- | -------------------- | ---------------- |
+| Default Constructor       | Yes | Yes                  | Factory Function |
+| Parameterized Constructor | Yes | Yes                  | Factory Function |
+| Copy Constructor          | Yes | No                   | Struct Copy      |
+| Copy Assignment           | Yes | Reference Assignment | Value Assignment |
+| Move Constructor          | Yes | No                   | No               |
+| Move Assignment           | Yes | No                   | No               |
+| Delegating Constructor    | Yes | Default Arguments    | Factory Function |
+| Conversion Constructor    | Yes | Dynamic Conversion   | Factory Function |
+| Destructor                | Yes | **del**              | No               |
+| Rule of 3                 | Yes | No                   | No               |
+| Rule of 5                 | Yes | No                   | No               |
+| Rule of 0                 | Yes | N/A                  | N/A              |
+
+---
+
+# Easy Way To Remember
+
+```text
+C++
+ ├─ Constructor
+ │   ├─ Default
+ │   ├─ Parameterized
+ │   ├─ Copy
+ │   ├─ Move
+ │   └─ Delegating
+ │
+ ├─ Assignment
+ │   ├─ Copy Assignment
+ │   └─ Move Assignment
+ │
+ └─ Destructor
+
+Python
+ ├─ __init__()
+ ├─ copy.copy()
+ ├─ copy.deepcopy()
+ ├─ Reference Assignment
+ └─ __del__()
+
+Go
+ ├─ Struct Literal
+ ├─ Factory Function
+ ├─ Value Copy
+ ├─ Pointer Sharing
+ └─ Garbage Collector
+```
+
+---
+
+# One-Line Summary
+
+```text
+C++  -> Explicit ownership (copy, move, destroy)
+Python -> Reference-based objects (copy when needed)
+Go -> Value semantics by default (copy structs, share pointers)
+```
 
 ---
 
