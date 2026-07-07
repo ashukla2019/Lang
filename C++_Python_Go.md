@@ -3,22 +3,25 @@
 ```
 Better: Group by Concept
 Basics
-C V I C L F E F D T
+CVIC  LEFT FD
 
 Compilation
 Variables
 Input
 Control Flow
+
 Loops
-Functions
 Exceptions
+Functions
+Type casting
+
 Files
 Dynamic memory allocation
-Type casting
+
 ---------------
 
 OOP Fundamentals
-C E A I P
+C E A  I P
 
 Class & Object
 Encapsulation
