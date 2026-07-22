@@ -687,3 +687,87 @@ Fast Front + Back
 ↓
 Random Access Supported
 ```
+
+---
+
+# Common STL APIs Comparison
+
+## 1. Creation
+
+| Operation | vector | list | deque |
+|----------|----------|--------|---------|
+| Empty | `vector<int> v;` | `list<int> l;` | `deque<int> d;` |
+| Size | `vector<int> v(5);` | `list<int> l(5);` | `deque<int> d(5);` |
+| Size + Value | `vector<int> v(5,10);` | `list<int> l(5,10);` | `deque<int> d(5,10);` |
+| Initializer List | `vector<int> v={1,2,3};` | `list<int> l={1,2,3};` | `deque<int> d={1,2,3};` |
+| Copy | `vector<int> v2(v1);` | `list<int> l2(l1);` | `deque<int> d2(d1);` |
+
+---
+
+## 2. Access
+
+| Operation | vector | list | deque |
+|----------|----------|--------|---------|
+| First Element | `front()` | `front()` | `front()` |
+| Last Element | `back()` | `back()` | `back()` |
+| Random Access | `v[i]`, `at(i)` | ❌ | `d[i]`, `at(i)` |
+| Raw Pointer | `data()` | ❌ | ❌ |
+| Begin Iterator | `begin()` | `begin()` | `begin()` |
+| End Iterator | `end()` | `end()` | `end()` |
+
+---
+
+## 3. Add
+
+| Operation | vector | list | deque |
+|----------|----------|--------|---------|
+| Add Back | `push_back()` | `push_back()` | `push_back()` |
+| Add Front | ❌ | `push_front()` | `push_front()` |
+| Construct Back | `emplace_back()` | `emplace_back()` | `emplace_back()` |
+| Construct Front | ❌ | `emplace_front()` | `emplace_front()` |
+| Insert | `insert(it,val)` | `insert(it,val)` | `insert(it,val)` |
+| Emplace | `emplace(it,args...)` | `emplace(it,args...)` | `emplace(it,args...)` |
+
+---
+
+## 4. Remove
+
+| Operation | vector | list | deque |
+|----------|----------|--------|---------|
+| Remove Back | `pop_back()` | `pop_back()` | `pop_back()` |
+| Remove Front | ❌ | `pop_front()` | `pop_front()` |
+| Erase Position | `erase(it)` | `erase(it)` | `erase(it)` |
+| Erase Range | `erase(first,last)` | `erase(first,last)` | `erase(first,last)` |
+| Remove by Value | `erase(remove(...), end())` | `remove(value)` | `erase(remove(...), end())` |
+| Clear | `clear()` | `clear()` | `clear()` |
+
+---
+
+## 5. Capacity
+
+| Operation | vector | list | deque |
+|----------|----------|--------|---------|
+| Size | `size()` | `size()` | `size()` |
+| Empty | `empty()` | `empty()` | `empty()` |
+| Max Size | `max_size()` | `max_size()` | `max_size()` |
+| Capacity | `capacity()` | ❌ | ❌ |
+| Reserve | `reserve()` | ❌ | ❌ |
+| Resize | `resize()` | `resize()` | `resize()` |
+| Shrink Memory | `shrink_to_fit()` | ❌ | `shrink_to_fit()` *(C++11+)* |
+
+---
+
+## 6. Utility Functions
+
+| Operation | vector | list | deque |
+|----------|----------|--------|---------|
+| `begin()` | ✅ | ✅ | ✅ |
+| `end()` | ✅ | ✅ | ✅ |
+| `rbegin()` | ✅ | ✅ | ✅ |
+| `rend()` | ✅ | ✅ | ✅ |
+| `cbegin()` | ✅ | ✅ | ✅ |
+| `cend()` | ✅ | ✅ | ✅ |
+| `assign()` | ✅ | ✅ | ✅ |
+| `swap()` | ✅ | ✅ | ✅ |
+
+---
