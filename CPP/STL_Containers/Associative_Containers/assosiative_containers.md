@@ -683,3 +683,109 @@ Sorted
 ↓
 Red-Black Tree
 ```
+
+# Common STL APIs Comparison (set & map)
+
+---
+
+## 1. Creation
+
+| Operation | set | map |
+|-----------|-----|-----|
+| Empty | `set<int> s;` | `map<int,string> m;` |
+| Initializer List | `set<int> s={3,1,2};` | `map<int,string> m={{1,"One"},{2,"Two"}};` |
+| Copy | `set<int> s2(s1);` | `map<int,string> m2(m1);` |
+| Custom Comparator | `set<int, greater<int>> s;` | `map<int,string, greater<int>> m;` |
+
+---
+
+## 2. Access
+
+| Operation | set | map |
+|-----------|-----|-----|
+| First Element | `*s.begin()` | `m.begin()->first` / `m.begin()->second` |
+| Last Element | `*prev(s.end())` | `prev(m.end())->first` |
+| Search | `find(key)` | `find(key)` |
+| Count | `count(key)` | `count(key)` |
+| Contains *(C++20)* | `contains(key)` | `contains(key)` |
+| Lower Bound | `lower_bound(key)` | `lower_bound(key)` |
+| Upper Bound | `upper_bound(key)` | `upper_bound(key)` |
+| Equal Range | `equal_range(key)` | `equal_range(key)` |
+| Access Value | ❌ | `m[key]`, `m.at(key)` |
+
+> **Note:** `set` stores only keys, so there is no value to access.
+
+---
+
+## 3. Add
+
+| Operation | set | map |
+|-----------|-----|-----|
+| Insert | `s.insert(10);` | `m.insert({1,"One"});` |
+| Emplace | `s.emplace(20);` | `m.emplace(2,"Two");` |
+| Insert with Hint | `s.insert(it,30);` | `m.insert(it,{3,"Three"});` |
+| Update Value | ❌ | `m[1]="New Value";` |
+
+---
+
+## 4. Remove
+
+| Operation | set | map |
+|-----------|-----|-----|
+| Erase by Key | `s.erase(10);` | `m.erase(1);` |
+| Erase by Iterator | `s.erase(it);` | `m.erase(it);` |
+| Erase Range | `s.erase(first,last);` | `m.erase(first,last);` |
+| Clear | `s.clear();` | `m.clear();` |
+
+---
+
+## 5. Capacity
+
+| Operation | set | map |
+|-----------|-----|-----|
+| Size | `size()` | `size()` |
+| Empty | `empty()` | `empty()` |
+| Maximum Size | `max_size()` | `max_size()` |
+
+---
+
+## 6. Utility Functions
+
+| Operation | set | map |
+|-----------|-----|-----|
+| `begin()` | ✅ | ✅ |
+| `end()` | ✅ | ✅ |
+| `rbegin()` | ✅ | ✅ |
+| `rend()` | ✅ | ✅ |
+| `cbegin()` | ✅ | ✅ |
+| `cend()` | ✅ | ✅ |
+| `swap()` | ✅ | ✅ |
+
+---
+
+# Quick Interview Revision
+
+| Requirement | Use |
+|-------------|-----|
+| Store unique sorted values | `set` |
+| Store sorted key-value pairs | `map` |
+| Fast search | Both (`O(log n)`) |
+| Update value by key | `map` |
+| Remove duplicates | `set` |
+| Dictionary / Lookup Table | `map` |
+| Frequency Counter | `map` |
+| Ordered Collection | `set` |
+
+---
+
+# Important Difference
+
+| Feature | set | map |
+|----------|-----|-----|
+| Stores | Keys | Key-Value Pairs |
+| Duplicate Keys | ❌ | ❌ |
+| Value Access | ❌ | `[]`, `at()` |
+| Key Type | `Key` | `Key` |
+| Value Type | Same as Key | Separate (`T`) |
+| Internal Node | `Key` | `pair<const Key, T>` |
+| Internal Structure | Red-Black Tree | Red-Black Tree |
