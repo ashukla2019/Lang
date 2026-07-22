@@ -2197,7 +2197,7 @@ Base* ptr = static_cast<Base*>(&d);
 
 `dynamic_cast` is a C++ cast operator used for
 
-- Safe downcasting
+- Safe upcasting
 - Runtime type checking
 - Polymorphic classes
 
