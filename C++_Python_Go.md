@@ -2191,17 +2191,134 @@ Base* ptr = static_cast<Base*>(&d);
 
 # 2. dynamic_cast
 
-Used for:
+# dynamic_cast
+
+## What is dynamic_cast?
+
+`dynamic_cast` is a C++ cast operator used for
 
 - Safe downcasting
 - Runtime type checking
 - Polymorphic classes
 
-Requires at least one virtual function.
+Unlike `static_cast`, `dynamic_cast` checks **at runtime** whether the cast is valid.
 
-Example:
+---
+
+# Why do we need dynamic_cast?
+
+Consider the inheritance hierarchy:
+
+```
+        Base
+          ▲
+          │
+      Derived
+```
+
+Suppose we have
 
 ```cpp
+Base* ptr = new Derived();
+```
+
+Memory
+
+```
+ptr
+ │
+ ▼
++--------------------+
+| Base Part          |
+|--------------------|
+| Derived Part       |
++--------------------+
+```
+
+Although the pointer type is `Base*`, the actual object is a `Derived`.
+
+Sometimes we want to access members of `Derived`.
+
+Example
+
+```cpp
+ptr->show();
+```
+
+❌ Compilation Error
+
+Because `Base` has no member named `show()`.
+
+We first need to convert
+
+```
+Base*
+
+↓
+
+Derived*
+```
+
+This is called **Downcasting**.
+
+---
+
+# Upcasting vs Downcasting
+
+## Upcasting (Always Safe)
+
+```
+Derived*
+
+↓
+
+Base*
+```
+
+```cpp
+Derived d;
+
+Base* ptr = &d;
+```
+
+Every `Derived` **is a** `Base`.
+
+Compiler allows it automatically.
+
+---
+
+## Downcasting (May Be Unsafe)
+
+```
+Base*
+
+↓
+
+Derived*
+```
+
+```cpp
+Base* ptr;
+
+Derived* d = ????
+```
+
+Question:
+
+Is the actual object really a `Derived`?
+
+Compiler doesn't know.
+
+This is why `dynamic_cast` exists.
+
+---
+
+# Example 1 : Successful Cast
+
+```cpp
+#include <iostream>
+using namespace std;
+
 class Base
 {
 public:
@@ -2213,27 +2330,112 @@ class Derived : public Base
 public:
     void show()
     {
-        cout << "Derived";
+        cout << "Derived Object";
     }
 };
 
-Base* ptr = new Derived();
-
-Derived* dptr = dynamic_cast<Derived*>(ptr);
-
-if(dptr)
+int main()
 {
-    dptr->show();
+    Base* ptr = new Derived();
+
+    Derived* dptr = dynamic_cast<Derived*>(ptr);
+
+    if(dptr)
+    {
+        dptr->show();
+    }
+
+    delete ptr;
 }
 ```
 
-Output:
+Output
 
-```text
+```
+Derived Object
+```
+
+---
+
+# Step-by-Step
+
+### Step 1
+
+```
+Base* ptr = new Derived();
+```
+
+Memory
+
+```
+ptr
+ │
+ ▼
++----------------------+
+| Base                 |
+|----------------------|
+| Derived              |
++----------------------+
+```
+
+Pointer type
+
+```
+Base*
+```
+
+Actual object
+
+```
 Derived
 ```
 
-Failed Cast
+---
+
+### Step 2
+
+```
+dynamic_cast<Derived*>(ptr)
+```
+
+Compiler checks **at runtime**
+
+```
+Is the object actually Derived?
+```
+
+Answer
+
+```
+YES
+```
+
+Return
+
+```
+Derived*
+```
+
+```
+dptr
+ │
+ ▼
++----------------------+
+| Base                 |
+|----------------------|
+| Derived              |
++----------------------+
+```
+
+Now we can access
+
+```cpp
+dptr->show();
+```
+
+---
+
+# Example 2 : Failed Cast
 
 ```cpp
 Base* ptr = new Base();
@@ -2246,11 +2448,245 @@ if(dptr == nullptr)
 }
 ```
 
-Output:
+Output
 
-```text
+```
 Invalid Cast
 ```
+
+---
+
+# Why?
+
+Memory
+
+```
+ptr
+ │
+ ▼
++---------+
+| Base    |
++---------+
+```
+
+There is **no Derived part**.
+
+When C++ checks
+
+```
+Is this object Derived?
+```
+
+Answer
+
+```
+NO
+```
+
+Return
+
+```
+nullptr
+```
+
+---
+
+# Why not use static_cast?
+
+```cpp
+Derived* dptr = static_cast<Derived*>(ptr);
+```
+
+Compiler allows it.
+
+But
+
+```
+Base* ptr = new Base();
+```
+
+Memory
+
+```
++---------+
+| Base    |
++---------+
+```
+
+After
+
+```
+static_cast
+```
+
+```
+dptr
+ │
+ ▼
++---------+
+| Base    |
++---------+
+```
+
+Compiler **assumes** it's a `Derived`.
+
+Now
+
+```cpp
+dptr->show();
+```
+
+This is **Undefined Behavior** because the object isn't actually a `Derived`.
+
+`static_cast` performs **no runtime check**.
+
+---
+
+# Why is a Virtual Function Required?
+
+```cpp
+class Base
+{
+public:
+    virtual ~Base() {}
+};
+```
+
+Without a virtual function
+
+```cpp
+class Base
+{
+};
+```
+
+Compilation Error
+
+```
+dynamic_cast requires polymorphic type
+```
+
+---
+
+# Why?
+
+`dynamic_cast` uses **Run-Time Type Information (RTTI)**.
+
+Only **polymorphic classes** (classes with at least one virtual function) contain RTTI.
+
+Memory
+
+```
+Derived Object
+
++----------------------+
+| vptr                 |
+| Base Data            |
+| Derived Data         |
++----------------------+
+```
+
+The **vptr** points to the **vtable**, which contains RTTI.
+
+Using RTTI,
+
+`dynamic_cast` can determine
+
+```
+Actual Object Type
+
+↓
+
+Derived
+```
+
+Without a virtual function,
+
+there is **no vptr**, **no vtable**, and **no RTTI**.
+
+So runtime type checking is impossible.
+
+---
+
+# Pointer vs Reference
+
+## Pointer
+
+```cpp
+Derived* d = dynamic_cast<Derived*>(ptr);
+```
+
+Failure
+
+```
+nullptr
+```
+
+---
+
+## Reference
+
+```cpp
+Derived& d = dynamic_cast<Derived&>(obj);
+```
+
+Failure
+
+Throws
+
+```cpp
+std::bad_cast
+```
+
+Example
+
+```cpp
+try
+{
+    Derived& d = dynamic_cast<Derived&>(*ptr);
+}
+catch(const bad_cast&)
+{
+    cout << "Invalid Cast";
+}
+```
+
+---
+
+# static_cast vs dynamic_cast
+
+| Feature | static_cast | dynamic_cast |
+|----------|-------------|--------------|
+| Runtime Check | ❌ No | ✅ Yes |
+| Downcasting | Unsafe | Safe |
+| Upcasting | ✅ Yes | ✅ Yes |
+| Needs Virtual Function | ❌ No | ✅ Yes |
+| Failed Pointer Cast | Undefined Behavior | `nullptr` |
+| Failed Reference Cast | Undefined Behavior | `std::bad_cast` |
+
+---
+
+# When to Use dynamic_cast
+
+✅ Safe downcasting
+
+✅ Runtime type checking
+
+✅ Polymorphic hierarchy
+
+Examples
+
+- Game engines
+- GUI frameworks
+- Plugin systems
+- Serialization
+- Compiler design
+
+---
+
+# Interview Answer (30 Seconds)
+
+`dynamic_cast` is used for **safe downcasting** in a polymorphic class hierarchy. It performs a **runtime check** using RTTI to verify whether the object is actually of the requested derived type. If the cast is valid, it returns the converted pointer; otherwise, it returns `nullptr` (or throws `std::bad_cast` for references). Because RTTI is stored in the virtual table, the base class must have at least one virtual function.
 
 ---
 
