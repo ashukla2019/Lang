@@ -41,7 +41,8 @@ Sequence Containers
 A **dynamic array** that automatically grows when full.
 
 ```cpp
-template<class T, class Alloc = allocator<T>>
+template<class T, class Alloc = allocator<T>> //T → Type of elements stored (e.g., int, string)
+Alloc → Memory allocator used to allocate and deallocate memory for those elements.
 class vector;
 ```
 
