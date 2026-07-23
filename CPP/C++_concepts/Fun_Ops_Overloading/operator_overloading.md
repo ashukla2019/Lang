@@ -86,12 +86,12 @@ Return **by value**.
 
 Examples:
 
-- +
-- -
-- *
-- /
-- %
-- unary -
+-  +
+-  -
+-  *
+-  /
+-  %
+-  unary -
 
 ```cpp
 class A
