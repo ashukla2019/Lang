@@ -1019,4 +1019,6 @@ public:
         cout << name << " Destroyed\n";
     }
 };
+
+We can not use only weak_ptr, as it works as observer so do not have ownership with any object so need atleast one shared_ptr to have ownership.
 ```
