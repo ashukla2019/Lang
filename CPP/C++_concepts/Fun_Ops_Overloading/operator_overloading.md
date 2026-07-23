@@ -86,10 +86,10 @@ Return **by value**.
 
 Examples:
 
--  +
--  -
--  *
--  /
+-  '+'
+-  '-'
+-  '*'
+-  '/'
 -  %
 -  unary -
 
