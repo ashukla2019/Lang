@@ -957,3 +957,64 @@ To observe a `shared_ptr` object **without increasing the reference count**, and
 - Use **`shared_ptr`** only when ownership must truly be shared.
 - Use **`weak_ptr`** to observe a shared object or to prevent circular references.
 - Never use **`auto_ptr`** in modern C++.
+
+A Very Simple shared_ptr Problem (Circular Reference)
+
+Let's create two people who are friends.
+
+Wrong Version (Using shared_ptr)
+#include <iostream>
+#include <memory>
+
+using namespace std;
+
+class Person
+{
+public:
+    string name;
+    shared_ptr<Person> friendPtr;
+
+    Person(string n) : name(n)
+    {
+        cout << name << " Created\n";
+    }
+
+    ~Person()
+    {
+        cout << name << " Destroyed\n";
+    }
+};
+
+int main()
+{
+    shared_ptr<Person> p1 = make_shared<Person>("Alice");
+    shared_ptr<Person> p2 = make_shared<Person>("Bob");
+
+    p1->friendPtr = p2;
+    p2->friendPtr = p1;
+
+    cout << "End of main\n";
+}
+------------------------------------
+solution: 
+Correct Version (Using weak_ptr)
+
+Only change one line:
+
+class Person
+{
+public:
+    string name;
+
+    weak_ptr<Person> friendPtr;   // Changed
+
+    Person(string n) : name(n)
+    {
+        cout << name << " Created\n";
+    }
+
+    ~Person()
+    {
+        cout << name << " Destroyed\n";
+    }
+};
