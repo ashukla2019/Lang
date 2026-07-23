@@ -893,4 +893,7 @@ If not
 Move
         ↓
 Else Copy
+
+
+why nrvo is not guaranteed because its real local object which has storage,lifetime.
 ```
