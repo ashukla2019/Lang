@@ -963,6 +963,7 @@ A Very Simple shared_ptr Problem (Circular Reference)
 Let's create two people who are friends.
 
 Wrong Version (Using shared_ptr)
+```
 #include <iostream>
 #include <memory>
 
@@ -1018,3 +1019,4 @@ public:
         cout << name << " Destroyed\n";
     }
 };
+```
