@@ -63,7 +63,7 @@ So:
 ```cpp
 p1->...
 ```
-
+An auto_ptr does not become a dangling pointer after ownership is transferred. Instead, it becomes a null pointer.
 will crash.
 
 Because of this confusing behavior, `auto_ptr` was removed in C++17.
