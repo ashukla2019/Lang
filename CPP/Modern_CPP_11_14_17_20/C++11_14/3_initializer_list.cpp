@@ -132,3 +132,18 @@ Use of initializer list: It is used when:
 		}
 	5) To initialize base class data members if function parameter and data member are using same name.
 		//Initialize member variables in initializer list in same order used in class.
+
+-------------------------
+Brace Initialization {}
+        │
+        ▼
+initializer_list constructor (if available)
+        │
+        ▼
+Matching normal constructor
+        │
+        ▼
+Aggregate initialization
+        │
+        ▼
+Compilation error (if none apply)
