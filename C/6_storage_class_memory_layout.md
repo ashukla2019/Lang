@@ -1,51 +1,68 @@
-# C Interview Handbook
-# Part 3F - Storage Classes & Memory Layout
+# C Storage Classes
+# auto, static, extern, register - Complete Interview Notes
 
 ---
 
 # Table of Contents
 
-1. What are Storage Classes?
-2. Scope, Lifetime & Linkage
-3. auto
-4. register
+1. Why Storage Classes?
+2. What is a Storage Class?
+3. Types of Storage Classes
+4. auto
 5. static
 6. extern
-7. Memory Layout of a C Program
-8. Text, Data, BSS, Heap & Stack
-9. Memory Allocation Flow
-10. Common Interview Questions
-11. Quick Revision
+7. register
+8. Lifetime vs Scope vs Linkage
+9. Comparison Table
+10. Interview Questions
 
 ---
 
-# 1. What are Storage Classes?
+# 1. Why Storage Classes?
 
-A storage class defines
+When we declare a variable
 
+```c
+int x = 10;
+```
+
+The compiler needs answers to questions like:
+
+- Where should it be stored?
+- Who can access it?
+- How long should it live?
+- Should other files be able to access it?
+
+These are controlled by **Storage Classes**.
+
+---
+
+# 2. What is a Storage Class?
+
+A storage class tells the compiler
+
+- Storage location
 - Scope
 - Lifetime
 - Linkage
-- Storage location
 
-There are four storage classes in C.
+There are four storage classes in C
 
 ```
 auto
-register
+
 static
+
 extern
+
+register
 ```
 
 ---
 
-# 2. Scope, Lifetime & Linkage
+# Understanding Scope
 
-Before learning storage classes, understand these terms.
-
-## Scope
-
-Where a variable is visible.
+Scope = Where a variable can be accessed.
 
 Example
 
@@ -56,13 +73,15 @@ void fun()
 }
 ```
 
-`x` is visible only inside `fun()`.
+```
+x exists only inside fun()
+```
 
 ---
 
-## Lifetime
+# Understanding Lifetime
 
-How long a variable exists.
+Lifetime = How long variable remains in memory.
 
 Example
 
@@ -73,35 +92,59 @@ void fun()
 }
 ```
 
-`x` is created when `fun()` starts.
-
-Destroyed when `fun()` returns.
-
----
-
-## Linkage
-
-Can another source file access this variable?
-
 ```
-Internal Linkage
+Memory created
 
 ↓
 
-Only current source file
-
-External Linkage
+Function executes
 
 ↓
 
-Accessible from other files
+Memory destroyed
 ```
 
 ---
 
-# 3. auto Storage Class
+# Understanding Linkage
 
-Default storage class for local variables.
+Linkage tells whether another file can access the variable.
+
+```
+File1.c
+
+↓
+
+Can File2.c access it?
+
+Yes → External Linkage
+
+No → Internal Linkage
+```
+
+---
+
+# 3. auto
+
+Default storage class.
+
+Example
+
+```c
+auto int x = 10;
+```
+
+Exactly same as
+
+```c
+int x = 10;
+```
+
+Compiler automatically assumes
+
+```
+auto
+```
 
 Example
 
@@ -110,86 +153,66 @@ void fun()
 {
     auto int x = 10;
 
-    printf("%d\n", x);
+    printf("%d", x);
 }
 ```
 
-Usually written simply as
+Memory
 
-```c
-int x = 10;
 ```
+Stack
+
++------+
+|  x   |
++------+
+```
+
+Function returns
+
+↓
+
+Memory removed.
 
 Properties
 
 | Property | Value |
-|----------|-------|
-| Scope | Local |
-| Lifetime | Function call |
-| Default Value | Garbage (indeterminate) |
+|-----------|-------|
 | Storage | Stack |
+| Scope | Local |
+| Lifetime | Function call |
+| Default Value | Garbage |
 
 ---
-
-# 4. register Storage Class
-
-Requests the compiler to keep a variable in a CPU register.
 
 Example
 
 ```c
-register int i;
-
-for(i = 0; i < 10; i++)
+void fun()
 {
-    printf("%d\n", i);
+    int x;
+
+    printf("%d", x);
 }
 ```
 
-Important
+Output
 
-The compiler may ignore this request.
-
-Modern compilers perform their own optimizations.
-
----
-
-Cannot take its address
-
-```c
-register int x = 10;
-
-printf("%p", (void *)&x);
+```
+Garbage Value
 ```
 
-This is not allowed by the C language.
+because auto variables are **not initialized automatically**.
 
 ---
 
-Properties
+# 4. static
 
-| Property | Value |
-|----------|-------|
-| Scope | Local |
-| Lifetime | Function call |
-| Storage | Register (if possible) |
-
----
-
-# 5. static Storage Class
-
-`static` changes lifetime and/or linkage depending on where it is used.
-
----
-
-## Static Local Variable
+Static variables keep their value even after function returns.
 
 Example
 
 ```c
-#include <stdio.h>
-
-void counter()
+void fun()
 {
     static int count = 0;
 
@@ -197,442 +220,544 @@ void counter()
 
     printf("%d\n", count);
 }
+```
 
-int main()
-{
-    counter();
-    counter();
-    counter();
+Call
 
-    return 0;
-}
+```c
+fun();
+fun();
+fun();
 ```
 
 Output
 
-```text
+```
 1
+
 2
+
 3
 ```
 
 Why?
 
-The variable is initialized only once.
-
-It exists until the program exits.
-
----
-
 Memory
 
-```text
+```
 Program Starts
 
 ↓
 
-count = 0
+count created
 
 ↓
 
-Function Call
+Function returns
 
 ↓
 
-count++
+count NOT destroyed
 
 ↓
 
-Function Returns
+Function called again
 
 ↓
 
-count remains in memory
-
-↓
-
-Next Call
-
-↓
-
-Reuse previous value
+Same count reused
 ```
 
 ---
 
-## Static Global Variable
+Normal Variable
 
 ```c
-static int value = 100;
+void fun()
+{
+    int count = 0;
+
+    count++;
+
+    printf("%d", count);
+}
 ```
 
-Meaning
+Output
 
 ```
-Internal Linkage
+1
 
-↓
+1
 
-Visible only inside
-this source file
+1
 ```
 
-Useful for hiding implementation details.
+because memory is recreated every call.
 
 ---
+
+Static Local Variable
+
+Storage
+
+```
+Data Segment
+```
+
+Not stack.
 
 Properties
 
 | Property | Value |
-|----------|-------|
-| Scope | Local or File |
+|-----------|-------|
+| Storage | Data Segment |
+| Scope | Local |
 | Lifetime | Entire Program |
-| Linkage | Internal (file-scope static) |
+| Default Value | 0 |
 
 ---
 
-# 6. extern Storage Class
+# Static Global Variable
 
-Used to access a global variable defined in another source file.
-
----
+Example
 
 File1.c
 
 ```c
-int count = 10;
+static int x = 10;
 ```
-
----
 
 File2.c
 
 ```c
-extern int count;
-
-printf("%d\n", count);
+extern int x;
 ```
 
-`extern` tells the compiler
+Compilation
 
 ```
-The definition exists
-in another file.
+Error
 ```
+
+Why?
+
+Because
+
+```
+static
+
+↓
+
+Internal Linkage
+
+↓
+
+Visible only inside File1.c
+```
+
+---
+
+# 5. extern
+
+Suppose
+
+File1.c
+
+```c
+int x = 100;
+```
+
+File2.c
+
+```c
+extern int x;
+
+printf("%d", x);
+```
+
+Output
+
+```
+100
+```
+
+extern means
+
+```
+Variable exists elsewhere.
+
+Don't allocate memory.
+
+Just use it.
+```
+
+Memory
+
+```
+File1
+
+x
+
+↓
+
+File2
+
+extern x
+
+↓
+
+Uses same variable
+```
+
+---
+
+Without extern
+
+File2.c
+
+```c
+int x;
+```
+
+This creates another variable.
+
+Different memory.
 
 ---
 
 Properties
 
 | Property | Value |
-|----------|-------|
+|-----------|-------|
+| Storage | Data Segment |
 | Scope | Global |
 | Lifetime | Entire Program |
 | Linkage | External |
 
 ---
 
-# 7. Memory Layout of a C Program
+# extern Function
 
-Typical memory layout
+Every function has external linkage by default.
 
-```text
-+----------------------+
-| Command-line Args    |
-+----------------------+
-| Environment          |
-+----------------------+
-| Stack                |
-| grows downward       |
-+----------------------+
-|                      |
-|      Free Space      |
-|                      |
-+----------------------+
-| Heap                 |
-| grows upward         |
-+----------------------+
-| BSS                  |
-+----------------------+
-| Data                 |
-+----------------------+
-| Text (Code)          |
-+----------------------+
+```c
+extern void fun();
 ```
+
+Usually unnecessary.
 
 ---
 
-# 8. Memory Segments
+# 6. register
 
-## Text Segment
-
-Contains
+register tells compiler
 
 ```
-Machine Instructions
-
-Compiled Functions
-
-Read-only Code
+Try storing variable inside CPU register.
 ```
 
 Example
 
 ```c
-void fun()
+register int i;
+
+for(i=0;i<100;i++)
 {
 }
 ```
 
-Stored in Text Segment.
+Why?
 
----
-
-## Data Segment
-
-Stores
-
-```
-Initialized Global Variables
-
-Initialized Static Variables
-```
-
-Example
-
-```c
-int g = 100;
-
-static int x = 5;
-```
-
----
-
-## BSS Segment
-
-Stores
-
-```
-Uninitialized Globals
-
-Uninitialized Static Variables
-```
-
-Example
-
-```c
-int g;
-
-static int s;
-```
-
-Both are automatically initialized to zero before `main()` starts.
-
----
-
-## Heap
-
-Dynamic memory.
-
-Allocated using
-
-```text
-malloc()
-
-calloc()
-
-realloc()
-```
-
-Released using
-
-```text
-free()
-```
-
----
-
-## Stack
-
-Stores
-
-```
-Function Calls
-
-Parameters
-
-Return Address
-
-Local Variables
-```
-
-Example
-
-```c
-void fun()
-{
-    int x = 10;
-}
-```
-
-`x` lives on the stack.
-
----
-
-# 9. Memory Allocation Flow
-
-Example
-
-```c
-int global = 10;
-
-static int counter = 0;
-
-int main()
-{
-    int local = 5;
-
-    int *p = malloc(sizeof(int));
-
-    *p = 20;
-
-    free(p);
-
-    return 0;
-}
-```
+Registers are much faster than RAM.
 
 Memory
 
-```text
-Text
+```
+CPU Register
 
 ↓
 
-main()
+Fast
+
+----------------
+
+RAM
 
 ↓
 
-Data
+Slower
+```
+
+Important
+
+Compiler may ignore it.
+
+Modern compilers perform their own optimization.
+
+---
+
+Cannot Take Address
+
+```c
+register int x = 10;
+
+printf("%p", &x);
+```
+
+May produce compilation error.
+
+Reason
+
+Registers don't have memory addresses like RAM variables.
+
+---
+
+Properties
+
+| Property | Value |
+|-----------|-------|
+| Storage | CPU Register (if possible) |
+| Scope | Local |
+| Lifetime | Function call |
+| Default Value | Garbage |
+
+---
+
+# 7. Lifetime Comparison
+
+auto
+
+```
+Function Starts
 
 ↓
 
-global
-counter
+Created
 
 ↓
 
-Heap
+Destroyed
 
 ↓
 
-*p = 20
-
-↓
-
-Stack
-
-↓
-
-local
-p
+Function Ends
 ```
 
 ---
 
-# Storage Class Summary
-
-| Storage Class | Scope | Lifetime | Linkage | Storage |
-|--------------|-------|----------|----------|----------|
-| auto | Local | Function Call | None | Stack |
-| register | Local | Function Call | None | Register (if possible) |
-| static (local) | Local | Entire Program | None | Data/BSS |
-| static (global) | File | Entire Program | Internal | Data/BSS |
-| extern | Global | Entire Program | External | Data/BSS |
-
----
-
-# Common Interview Questions
-
-## Q1. Difference between scope and lifetime?
-
-Scope
+static
 
 ```
-Where variable is accessible.
-```
+Program Starts
 
-Lifetime
+↓
 
-```
-How long variable exists.
+Created
+
+↓
+
+Never Destroyed
+
+↓
+
+Program Ends
 ```
 
 ---
 
-## Q2. Difference between static local and normal local?
-
-Normal local
+extern
 
 ```
-Created every call.
+Program Starts
 
-Destroyed every return.
-```
+↓
 
-Static local
+Exists
 
-```
-Created once.
+↓
 
-Destroyed when program exits.
+Program Ends
 ```
 
 ---
 
-## Q3. Difference between static and extern?
-
-`static`
+register
 
 ```
-Internal linkage.
+Function Starts
 
-Only current source file.
-```
+↓
 
-`extern`
+Created
 
-```
-External linkage.
+↓
 
-Defined elsewhere.
+Destroyed
+
+↓
+
+Function Ends
 ```
 
 ---
 
-## Q4. Where are global variables stored?
+# 8. Scope Comparison
+
+```
+auto
+
+↓
+
+Local
+```
+
+```
+register
+
+↓
+
+Local
+```
+
+```
+static local
+
+↓
+
+Local
+```
+
+```
+static global
+
+↓
+
+Current File
+```
+
+```
+extern
+
+↓
+
+Entire Program
+```
+
+---
+
+# 9. Complete Comparison
+
+| Feature | auto | static | extern | register |
+|----------|------|---------|----------|-----------|
+| Storage | Stack | Data Segment | Data Segment | Register/Stack |
+| Scope | Local | Local or File | Global | Local |
+| Lifetime | Function Call | Entire Program | Entire Program | Function Call |
+| Default Value | Garbage | 0 | 0 | Garbage |
+| Linkage | None | Internal (global) | External | None |
+
+---
+
+# Memory Layout
+
+```
++---------------------------+
+| Code Segment              |
++---------------------------+
+
+| Initialized Data          |
+| static = 10               |
+| global = 20               |
++---------------------------+
+
+| BSS                       |
+| static int x;             |
+| global int y;             |
++---------------------------+
+
+| Heap                      |
+| malloc()                  |
++---------------------------+
+
+| Stack                     |
+| auto variables            |
+| register (if spilled)     |
++---------------------------+
+```
+
+---
+
+# Interview Questions
+
+## Why is auto rarely written?
+
+Because every local variable is `auto` by default.
+
+---
+
+## Why use static inside a function?
+
+To preserve a variable's value across function calls.
+
+---
+
+## Difference between global and static global?
+
+Global
+
+```
+Visible to all files.
+```
+
+Static Global
+
+```
+Visible only inside current source file.
+```
+
+---
+
+## Why use extern?
+
+To access a global variable or function defined in another source file.
+
+---
+
+## Does extern allocate memory?
+
+No.
+
+It only declares that the variable exists elsewhere.
+
+---
+
+## Why is register obsolete?
+
+Modern compilers automatically decide whether a variable should be placed in a CPU register, making the `register` keyword mostly ignored.
+
+---
+
+## Can we take address of register variable?
+
+No (by the C language rules).
+
+```c
+register int x;
+
+printf("%p",&x);    // Invalid
+```
+
+---
+
+## Where are static variables stored?
 
 ```
 Data Segment
-
-or
-
-BSS Segment
-```
-
-depending on whether they are initialized.
-
----
-
-## Q5. Where is malloc memory stored?
-
-```
-Heap
 ```
 
 ---
 
-## Q6. Where are local variables stored?
+## Where are auto variables stored?
 
 ```
 Stack
@@ -640,90 +765,23 @@ Stack
 
 ---
 
-## Q7. What is BSS?
+## Which variables are initialized to zero automatically?
 
-Stores
+- Global variables
+- Static variables
 
-```
-Uninitialized Globals
+Not
 
-Uninitialized Static Variables
-```
-
-Automatically initialized to zero before program execution begins.
+- auto
+- register
 
 ---
 
-# Quick Revision
+# Key Takeaways
 
-✓ `auto` → Default local variable.
-
-✓ `register` → Hint to store in CPU register.
-
-✓ `static` local → Retains value across function calls.
-
-✓ `static` global → Internal linkage.
-
-✓ `extern` → Variable defined in another source file.
-
-✓ Text → Program instructions.
-
-✓ Data → Initialized global/static variables.
-
-✓ BSS → Uninitialized global/static variables.
-
-✓ Heap → Dynamic memory.
-
-✓ Stack → Function calls and local variables.
-
----
-
-# Memory Trick
-
-```text
-Program
-
-↓
-
-Text
-
-↓
-
-Data
-
-↓
-
-BSS
-
-↓
-
-Heap ↑
-
-
-
-Stack ↓
-```
-
-Remember
-
-- Heap grows upward.
-- Stack grows downward.
-- They grow toward each other.
-
----
-
-# Next Part
-
-**Part 3G – Advanced C Concepts**
-
-Topics
-
-- volatile
-- restrict (C99)
-- typedef
-- enum
-- bit-fields
-- Flexible Array Members
-- _Bool
-- Designated Initializers
-- Interview Questions
+- `auto` is the default storage class for local variables.
+- `static` extends a variable's lifetime to the entire program.
+- `static` at file scope gives **internal linkage** (visible only within that file).
+- `extern` declares a variable or function defined in another file and does not allocate memory.
+- `register` is only a request to the compiler to use a CPU register and is generally ignored by modern compilers.
+- Storage classes define **where a variable is stored, its scope, its lifetime, and its linkage**—all common interview topics.
