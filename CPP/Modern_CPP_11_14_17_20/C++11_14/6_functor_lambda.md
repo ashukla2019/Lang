@@ -462,56 +462,219 @@ Useful when storing different callable objects using the same interface.
 
 # 12. Capturing `this`
 
+When a lambda is created inside a **non-static member function**, it may need to access the object's data members (`value`, `name`, etc.).
+
+Those data members belong to an object, so the lambda needs a way to access that object.
+
+Every non-static member function has a hidden pointer named **`this`**, which points to the current object.
+
+For example,
+
 ```cpp
 class MyClass
 {
-    int value=10;
+    int value = 10;
+
+public:
+    void show()
+    {
+        std::cout << value;
+    }
+};
+```
+
+is conceptually similar to
+
+```cpp
+void MyClass::show(MyClass* this)
+{
+    std::cout << this->value;
+}
+```
+
+So writing
+
+```cpp
+value
+```
+
+inside a member function is actually equivalent to
+
+```cpp
+this->value
+```
+
+---
+
+## What does `[this]` capture?
+
+```cpp
+[this]
+```
+
+captures **the `this` pointer**, **not the object itself**.
+
+The lambda stores only the pointer to the original object.
+
+Diagram
+
+```
+Original Object
+
++----------------------+
+| value = 10           |
++----------------------+
+          ^
+          |
+      this pointer
+          |
+     Lambda stores
+     only this pointer
+```
+
+Because both the member function and the lambda refer to the **same object**, any changes made to the object before the lambda executes are visible inside the lambda.
+
+---
+
+## Example
+
+```cpp
+#include <iostream>
+
+class MyClass
+{
+    int value = 10;
 
 public:
 
     void show()
     {
-        auto lambda=[this]()
+        auto lambda = [this]()
         {
-            std::cout<<value;
+            std::cout << value << std::endl;
         };
 
-        value=20;
+        value = 20;
 
         lambda();
     }
 };
+
+int main()
+{
+    MyClass obj;
+    obj.show();
+}
 ```
 
-Output
+### Output
 
 ```
 20
 ```
 
-The lambda accesses the original object through the `this` pointer.
+---
+
+## Step-by-Step Execution
+
+Initially
+
+```
+value = 10
+```
+
+The lambda is created.
+
+```cpp
+[this]
+```
+
+stores only the pointer to the object.
+
+Nothing is copied.
+
+Later,
+
+```cpp
+value = 20;
+```
+
+changes the original object.
+
+When the lambda executes,
+
+```cpp
+std::cout << value;
+```
+
+actually becomes
+
+```cpp
+std::cout << this->value;
+```
+
+Since the object now contains
+
+```
+20
+```
+
+the output is
+
+```
+20
+```
 
 ---
 
-# 13. Capturing `*this` (C++17)
+## Compiler's Conceptual Transformation
+
+The compiler generates something similar to
 
 ```cpp
-class MyClass
+class Lambda
 {
-    int value=10;
+    MyClass* ptr;
 
 public:
 
-    void show()
+    Lambda(MyClass* p)
+        : ptr(p)
     {
-        auto lambda=[*this]()
+    }
+
+    void operator()()
+    {
+        std::cout << ptr->value;
+    }
+};
+```
+
+Notice that only a pointer is stored.
+
+---
+
+## Can `[this]` Modify the Object?
+
+Yes.
+
+```cpp
+class Test
+{
+    int x = 5;
+
+public:
+
+    void fun()
+    {
+        auto lam = [this]()
         {
-            std::cout<<value;
+            x = 100;
         };
 
-        value=20;
+        lam();
 
-        lambda();
+        std::cout << x;
     }
 };
 ```
@@ -519,10 +682,355 @@ public:
 Output
 
 ```
+100
+```
+
+The lambda modifies the original object because it accesses the object through its pointer.
+
+---
+
+## Lifetime Problem
+
+One drawback of `[this]` is that the lambda stores only a pointer.
+
+If the object is destroyed before the lambda executes, the pointer becomes invalid (dangling pointer).
+
+```cpp
+std::function<void()> func;
+
+{
+    MyClass obj;
+
+    func = [this]()
+    {
+        std::cout << value;
+    };
+
+}   // obj destroyed here
+
+func();     // Undefined Behavior
+```
+
+This is a common source of bugs in asynchronous or multithreaded programs.
+
+---
+
+# 13. Capturing `*this` (C++17)
+
+C++17 introduced
+
+```cpp
+[*this]
+```
+
+Unlike `[this]`, this capture copies the **entire object** into the lambda.
+
+Instead of storing
+
+```
+this pointer
+```
+
+the lambda stores
+
+```
+a copy of the object
+```
+
+Diagram
+
+Original Object
+
+```
++------------------+
+| value = 10       |
++------------------+
+```
+
+Lambda's Copy
+
+```
++------------------+
+| value = 10       |
++------------------+
+```
+
+These are completely independent objects.
+
+---
+
+## Example
+
+```cpp
+#include <iostream>
+
+class MyClass
+{
+    int value = 10;
+
+public:
+
+    void show()
+    {
+        auto lambda = [*this]()
+        {
+            std::cout << value << std::endl;
+        };
+
+        value = 20;
+
+        lambda();
+    }
+};
+
+int main()
+{
+    MyClass obj;
+
+    obj.show();
+}
+```
+
+### Output
+
+```
 10
 ```
 
-`[*this]` creates a copy of the entire object.
+---
+
+## Step-by-Step Execution
+
+Initially
+
+```
+value = 10
+```
+
+The lambda is created.
+
+```cpp
+[*this]
+```
+
+copies the complete object.
+
+The lambda now owns its own copy.
+
+Original object
+
+```
+value = 10
+```
+
+Lambda copy
+
+```
+value = 10
+```
+
+Then
+
+```cpp
+value = 20;
+```
+
+changes only the original object.
+
+The lambda's copy remains unchanged.
+
+Therefore,
+
+```
+Output = 10
+```
+
+---
+
+## Compiler's Conceptual Transformation
+
+The compiler creates something conceptually similar to
+
+```cpp
+class Lambda
+{
+    MyClass copy;
+
+public:
+
+    Lambda(const MyClass& obj)
+        : copy(obj)
+    {
+    }
+
+    void operator()()
+    {
+        std::cout << copy.value;
+    }
+};
+```
+
+Notice that no pointer is stored.
+
+The lambda owns its own copy of the object.
+
+---
+
+## Modifying the Copied Object
+
+By default, captured values are read-only.
+
+To modify the copied object, use `mutable`.
+
+```cpp
+class Test
+{
+    int x = 5;
+
+public:
+
+    void fun()
+    {
+        auto lam = [*this]() mutable
+        {
+            x = 100;
+
+            std::cout << x << std::endl;
+        };
+
+        lam();
+
+        std::cout << x;
+    }
+};
+```
+
+Output
+
+```
+100
+5
+```
+
+The lambda changes only its own copy.
+
+The original object remains unchanged.
+
+---
+
+## Comparing `[this]` and `[*this]`
+
+```cpp
+class Test
+{
+    int x = 10;
+
+public:
+
+    void demo()
+    {
+        auto L1 = [this]()
+        {
+            std::cout << x << std::endl;
+        };
+
+        auto L2 = [*this]()
+        {
+            std::cout << x << std::endl;
+        };
+
+        x = 50;
+
+        L1();
+        L2();
+    }
+};
+```
+
+Output
+
+```
+50
+10
+```
+
+Explanation
+
+`L1`
+
+- Stores the `this` pointer.
+- Reads the current value from the original object.
+
+`L2`
+
+- Stores a copy of the object.
+- Reads the value from the copied object.
+
+---
+
+## When to Use `[this]`
+
+Use `[this]` when
+
+- You want to modify the original object.
+- The lambda executes immediately.
+- The object's lifetime is guaranteed.
+
+Example
+
+```cpp
+std::sort(v.begin(), v.end(),
+    [this](const Item& a, const Item& b)
+    {
+        return compare(a, b);
+    });
+```
+
+---
+
+## When to Use `[*this]`
+
+Use `[*this]` when
+
+- The lambda may execute later.
+- The lambda runs asynchronously or in another thread.
+- You want a snapshot of the object's current state.
+- You want to avoid dangling `this` pointers.
+
+Example
+
+```cpp
+auto task = [*this]()
+{
+    // Safe copy of the object
+};
+```
+
+---
+
+## Summary
+
+| Feature | `[this]` | `[*this]` |
+|---------|----------|-----------|
+| Captures | Pointer to current object | Copy of current object |
+| Stores | `MyClass*` | `MyClass` |
+| Reflects later changes | Yes | No |
+| Modifies original object | Yes | No |
+| Lifetime depends on original object | Yes | No |
+| Safer for asynchronous code | No | Yes |
+| Introduced | C++11 | C++17 |
+
+---
+
+## Interview Tip
+
+**Q. Why was `[*this]` introduced in C++17?**
+
+**Answer:**
+
+Before C++17, lambdas could only capture `this`, which stores a pointer to the original object. If the object was destroyed before the lambda executed (common in asynchronous programming), the lambda contained a dangling pointer, leading to undefined behavior.
+
+`[*this]` solves this problem by copying the entire object into the lambda, making it independent of the lifetime of the original object.
 
 ---
 
