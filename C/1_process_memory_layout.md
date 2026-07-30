@@ -1,5 +1,5 @@
 # C Interview Handbook
-# Chapter 1 – Process Memory Layout (System Software Interview Edition)
+# Chapter 1 – Process Memory Layout
 
 ---
 
@@ -778,21 +778,3 @@ Stack (grows downward)
 ✅ Be comfortable drawing stack frames for nested function calls.
 
 ---
-
-# Coming Next
-
-**Chapter 2 – Pointers (≈30 pages)**
-
-Topics include:
-
-- Pointer internals
-- Pointer arithmetic
-- Array vs Pointer
-- Function pointers
-- Void pointers
-- Pointer to array
-- Array of pointers
-- const pointers
-- Pointer interview questions
-- Memory diagrams
-- Qualcomm/NVIDIA interview problems
