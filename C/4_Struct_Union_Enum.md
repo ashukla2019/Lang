@@ -1,4 +1,3 @@
-# C Interview Handbook
 # Chapter 4 – Structures, Unions & Enums
 # Part 1 – Structures (Complete Fundamentals)
 
@@ -20,7 +19,6 @@ After completing this chapter, you should understand:
 - Structure comparison
 - Passing structures to functions
 - Returning structures
-- Interview questions
 
 ---
 
@@ -5940,69 +5938,4 @@ Copy Data
 
 ---
 
-# Qualcomm / NVIDIA / Broadcom Interview Focus
 
-The following topics are asked very frequently:
-
-★★★★★ Structure Padding & Alignment
-
-★★★★★ Structure Pointer (`->`)
-
-★★★★★ Self-Referential Structures
-
-★★★★★ `typedef struct`
-
-★★★★★ `volatile` Structures
-
-★★★★★ Memory-Mapped Registers
-
-★★★★☆ Flexible Array Members
-
-★★★★☆ `offsetof()`
-
-★★★★☆ `container_of()` (especially Linux/kernel roles)
-
-★★★☆☆ Bit-fields
-
-★★★☆☆ Anonymous Structs/Unions
-
----
-
-# Chapter Summary
-
-By now you should be comfortable with:
-
-- Creating and using structures
-- Padding and alignment
-- Structure pointers
-- Self-referential structures
-- Unions
-- Enums
-- Flexible array members
-- Bit-fields
-- `volatile` structures
-- `offsetof()` and `container_of()`
-
-These concepts form the foundation for **linked lists, trees, device drivers, operating systems, Linux kernel development, embedded firmware, and protocol implementations**.
-
----
-
-# Next Chapter
-
-**Chapter 5 – Dynamic Memory Management**
-
-We'll cover:
-
-- `malloc()`
-- `calloc()`
-- `realloc()`
-- `free()`
-- Heap vs Stack
-- Memory leaks
-- Dangling pointers
-- Double free
-- Use-after-free
-- Memory fragmentation
-- 30+ interview questions
-- Common coding mistakes
-- Embedded memory management strategies
