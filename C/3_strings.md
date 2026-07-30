@@ -1,4 +1,3 @@
-# C Interview Handbook
 # Chapter 3 – Strings
 # Part 1 – String Fundamentals
 
@@ -8529,5 +8528,3 @@ You now have interview-level coverage of:
 - ✅ Undefined behavior
 - ✅ 50 interview questions and output prediction exercises
 
-**Next Chapter:** **Chapter 4 – Pointers (The Most Important Topic in C Interviews)**, where we'll cover pointer fundamentals, pointer arithmetic, double pointers, function pointers, arrays vs pointers, memory diagrams, and advanced interview puzzles.
---------------------------------------------------------------------------------
