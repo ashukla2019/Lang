@@ -1,4 +1,3 @@
-# C Interview Handbook
 # Chapter 2 – Pointers
 # Part 1 – Pointer Fundamentals
 
@@ -10099,16 +10098,3 @@ Interview Tricks
 ✅ If you can confidently explain every example in this chapter **without running the code**, your pointer fundamentals are strong enough for Qualcomm, NVIDIA, Broadcom, Intel, AMD, and similar systems interviews.
 
 ---
-
-# Pointer Chapter Complete ✅
-
-At this point, you have covered almost everything expected about pointers in C interviews.
-
-**Next Chapter:** **Strings** (one of the most important C interview topics), covering:
-
-- Character arrays vs string literals
-- Memory layout of strings
-- All standard string functions (`strlen`, `strcpy`, `strncpy`, `strcmp`, `strcat`, `strtok`, etc.)
-- Common string interview problems
-- Frequently asked Qualcomm/NVIDIA/Broadcom string questions
-- String pitfalls and undefined behavior
