@@ -1,25 +1,6 @@
 # Chapter 4 – Structures, Unions & Enums
 # Part 1 – Structures (Complete Fundamentals)
 
-> **Target Companies:** Qualcomm • NVIDIA • Broadcom • AMD • Intel • Samsung • Cisco • Linux Kernel Teams
-
----
-
-# Objectives
-
-After completing this chapter, you should understand:
-
-- Why structures exist
-- How to define structures
-- Declaring and initializing structures
-- Accessing members
-- Arrays of structures
-- Nested structures
-- Structure assignment
-- Structure comparison
-- Passing structures to functions
-- Returning structures
-
 ---
 
 # Why Do We Need Structures?
@@ -606,10 +587,6 @@ createPoint();
 
 ---
 
-# Common Interview Questions
-
----
-
 ## Q1. Why use structures?
 
 To group related variables into a single object.
@@ -691,76 +668,6 @@ passing a pointer is preferred because it avoids copying.
 
 ---
 
-# Common Interview Traps
-
-### Trap 1
-
-```c
-struct Student
-{
-};
-```
-
-Invalid.
-
-A structure must contain at least one member.
-
----
-
-### Trap 2
-
-```c
-struct Student s;
-
-s.name = "Rahul";
-```
-
-Wrong.
-
-Arrays cannot be assigned.
-
-Correct
-
-```c
-strcpy(s.name, "Rahul");
-```
-
----
-
-### Trap 3
-
-```c
-struct Student s1;
-
-struct Student s2;
-
-if(s1==s2)
-```
-
-Compilation error.
-
----
-
-### Trap 4
-
-```c
-struct Student
-{
-    int a;
-    char b;
-};
-```
-
-Many answer
-
-```
-5 Bytes
-```
-
-Usually incorrect due to padding.
-
----
-
 # Real Embedded Examples
 
 ## Device Configuration
@@ -801,80 +708,6 @@ struct Header
 
 ---
 
-# Quick Revision
-
-```
-Structure
-
-↓
-
-User Defined Type
-
-↓
-
-Groups Different Data Types
-
--------------------------
-
-Access
-
-↓
-
-.
-
-Operator
-
--------------------------
-
-Nested Structure
-
-↓
-
-Structure Inside Structure
-
--------------------------
-
-Array Of Structures
-
-↓
-
-Many Objects
-
--------------------------
-
-Structure Assignment
-
-↓
-
-Allowed
-
--------------------------
-
-Structure Comparison
-
-↓
-
-Not Allowed
-
--------------------------
-
-Pass To Function
-
-↓
-
-Pointer Preferred
-
--------------------------
-
-Return Structure
-
-↓
-
-Allowed
-```
-
----
-
 # Key Interview Takeaways
 
 ✅ Structures group related variables into a single user-defined type.
@@ -901,13 +734,10 @@ In **Part 2**, we'll cover **Structure Padding & Memory Alignment**, including:
 - Reordering members to reduce memory usage
 - `#pragma pack`
 - `__attribute__((packed))`
-- Alignment interview questions from Qualcomm, NVIDIA, Broadcom, and Intel.
 - ----------------------------------------------------------------------------------------------
 # C Interview Handbook
 # Chapter 4 – Structures, Unions & Enums
 # Part 2 – Structure Padding & Memory Alignment (Most Asked Embedded Topic)
-
-> **Target Companies:** Qualcomm • NVIDIA • Broadcom • AMD • Intel • Samsung • Cisco • Linux Kernel Teams
 
 ---
 
@@ -1729,10 +1559,6 @@ Total
 
 ---
 
-# Common Interview Questions
-
----
-
 ## Q1
 
 Why is
@@ -1797,60 +1623,6 @@ The **order of members is preserved**, but the compiler may insert padding betwe
 
 ---
 
-# Common Interview Traps
-
-### Trap 1
-
-```c
-struct Test
-{
-    char c;
-    int i;
-};
-```
-
-Answering
-
-```
-5 Bytes
-```
-
-Wrong.
-
-Usually
-
-```
-8 Bytes
-```
-
----
-
-### Trap 2
-
-Thinking
-
-```
-Padding
-
-↓
-
-Always Bad
-```
-
-Wrong.
-
-Padding often improves CPU performance.
-
----
-
-### Trap 3
-
-Using packed structures everywhere.
-
-Can reduce performance and may even cause faults on some architectures.
-
----
-
 # Real Embedded Examples
 
 ## Ethernet Header
@@ -1911,78 +1683,6 @@ BMP, ELF, WAV, and many binary file formats rely on exact field layouts.
 
 ---
 
-# Quick Revision
-
-```
-Padding
-
-↓
-
-Extra Bytes
-
-↓
-
-Alignment
-
----------------------
-
-Alignment
-
-↓
-
-CPU Efficiency
-
----------------------
-
-Largest Alignment
-
-↓
-
-Determines
-
-↓
-
-Structure Alignment
-
----------------------
-
-Member Reordering
-
-↓
-
-Less Padding
-
-↓
-
-Smaller Structure
-
----------------------
-
-Packed Structure
-
-↓
-
-No Padding
-
-↓
-
-Hardware Protocols
-
-↓
-
-Use Carefully
-
----------------------
-
-offsetof()
-
-↓
-
-Member Offset
-```
-
----
-
 # Key Interview Takeaways
 
 ✅ Padding is inserted to satisfy alignment requirements and improve CPU access efficiency.
@@ -2008,21 +1708,6 @@ In **Part 3**, we'll cover **Structure Pointers, the `->` Operator, Self-Referen
 # Part 3 – Structure Pointers, `->` Operator, Self-Referential Structures & typedef
 
 > **Target Companies:** Qualcomm • NVIDIA • Broadcom • AMD • Intel • Samsung • Cisco • Linux Kernel Teams
-
----
-
-# Objectives
-
-After completing this chapter, you should understand:
-
-- Pointer to a structure
-- Dot (`.`) vs Arrow (`->`) operator
-- Passing structures using pointers
-- Dynamic allocation of structures
-- Self-referential structures
-- `typedef struct`
-- Why linked lists use structure pointers
-- Common interview questions
 
 ---
 
@@ -2713,10 +2398,6 @@ if(ptr != NULL)
 
 ---
 
-# Common Interview Questions
-
----
-
 ## Q1
 
 Difference between
@@ -2835,82 +2516,6 @@ Pointers avoid copying.
 
 ---
 
-# Common Interview Traps
-
-### Trap 1
-
-```c
-ptr.roll
-```
-
-Wrong.
-
-Use
-
-```c
-ptr->roll
-```
-
----
-
-### Trap 2
-
-```c
-(*ptr.roll)
-```
-
-Wrong.
-
-`.` has higher precedence than `*`.
-
-Correct
-
-```c
-(*ptr).roll
-```
-
-or simply
-
-```c
-ptr->roll
-```
-
----
-
-### Trap 3
-
-```c
-return &localStructure;
-```
-
-Returns a dangling pointer.
-
----
-
-### Trap 4
-
-```c
-malloc(sizeof(ptr));
-```
-
-Usually wrong.
-
-`sizeof(ptr)` is only the pointer size.
-
-Correct
-
-```c
-malloc(sizeof(struct Student));
-```
-
-or, even better,
-
-```c
-malloc(sizeof(*ptr));
-```
-
----
-
 # Real Embedded Examples
 
 ## UART Configuration
@@ -2952,78 +2557,6 @@ This doubly linked list structure is used throughout the Linux kernel.
 
 ---
 
-# Quick Revision
-
-```
-Structure Object
-
-↓
-
-.
-
-Operator
-
---------------------
-
-Structure Pointer
-
-↓
-
-->
-
-Operator
-
---------------------
-
-(*ptr).member
-
-↓
-
-Same As
-
-↓
-
-ptr->member
-
---------------------
-
-Self-Referential
-
-↓
-
-Pointer To Same Structure
-
---------------------
-
-Used In
-
-↓
-
-Linked List
-
-↓
-
-Tree
-
-↓
-
-Graph
-
---------------------
-
-typedef
-
-↓
-
-Removes
-
-↓
-
-Repeated struct Keyword
-```
-
----
-
 # Key Interview Takeaways
 
 ✅ Use `.` for structure objects and `->` for structure pointers.
@@ -3057,22 +2590,6 @@ In **Part 4**, we'll cover **Unions**, including:
 # Part 4 – Unions (Memory Sharing & Type Punning)
 
 > **Target Companies:** Qualcomm • NVIDIA • Broadcom • AMD • Intel • Samsung • Cisco • Linux Kernel Teams
-
----
-
-# Objectives
-
-After completing this chapter, you should understand:
-
-- What a union is
-- Difference between structure and union
-- Memory layout of unions
-- Size of a union
-- How memory is shared
-- Type punning
-- Endianness using unions
-- Embedded use cases
-- Common interview questions
 
 ---
 
@@ -3778,10 +3295,6 @@ Networking
 
 ---
 
-# Common Interview Questions
-
----
-
 ## Q1
 
 Difference between structure and union?
@@ -3870,54 +3383,6 @@ Exactly like structures.
 
 ---
 
-# Common Interview Traps
-
-### Trap 1
-
-```c
-union U
-{
-    int a;
-    float b;
-};
-
-u.a = 10;
-
-u.b = 20;
-```
-
-Thinking both values exist.
-
-Wrong.
-
-Only the **last written member** should be considered valid.
-
----
-
-### Trap 2
-
-Assuming
-
-```
-sizeof(union)
-
-=
-
-Sum of Members
-```
-
-Wrong.
-
-It's the size of the **largest member** (subject to alignment).
-
----
-
-### Trap 3
-
-Using unions for type punning without understanding that this behavior has portability considerations under the C standard. In interview code it's common, but production code may require care depending on the compiler and optimization settings.
-
----
-
 # Real Embedded Example
 
 Reading a 32-bit register as bytes.
@@ -3953,70 +3418,6 @@ No copying required.
 
 ---
 
-# Quick Revision
-
-```
-Union
-
-↓
-
-Shared Memory
-
-----------------------
-
-Size
-
-↓
-
-Largest Member
-
-----------------------
-
-Writing One Member
-
-↓
-
-Overwrites Others
-
-----------------------
-
-Used For
-
-↓
-
-Memory Saving
-
-↓
-
-Type Punning
-
-↓
-
-Hardware Registers
-
-↓
-
-Protocol Parsing
-
-----------------------
-
-Tagged Union
-
-↓
-
-Enum
-
-+
-
-Union
-
-↓
-
-Safe Design
-```
-
----
-
 # Key Interview Takeaways
 
 ✅ A union allocates a single block of memory shared by all members.
@@ -4048,21 +3449,6 @@ In **Part 5**, we'll cover **Enumerations (`enum`)**, including:
 # Part 5 – Enumerations (enum)
 
 > **Target Companies:** Qualcomm • NVIDIA • Broadcom • AMD • Intel • Samsung • Cisco • Linux Kernel Teams
-
----
-
-# Objectives
-
-After completing this chapter, you should understand:
-
-- What is an enum?
-- Why use enums instead of macros?
-- Default and custom enum values
-- Enum size
-- Enum with switch-case
-- Enum in state machines
-- Enum in embedded systems
-- Common interview questions
 
 ---
 
@@ -4593,10 +3979,6 @@ device.status = READY;
 
 ---
 
-# Common Interview Questions
-
----
-
 ## Q1
 
 What is an enum?
@@ -4709,84 +4091,6 @@ Where are enums used?
 
 ---
 
-# Common Interview Traps
-
-### Trap 1
-
-Thinking
-
-```c
-enum
-```
-
-stores strings.
-
-Wrong.
-
-It stores integers.
-
----
-
-### Trap 2
-
-Thinking
-
-```
-RED
-
-↓
-
-"RED"
-```
-
-Wrong.
-
-Actually
-
-```
-RED
-
-↓
-
-0
-```
-
----
-
-### Trap 3
-
-Printing
-
-```c
-printf("%s", RED);
-```
-
-Wrong.
-
-Use
-
-```c
-printf("%d", RED);
-```
-
----
-
-### Trap 4
-
-Assuming
-
-```
-sizeof(enum)
-
-↓
-
-Always 4
-```
-
-Usually true, but not guaranteed by the C standard.
-
----
-
 # Real Embedded Examples
 
 ## Operating System States
@@ -4841,78 +4145,6 @@ enum BootMode
 
 ---
 
-# Quick Revision
-
-```
-Enum
-
-↓
-
-Named Integer Constants
-
-----------------------
-
-Default Values
-
-↓
-
-0
-
-1
-
-2
-
-3
-
-----------------------
-
-Custom Values
-
-↓
-
-Allowed
-
-----------------------
-
-Enum Variable
-
-↓
-
-Stores Enumerator
-
-----------------------
-
-Used In
-
-↓
-
-Switch
-
-↓
-
-State Machines
-
-↓
-
-Drivers
-
-↓
-
-Protocols
-
-----------------------
-
-Preferred Over
-
-↓
-
-#define
-
-For Related Constants
-```
-
----
-
 # Key Interview Takeaways
 
 ✅ Enums improve readability by replacing numeric constants with meaningful names.
@@ -4945,25 +4177,6 @@ In **Part 6**, we'll cover **Advanced Structure & Union Interview Questions**, i
 # Part 6 – Advanced Structure & Union Interview Questions
 
 > **Target Companies:** Qualcomm • NVIDIA • Broadcom • AMD • Intel • Samsung • Cisco • Linux Kernel Teams
-
----
-
-# Objectives
-
-This chapter covers advanced concepts frequently asked in embedded and systems interviews.
-
-Topics include:
-
-- Flexible Array Members (FAM)
-- Bit-fields
-- Anonymous Structures & Unions
-- offsetof()
-- container_of() (Linux Kernel)
-- Structure Copying
-- const with Structures
-- volatile Structures
-- Memory Mapping
-- 30+ Interview Questions
 
 ---
 
@@ -5597,10 +4810,6 @@ It avoids duplicate objects and enables generic data structures.
 
 ---
 
-# Common Interview Questions
-
----
-
 ## Q1
 
 Difference between shallow copy and deep copy?
@@ -5729,87 +4938,6 @@ However, for portable hardware code, explicit bit masking is often preferred bec
 
 ---
 
-# Common Interview Traps
-
-### Trap 1
-
-```c
-struct Test
-{
-    char data[];
-
-    int x;
-};
-```
-
-Invalid.
-
-Flexible array must be last.
-
----
-
-### Trap 2
-
-```c
-s2 = s1;
-```
-
-Thinking
-
-```
-Deep Copy
-```
-
-Wrong.
-
-It's a shallow copy when pointers are involved.
-
----
-
-### Trap 3
-
-```c
-volatile
-
-↓
-
-Thread Synchronization
-```
-
-Wrong.
-
-`volatile` does **not** make code thread-safe.
-
-Use mutexes or atomic operations for synchronization.
-
----
-
-### Trap 4
-
-Thinking
-
-```
-const
-
-↓
-
-Object Stored In ROM
-```
-
-Wrong.
-
-`const` means read-only through that access path. The actual storage location depends on the compiler and linker.
-
----
-
-### Trap 5
-
-Using bit-fields for communication protocols without checking compiler behavior.
-
-Bit ordering and layout are implementation-defined.
-
----
-
 # Real Embedded Examples
 
 ## Linux Kernel
@@ -5869,73 +4997,3 @@ struct Status
 Represents hardware status bits.
 
 ---
-
-# Quick Revision
-
-```
-Flexible Array
-
-↓
-
-Variable Size Data
-
-------------------------
-
-Bit-fields
-
-↓
-
-Bit-Level Storage
-
-------------------------
-
-offsetof()
-
-↓
-
-Member Offset
-
-------------------------
-
-container_of()
-
-↓
-
-Member Pointer
-
-↓
-
-Structure Pointer
-
-------------------------
-
-volatile Structure
-
-↓
-
-Hardware Registers
-
-------------------------
-
-Structure Copy
-
-↓
-
-Shallow Copy
-
-------------------------
-
-Deep Copy
-
-↓
-
-Allocate New Memory
-
-↓
-
-Copy Data
-```
-
----
-
-
