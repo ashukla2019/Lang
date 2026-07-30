@@ -763,18 +763,3 @@ Stack (grows downward)
 
 ---
 
-# Key Interview Takeaways
-
-✅ Draw the process memory layout from memory.
-
-✅ Know where every type of variable is stored.
-
-✅ Understand the difference between Stack, Heap, Data, BSS, Text, and Read-Only Data.
-
-✅ Explain why returning a local variable's address is wrong.
-
-✅ Explain why stack allocation is faster than heap allocation.
-
-✅ Be comfortable drawing stack frames for nested function calls.
-
----
