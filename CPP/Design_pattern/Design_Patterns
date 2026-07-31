@@ -1,25 +1,400 @@
-1. Creational Patterns:
-provide a way to create objects without specifying how they are created, making the creation process more
-flexible and less complex. They abstract the object creation logic, making it easier to manage and modify.
+# Design Patterns
 
-Singleton Pattern
-Factory Pattern
-Abstract Factory Pattern
-Builder Pattern
+Design Patterns are reusable solutions to commonly occurring software design problems.
 
-2. Structural Patterns: 
-Structural design patterns deal with how classes or objects are put together to form larger structures. 
-They help you add new features to these structures without affecting the existing ones. So, if you need to change 
-something in one part of the structure, you can do it without having to change everything else.
+Instead of solving the same design problem repeatedly, we use proven design patterns.
 
-Adapter pattern
-Proxy Pattern
+Goals:
+- Reduce code duplication
+- Improve maintainability
+- Improve flexibility
+- Reduce coupling
+- Increase code reuse
+- Follow SOLID principles
 
-3. Behavioral design patterns:
-focus on how different objects in a system communicate with each other. They simplify communication and make sure that 
-information is consistent and up-to-date between these objects. In other words, they help objects interact with each other
-in a more organized and efficient way.
+---
 
-Observer Pattern (Publisher Subscriber)
-Strategy Pattern
-Chain of Responsibility
+# Types of Design Patterns
+
+There are **23 Gang of Four (GoF)** design patterns grouped into three categories:
+
+```
+Design Patterns
+│
+├── Creational (Object Creation)
+├── Structural (Object Composition)
+└── Behavioral (Object Communication)
+```
+
+---
+
+# 1. Creational Design Patterns
+
+## Definition
+
+Creational patterns deal with **how objects are created**.
+
+They hide or simplify the object creation process so that the client does not need to know the exact construction details.
+
+### Goals
+
+- Encapsulate object creation
+- Reduce object creation complexity
+- Improve flexibility
+- Make code independent of concrete classes
+
+### Common Creational Patterns
+
+### 1. Singleton
+Only one object exists in the entire application.
+
+Example:
+```
+Logger
+Configuration Manager
+Database Connection Pool
+```
+
+---
+
+### 2. Factory Method
+Creates objects without exposing the creation logic.
+
+Example:
+```
+Vehicle *v = Factory::create(Car);
+```
+
+---
+
+### 3. Abstract Factory
+Creates families of related objects.
+
+Example:
+```
+Windows Button
+Windows Checkbox
+
+Linux Button
+Linux Checkbox
+```
+
+---
+
+### 4. Builder
+Constructs a complex object step by step.
+
+Example:
+```
+Computer
+House
+HTTP Request
+```
+
+---
+
+### 5. Prototype
+Creates new objects by copying an existing object.
+
+Example:
+```
+clone()
+```
+
+---
+
+# Summary
+
+Creational patterns answer:
+
+> "How should objects be created?"
+
+---
+
+# 2. Structural Design Patterns
+
+## Definition
+
+Structural patterns deal with **how classes and objects are combined** to form larger systems.
+
+They simplify relationships between objects while keeping the system flexible.
+
+### Goals
+
+- Reduce coupling
+- Improve code organization
+- Reuse existing classes
+- Simplify object relationships
+
+### Common Structural Patterns
+
+### 1. Adapter
+Converts one interface into another.
+
+Example:
+```
+Old Printer -> New Printer Interface
+```
+
+---
+
+### 2. Decorator
+Adds new functionality dynamically without modifying the original class.
+
+Example:
+```
+Coffee
++ Milk
++ Sugar
+```
+
+---
+
+### 3. Proxy
+Provides a placeholder that controls access to another object.
+
+Example:
+```
+Virtual Proxy
+Remote Proxy
+Protection Proxy
+```
+
+---
+
+### 4. Facade
+Provides one simplified interface for a complex subsystem.
+
+Example:
+```
+Computer.start()
+
+internally:
+CPU
+Memory
+Disk
+OS
+```
+
+---
+
+### 5. Composite
+Treats individual objects and groups uniformly.
+
+Example:
+```
+Folder
+ ├── File
+ ├── File
+ └── Folder
+```
+
+---
+
+### 6. Bridge
+Separates abstraction from implementation.
+
+Example:
+```
+Shape
+ ├── Circle
+ └── Rectangle
+
+Color
+ ├── Red
+ └── Blue
+```
+
+---
+
+### Summary
+
+Structural patterns answer:
+
+> "How should objects be connected together?"
+
+---
+
+# 3. Behavioral Design Patterns
+
+## Definition
+
+Behavioral patterns deal with **how objects communicate and collaborate**.
+
+They define responsibilities and interaction between objects.
+
+### Goals
+
+- Reduce coupling
+- Improve communication
+- Separate responsibilities
+- Make behavior flexible
+
+### Common Behavioral Patterns
+
+### 1. Observer (Publisher-Subscriber)
+One object notifies many dependent objects.
+
+Example:
+```
+YouTube Subscribers
+Stock Market
+Weather App
+```
+
+---
+
+### 2. Strategy
+Encapsulates multiple algorithms and allows switching at runtime.
+
+Example:
+```
+Credit Card
+UPI
+PayPal
+```
+
+---
+
+### 3. Chain of Responsibility
+A request passes through multiple handlers until one processes it.
+
+Example:
+```
+Logger
+
+INFO
+ ↓
+WARNING
+ ↓
+ERROR
+```
+
+---
+
+### 4. Command
+Encapsulates a request as an object.
+
+Example:
+```
+Undo
+Redo
+Remote Control
+```
+
+---
+
+### 5. State
+Changes behavior based on internal state.
+
+Example:
+```
+Traffic Light
+
+Red
+Yellow
+Green
+```
+
+---
+
+### 6. Iterator
+Traverses a collection without exposing its implementation.
+
+Example:
+```
+vector iterator
+list iterator
+```
+
+---
+
+### 7. Template Method
+Defines the skeleton of an algorithm while allowing subclasses to customize steps.
+
+Example:
+```
+Build Software
+
+Compile
+↓
+
+Test
+↓
+
+Package
+```
+
+---
+
+### Summary
+
+Behavioral patterns answer:
+
+> "How should objects communicate and share responsibilities?"
+
+---
+
+# Quick Interview Cheat Sheet
+
+| Category | Solves | Common Patterns |
+|-----------|---------|----------------|
+| Creational | Object creation | Singleton, Factory, Abstract Factory, Builder, Prototype |
+| Structural | Object composition | Adapter, Decorator, Proxy, Facade, Composite, Bridge |
+| Behavioral | Object communication | Observer, Strategy, Chain of Responsibility, Command, State, Iterator, Template Method |
+
+---
+
+# Easy Way to Remember
+
+```
+Creational
+↓
+How do we CREATE objects?
+
+Structural
+↓
+How do we CONNECT objects?
+
+Behavioral
+↓
+How do objects COMMUNICATE?
+```
+
+---
+
+# Senior C++ Interview Focus (Most Frequently Asked)
+
+★★★★★ Singleton
+
+★★★★★ Factory
+
+★★★★★ Builder
+
+★★★★★ Adapter
+
+★★★★★ Proxy
+
+★★★★★ Observer
+
+★★★★★ Strategy
+
+★★★★★ Chain of Responsibility
+
+★★★★☆ Decorator
+
+★★★★☆ Facade
+
+★★★★☆ Command
+
+★★★★☆ State
+
+★★★☆☆ Composite
+
+★★★☆☆ Bridge
+
+★★★☆☆ Iterator
+
+★★★☆☆ Template Method
+
+★★★☆☆ Prototype
