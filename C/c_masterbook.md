@@ -441,6 +441,13 @@ char ch = 'A';
 char x = 65;
 printf("%d\n", 'A'); // 65
 printf("%c\n", 65);  // A
+
+1. char ch = 'A';
+The character 'A' is stored internally as its ASCII value:
+
+'A' → 65
+So memory contains:
+ch = 65
 ```
 
 ## short
