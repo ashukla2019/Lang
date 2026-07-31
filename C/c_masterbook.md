@@ -979,7 +979,12 @@ Important:
 Array owns storage.
 Pointer stores an address.
 ```
-
+```
+| Code                                  | `p` stored | `"hello"` stored | Modifiable? |
+| ------------------------------------- | ---------- | ---------------- | ----------- |
+| `char *p = "hello";` inside function  | Stack      | Read-only memory | ❌ No        |
+| `char p[] = "hello";` inside function | Stack      | Stack copy       | ✅ Yes       |
+```
 ---
 
 # 20. `sizeof` vs `strlen`
