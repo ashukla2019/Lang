@@ -421,44 +421,172 @@ after preprocessing.
 ---
 
 # 4. Data Types
+# C Fundamental Data Types
 
-Common C types:
+# Integer Types
+
+| Type | Typical Size (64-bit Linux) | Range (Signed) | Purpose |
+|------|:---------------------------:|---------------:|---------|
+| `char` | 1 byte | -128 to 127 | Character/small integer |
+| `short` | 2 bytes | -32,768 to 32,767 | Small integer |
+| `int` | 4 bytes | ±2.1 billion | General-purpose integer |
+| `long` | 8 bytes (Linux), 4 bytes (Windows) | Platform-dependent | Large integer |
+| `long long` | 8 bytes | ±9.22 × 10¹⁸ | Very large integer |
+
+## char
+Stores a single byte. It is an integer type.
 
 ```c
-char
-short
-int
-long
-long long
-
-float
-double
-long double
-
-void
+char ch = 'A';
+char x = 65;
+printf("%d\n", 'A'); // 65
+printf("%c\n", 65);  // A
 ```
 
-Modifiers:
+## short
+Usually 2 bytes.
 
 ```c
-signed
-unsigned
-short
-long
+short age = 25;
 ```
 
-Use `<stdint.h>` when exact widths matter:
+## int
+General-purpose integer, usually 4 bytes.
 
 ```c
-uint8_t
-uint16_t
-uint32_t
-uint64_t
+int count = 100;
+```
 
-int8_t
-int16_t
-int32_t
-int64_t
+## long
+Platform-dependent (8 bytes on 64-bit Linux, 4 bytes on 64-bit Windows).
+
+```c
+long population = 8000000000L;
+```
+
+## long long
+At least 64 bits.
+
+```c
+long long distance = 900000000000LL;
+```
+
+## Signed vs Unsigned
+
+```c
+unsigned int x = 4000000000U;
+```
+
+- Signed: negative and positive values.
+- Unsigned: only non-negative values.
+
+# Floating-Point Types
+
+| Type | Typical Size | Precision | Purpose |
+|------|:------------:|----------:|---------|
+| `float` | 4 bytes | ~6–7 digits | Single precision |
+| `double` | 8 bytes | ~15–16 digits | Double precision |
+| `long double` | Usually 16 bytes | Platform-dependent | Extended precision |
+
+## float
+
+```c
+float pi = 3.14f;
+```
+
+32-bit IEEE-754 floating-point.
+
+## double
+
+```c
+double pi = 3.141592653589793;
+```
+
+64-bit floating-point with higher precision.
+
+## long double
+
+```c
+long double value = 3.141592653589793238L;
+```
+
+Higher precision than `double` (implementation-dependent).
+
+# void
+
+Represents **no value** or **no type**.
+
+## Function returning nothing
+
+```c
+void printMessage(void)
+{
+    printf("Hello\n");
+}
+```
+
+## Function with no parameters
+
+```c
+void func(void)
+{
+}
+```
+
+## Generic Pointer
+
+```c
+int x = 10;
+void *ptr = &x;
+
+printf("%d\n", *(int *)ptr);
+```
+
+`void *` can point to any data type but must be cast before dereferencing.
+
+# Memory Comparison
+
+```text
+char          : 1 byte
+short         : 2 bytes
+int           : 4 bytes
+long          : 8 bytes (Linux)
+long long     : 8 bytes
+float         : 4 bytes
+double        : 8 bytes
+long double   : 16 bytes (typical)
+```
+
+# Check Sizes
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    printf("char        : %zu\n", sizeof(char));
+    printf("short       : %zu\n", sizeof(short));
+    printf("int         : %zu\n", sizeof(int));
+    printf("long        : %zu\n", sizeof(long));
+    printf("long long   : %zu\n", sizeof(long long));
+    printf("float       : %zu\n", sizeof(float));
+    printf("double      : %zu\n", sizeof(double));
+    printf("long double : %zu\n", sizeof(long double));
+    printf("void *      : %zu\n", sizeof(void *));
+
+    return 0;
+}
+```
+
+# Interview Tips
+
+- `char` is an integer type occupying 1 byte.
+- `int` is the default integer type.
+- `long` is platform-dependent.
+- `long long` is at least 64 bits.
+- `float`, `double`, and `long double` provide increasing precision.
+- `void` represents no value and `void *` is a generic pointer.
+- Use `sizeof()` instead of assuming type sizes.
 ```
 
 ---
