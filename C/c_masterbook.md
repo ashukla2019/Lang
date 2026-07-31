@@ -1,7 +1,5 @@
 # C MASTER HANDBOOK
 
-## Senior C Programming for Linux, Embedded & Systems Interviews
-
 The goal is to understand:
 
 ```text
