@@ -940,25 +940,19 @@ A C string requires a terminating null byte.
 ```c
 char *p = "hello";
 ```
-
 The literal is not modifiable.
-
+"hello" is created in RO(read only)
 Do not do:
-
 ```c
 p[0] = 'H';
 ```
-
 That is undefined behavior.
 
 Prefer:
-
 ```c
 char p[] = "hello";
+Because: the compiler creates an array and copies the string into it.
 ```
-
-when a modifiable character array is required.
-
 ---
 
 # 19. `char s[]` vs `char *s`
