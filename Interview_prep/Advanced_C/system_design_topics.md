@@ -13,4 +13,4 @@ RAID	Very High	Storage architecture
 Snapshot Design	Very High	NetApp-style storage systems
 Deduplication	Very High	Enterprise storage
 Replication	Very High	Distributed systems
-Distributed File System	Very High	Large-scale storage
+Distributed File System	Very High	Large-scale storage,
