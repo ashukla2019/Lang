@@ -180,14 +180,10 @@ int main()
     return 0;
 }
 
-
-Input:
-
+Input
 10 20
 
-
-Output:
-
+Output
 A = 10
 B = 20
 
@@ -218,14 +214,10 @@ int main()
     return 0;
 }
 
-
-Input:
-
+Input
 10 20 30 40 50
 
-
-Output:
-
+Output
 Array: 10 20 30 40 50
 
 8. Taking String Input
@@ -267,23 +259,23 @@ fgets()	Read a string/line
 gets()	Unsafe — avoid
 getch()	Non-standard/compiler-specific
 Most Important to Remember
-// Integer
+Integer
 int n;
 scanf("%d", &n);
 
-// Float
+Float
 float f;
 scanf("%f", &f);
 
-// Character
+Character
 char ch;
 scanf(" %c", &ch);
 
-// String without spaces
+String without spaces
 char name[50];
 scanf("%s", name);
 
-// String/line with spaces
+String/line with spaces
 char name[50];
 fgets(name, sizeof(name), stdin);
 
