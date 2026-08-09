@@ -51,7 +51,7 @@ char ch;
 scanf(" %c", &ch);
 
 
-Notice the space before %c. It helps skip leftover whitespace/newline characters.
+Notice the space before %c. It helps skip leftover whitespace or newline characters.
 
 For a string array, don't use &:
 
@@ -157,7 +157,7 @@ It is commonly associated with:
 
 However, getch() is not part of standard C and is compiler/platform-specific.
 
-For portable C programs, prefer standard functions such as:
+For portable C programs, prefer:
 
 getchar();
 
@@ -255,7 +255,7 @@ Quick Reference
 Function	Purpose
 scanf()	Formatted input
 getchar()	Read one character
-fgets()	Read a string/line
+fgets()	Read a string or line
 gets()	Unsafe — avoid
 getch()	Non-standard/compiler-specific
 Most Important to Remember
@@ -266,6 +266,10 @@ scanf("%d", &n);
 Float
 float f;
 scanf("%f", &f);
+
+Double
+double d;
+scanf("%lf", &d);
 
 Character
 char ch;
@@ -286,5 +290,5 @@ For modern C programming:
 Use scanf() for formatted numeric input.
 Use getchar() for a single character.
 Use fgets() for strings and complete lines.
-Avoid gets().
+Avoid gets() because it is unsafe.
 Avoid relying on getch() if you want portable standard C.
