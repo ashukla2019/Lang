@@ -275,11 +275,11 @@ Character
 char ch;
 scanf(" %c", &ch);
 
-String without spaces
+String Without Spaces
 char name[50];
 scanf("%s", name);
 
-String/line with spaces
+String/Line With Spaces
 char name[50];
 fgets(name, sizeof(name), stdin);
 
