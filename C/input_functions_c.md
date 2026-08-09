@@ -1,9 +1,12 @@
-C Language — Input Functions
-1. scanf()
+# C Language — Input Functions
 
-scanf() is used to take formatted input from the user.
+## 1. `scanf()`
 
-Example
+`scanf()` is used to take formatted input from the user.
+
+### Example
+
+```c
 #include <stdio.h>
 
 int main()
@@ -27,42 +30,54 @@ int main()
 
     return 0;
 }
+```
 
-Common Format Specifiers
-Data Type	Format Specifier
-int	%d
-float	%f
-double	%lf
-char	%c
-string	%s
-long int	%ld
-unsigned int	%u
-Important
+### Common Format Specifiers
 
-For most variables, use & with scanf():
+| Data Type | Format Specifier |
+|---|---|
+| `int` | `%d` |
+| `float` | `%f` |
+| `double` | `%lf` |
+| `char` | `%c` |
+| string | `%s` |
+| `long int` | `%ld` |
+| `unsigned int` | `%u` |
 
+### Important
+
+For most variables, use `&` with `scanf()`:
+
+```c
 int n;
 scanf("%d", &n);
-
+```
 
 For a character:
 
+```c
 char ch;
 scanf(" %c", &ch);
+```
 
+> Notice the space before `%c`. It helps skip leftover whitespace or newline characters.
 
-Notice the space before %c. It helps skip leftover whitespace or newline characters.
+For a string array, don't use `&`:
 
-For a string array, don't use &:
-
+```c
 char name[50];
 scanf("%s", name);
+```
 
-2. getchar()
+---
 
-getchar() reads one character from standard input.
+## 2. `getchar()`
 
-Example
+`getchar()` reads one character from standard input.
+
+### Example
+
+```c
 #include <stdio.h>
 
 int main()
@@ -76,20 +91,31 @@ int main()
 
     return 0;
 }
+```
 
-Example Input
+### Example Input
+
+```text
 A
+```
 
-Output
+### Output
+
+```text
 You entered: A
+```
 
-3. fgets()
+---
 
-fgets() is used to read a string or an entire line.
+## 3. `fgets()`
+
+`fgets()` is used to read a string or an entire line.
 
 It is especially useful when the input contains spaces.
 
-Example
+### Example
+
+```c
 #include <stdio.h>
 
 int main()
@@ -103,68 +129,85 @@ int main()
 
     return 0;
 }
+```
 
-Example
+### Example
 
-Input:
+**Input:**
 
+```text
 Rahul Kumar
+```
 
+**Output:**
 
-Output:
-
+```text
 Name: Rahul Kumar
-
+```
 
 Unlike:
 
+```c
 scanf("%s", name);
+```
 
+`fgets()` can read spaces.
 
-fgets() can read spaces.
+---
 
-4. gets() — Avoid It
+## 4. `gets()` — Avoid It
 
 You may see old C programs using:
 
+```c
 gets(name);
+```
 
-
-Do not use gets() in modern C.
+**Do not use `gets()` in modern C.**
 
 It is unsafe because it does not know the size of the input buffer and can cause a buffer overflow.
 
 Use:
 
+```c
 fgets(name, sizeof(name), stdin);
-
+```
 
 instead.
 
-5. getch()
+---
+
+## 5. `getch()`
 
 You may encounter:
 
+```c
 getch();
-
+```
 
 in older C programs.
 
 It is commonly associated with:
 
+```c
 #include <conio.h>
+```
 
-
-However, getch() is not part of standard C and is compiler/platform-specific.
+However, `getch()` is **not part of standard C** and is compiler/platform-specific.
 
 For portable C programs, prefer:
 
+```c
 getchar();
+```
 
-6. Taking Multiple Inputs
+---
 
-You can use scanf() to take multiple values:
+## 6. Taking Multiple Inputs
 
+You can use `scanf()` to take multiple values:
+
+```c
 #include <stdio.h>
 
 int main()
@@ -179,18 +222,28 @@ int main()
 
     return 0;
 }
+```
 
-Input
+### Input
+
+```text
 10 20
+```
 
-Output
+### Output
+
+```text
 A = 10
 B = 20
+```
 
-7. Taking Array Input
+---
 
-You can use a loop with scanf():
+## 7. Taking Array Input
 
+You can use a loop with `scanf()`:
+
+```c
 #include <stdio.h>
 
 int main()
@@ -213,82 +266,128 @@ int main()
 
     return 0;
 }
+```
 
-Input
+### Input
+
+```text
 10 20 30 40 50
+```
 
-Output
+### Output
+
+```text
 Array: 10 20 30 40 50
+```
 
-8. Taking String Input
-Using scanf()
+---
+
+## 8. Taking String Input
+
+### Using `scanf()`
+
+```c
 char name[50];
 
 scanf("%s", name);
-
+```
 
 This reads only until whitespace.
 
 For example:
 
+```text
 Rahul Kumar
-
+```
 
 will read only:
 
+```text
 Rahul
+```
 
-Using fgets()
+### Using `fgets()`
+
+```c
 char name[50];
 
 fgets(name, sizeof(name), stdin);
-
+```
 
 This can read:
 
+```text
 Rahul Kumar
-
+```
 
 as a complete line.
 
-Quick Reference
-Function	Purpose
-scanf()	Formatted input
-getchar()	Read one character
-fgets()	Read a string or line
-gets()	Unsafe — avoid
-getch()	Non-standard/compiler-specific
-Most Important to Remember
-Integer
+---
+
+# Quick Reference
+
+| Function | Purpose |
+|---|---|
+| `scanf()` | Formatted input |
+| `getchar()` | Read one character |
+| `fgets()` | Read a string or line |
+| `gets()` | Unsafe — avoid |
+| `getch()` | Non-standard/compiler-specific |
+
+---
+
+# Most Important to Remember
+
+### Integer
+
+```c
 int n;
 scanf("%d", &n);
+```
 
-Float
+### Float
+
+```c
 float f;
 scanf("%f", &f);
+```
 
-Double
+### Double
+
+```c
 double d;
 scanf("%lf", &d);
+```
 
-Character
+### Character
+
+```c
 char ch;
 scanf(" %c", &ch);
+```
 
-String Without Spaces
+### String Without Spaces
+
+```c
 char name[50];
 scanf("%s", name);
+```
 
-String/Line With Spaces
+### String/Line With Spaces
+
+```c
 char name[50];
 fgets(name, sizeof(name), stdin);
+```
 
-Recommendation
+---
+
+# Recommendation
 
 For modern C programming:
 
-Use scanf() for formatted numeric input.
-Use getchar() for a single character.
-Use fgets() for strings and complete lines.
-Avoid gets() because it is unsafe.
-Avoid relying on getch() if you want portable standard C.
+- Use **`scanf()`** for formatted numeric input.
+- Use **`getchar()`** for a single character.
+- Use **`fgets()`** for strings and complete lines.
+- **Avoid `gets()`** because it is unsafe.
+- Avoid relying on **`getch()`** if you want portable standard C.
