@@ -124,7 +124,7 @@ void pointer_to_char_arr_of_n()
 		p[0][3] -> D
 		p[0][4] -> E
 	*/
-
+	printf("%s\n", *p); //print whole string
 	printf("%c\n", p[0][0]); // A
 	printf("%c\n", p[0][1]); // B
 	printf("%c\n", p[0][2]); // C
