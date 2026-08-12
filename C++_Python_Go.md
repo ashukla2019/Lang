@@ -122,15 +122,26 @@ Python is interpreted but internally compiles to bytecode.
 ###  Steps
 
 Source Code (.py)  
-↓  
-Bytecode Compilation  
-↓  
-Bytecode (.pyc)  
-↓  
-Python Virtual Machine (PVM)  
-↓  
-Execution  
+↓           COMPILATION
+              
+   program.py
+       │
+       ▼
+ Python Compiler
+       │
+       ▼
+   Bytecode
+       │
+       ├──────────────► stored as .pyc (optional)
+       │
+       ▼
+       EXECUTION
 
+       PVM
+       │
+       ▼
+   Execute Bytecode
+   
 ### 🔹 Bytecode Compilation
 - Converts .py → .pyc
 - Stored in __pycache__
