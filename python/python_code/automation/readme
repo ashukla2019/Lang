@@ -1,1 +1,9 @@
-
+pathlib → files/directories
+os → operating-system operations
+shutil → copy/move/delete files
+re → pattern matching
+json → JSON files
+csv → CSV files
+subprocess → run system commands
+datetime → dates/times
+logging → automation logs
