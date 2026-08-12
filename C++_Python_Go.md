@@ -1120,7 +1120,7 @@ info(age=20, name="Ashu")
 
 ---
 
-### 4. *args (multiple inputs)
+### 4. *args (multiple inputs): Stores values as tuple
 
 ```python
 def total(*nums):
@@ -1131,7 +1131,7 @@ print(total(1,2,3,4))
 
 ---
 
-### 5. **kwargs(keyword arguments)
+### 5. **kwargs(keyword arguments): Stores values as dictionary
 
 ```python
 def show(**data):
