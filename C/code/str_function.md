@@ -1,97 +1,78 @@
-# C String Functions (Easy Implementations)
+C String and Memory Functions — Easy Implementations
 
-This file contains easy implementations of commonly used C string functions for learning purposes.
+This document contains simple implementations of commonly used C string and memory functions for learning purposes.
 
----
+Note: These implementations are intended for learning. In production code, prefer the optimized functions provided by the standard library where available.
 
-# Table of Contents
-
+Table of Contents
+String Functions
+strlen()
+strcpy()
+strncpy()
+strcat()
+strncat()
+strcmp()
+strncmp()
+strchr()
+strrchr()
+strstr()
+strtok()
+strspn()
+strcspn()
+strpbrk()
+strdup()
+strrev()
+strupr()
+strlwr()
+Memory Functions
+memset()
+memcpy()
+memmove()
+memcmp()
+memchr()
+strerror()
+Part 1 — String Functions
 1. strlen()
-2. strcpy()
-3. strncpy()
-4. strcat()
-5. strncat()
-6. strcmp()
-7. strncmp()
-8. strchr()
-9. strrchr()
-10. strstr()
-11. strtok()
-12. strspn()
-13. strcspn()
-14. strpbrk()
-15. strdup()
-16. strrev()
-17. strupr()
-18. strlwr()
-19. memset()
-20. memcpy()
-21. memmove()
-22. memcmp()
-23. memchr()
-24. strerror()
+Purpose
 
----
+Returns the length of a string, excluding the terminating '\0'.
 
-# 1. strlen()
-
-### Purpose
-Returns the length of a string (excluding `'\0'`).
-
-### Prototype
-
-```c
+Prototype
 size_t my_strlen(const char *str);
-```
 
-### Implementation
-
-```c
-int my_strlen(const char *str)
+Implementation
+size_t my_strlen(const char *str)
 {
-    int len = 0;
+    size_t len = 0;
 
-    while(str[len] != '\0')
+    while (str[len] != '\0')
         len++;
 
     return len;
 }
-```
 
-### Example
-
-```c
+Example
 char s[] = "Hello";
-printf("%d", my_strlen(s));
-```
+
+printf("%zu", my_strlen(s));
 
 Output
-
-```
 5
-```
 
----
+2. strcpy()
+Purpose
 
-# 2. strcpy()
-
-### Purpose
 Copies one string into another.
 
-### Prototype
+Prototype
+char *my_strcpy(char *dest, const char *src);
 
-```c
-char *my_strcpy(char *dest,const char *src);
-```
-
-### Implementation
-
-```c
-char *my_strcpy(char *dest,const char *src)
+Implementation
+char *my_strcpy(char *dest, const char *src)
 {
     int i = 0;
 
-    while(src[i] != '\0')
+    while (src[i] != '\0')
     {
         dest[i] = src[i];
         i++;
@@ -101,615 +82,459 @@ char *my_strcpy(char *dest,const char *src)
 
     return dest;
 }
-```
 
-### Example
-
-```c
-char src[]="OpenAI";
+Example
+char src[] = "OpenAI";
 char dest[20];
 
-my_strcpy(dest,src);
+my_strcpy(dest, src);
 
-printf("%s",dest);
-```
+printf("%s", dest);
 
 Output
-
-```
 OpenAI
-```
 
----
+3. strncpy()
+Purpose
 
-# 3. strncpy()
+Copies up to n characters from the source string.
 
-### Purpose
-Copies first n characters.
+Prototype
+char *my_strncpy(char *dest, const char *src, size_t n);
 
-### Prototype
-
-```c
-char *my_strncpy(char *dest,const char *src,int n);
-```
-
-### Implementation
-
-```c
-char *my_strncpy(char *dest,const char *src,int n)
+Implementation
+char *my_strncpy(char *dest, const char *src, size_t n)
 {
-    int i;
+    size_t i;
 
-    for(i=0;i<n && src[i]!='\0';i++)
-        dest[i]=src[i];
+    for (i = 0; i < n && src[i] != '\0'; i++)
+        dest[i] = src[i];
 
-    while(i<n)
+    while (i < n)
     {
-        dest[i]='\0';
+        dest[i] = '\0';
         i++;
     }
 
     return dest;
 }
-```
 
-### Example
-
-```c
-char src[]="Programming";
+Example
+char src[] = "Programming";
 char dest[20];
 
-my_strncpy(dest,src,7);
+my_strncpy(dest, src, 7);
 
-printf("%s",dest);
-```
+printf("%s", dest);
 
 Output
-
-```
 Program
-```
 
----
+4. strcat()
+Purpose
 
-# 4. strcat()
-
-### Purpose
 Appends one string to another.
 
-### Prototype
+Prototype
+char *my_strcat(char *dest, const char *src);
 
-```c
-char *my_strcat(char *dest,const char *src);
-```
-
-### Implementation
-
-```c
-char *my_strcat(char *dest,const char *src)
+Implementation
+char *my_strcat(char *dest, const char *src)
 {
-    int i=0;
-    int j=0;
+    int i = 0;
+    int j = 0;
 
-    while(dest[i]!='\0')
+    while (dest[i] != '\0')
         i++;
 
-    while(src[j]!='\0')
+    while (src[j] != '\0')
     {
-        dest[i]=src[j];
+        dest[i] = src[j];
         i++;
         j++;
     }
 
-    dest[i]='\0';
+    dest[i] = '\0';
 
     return dest;
 }
-```
 
-### Example
+Example
+char a[30] = "Hello ";
+char b[] = "World";
 
-```c
-char a[30]="Hello ";
-char b[]="World";
+my_strcat(a, b);
 
-my_strcat(a,b);
-
-printf("%s",a);
-```
+printf("%s", a);
 
 Output
-
-```
 Hello World
-```
 
----
+5. strncat()
+Purpose
 
-# 5. strncat()
+Appends up to n characters from the source string.
 
-### Purpose
-Appends first n characters.
+Prototype
+char *my_strncat(char *dest, const char *src, size_t n);
 
-### Prototype
-
-```c
-char *my_strncat(char *dest,const char *src,int n);
-```
-
-### Implementation
-
-```c
-char *my_strncat(char *dest,const char *src,int n)
+Implementation
+char *my_strncat(char *dest, const char *src, size_t n)
 {
-    int i=0;
-    int j=0;
+    size_t i = 0;
+    size_t j = 0;
 
-    while(dest[i]!='\0')
+    while (dest[i] != '\0')
         i++;
 
-    while(src[j]!='\0' && j<n)
+    while (src[j] != '\0' && j < n)
     {
-        dest[i]=src[j];
+        dest[i] = src[j];
         i++;
         j++;
     }
 
-    dest[i]='\0';
+    dest[i] = '\0';
 
     return dest;
 }
-```
 
-### Example
+Example
+char a[30] = "Hello ";
+char b[] = "Programming";
 
-```c
-char a[30]="Hello ";
-char b[]="Programming";
+my_strncat(a, b, 7);
 
-my_strncat(a,b,7);
-
-printf("%s",a);
-```
+printf("%s", a);
 
 Output
-
-```
 Hello Program
-```
 
----
+6. strcmp()
+Purpose
 
-# 6. strcmp()
-
-### Purpose
 Compares two strings.
 
-Returns
+Return Value
+0 → Strings are equal
+< 0 → First string is smaller
+> 0 → First string is greater
+Prototype
+int my_strcmp(const char *s1, const char *s2);
 
-- 0 → Equal
-- >0 → First string greater
-- <0 → Second string greater
-
-### Prototype
-
-```c
-int my_strcmp(const char *s1,const char *s2);
-```
-
-### Implementation
-
-```c
-int my_strcmp(const char *s1,const char *s2)
+Implementation
+int my_strcmp(const char *s1, const char *s2)
 {
-    int i=0;
+    int i = 0;
 
-    while(s1[i] && s2[i])
+    while (s1[i] && s2[i])
     {
-        if(s1[i]!=s2[i])
-            return s1[i]-s2[i];
+        if (s1[i] != s2[i])
+            return (unsigned char)s1[i] - (unsigned char)s2[i];
 
         i++;
     }
 
-    return s1[i]-s2[i];
+    return (unsigned char)s1[i] - (unsigned char)s2[i];
 }
-```
 
-### Example
-
-```c
-printf("%d",my_strcmp("abc","abc"));
-```
+Example
+printf("%d", my_strcmp("abc", "abc"));
 
 Output
-
-```
 0
-```
 
----
+7. strncmp()
+Purpose
 
-# 7. strncmp()
+Compares up to n characters of two strings.
 
-### Purpose
-Compares first n characters.
+Prototype
+int my_strncmp(const char *s1, const char *s2, size_t n);
 
-### Prototype
-
-```c
-int my_strncmp(const char *s1,const char *s2,int n);
-```
-
-### Implementation
-
-```c
-int my_strncmp(const char *s1,const char *s2,int n)
+Implementation
+int my_strncmp(const char *s1, const char *s2, size_t n)
 {
-    int i;
+    size_t i;
 
-    for(i=0;i<n;i++)
+    for (i = 0; i < n; i++)
     {
-        if(s1[i]!=s2[i] || s1[i]=='\0' || s2[i]=='\0')
-            return s1[i]-s2[i];
+        if (s1[i] != s2[i] ||
+            s1[i] == '\0' ||
+            s2[i] == '\0')
+        {
+            return (unsigned char)s1[i] -
+                   (unsigned char)s2[i];
+        }
     }
 
     return 0;
 }
-```
 
-### Example
-
-```c
-printf("%d",my_strncmp("apple","application",5));
-```
+Example
+printf("%d", my_strncmp("apple", "application", 5));
 
 Output
-
-```
 0
-```
 
----
+8. strchr()
+Purpose
 
-# 8. strchr()
+Finds the first occurrence of a character in a string.
 
-### Purpose
-Finds first occurrence of a character.
+Prototype
+char *my_strchr(char *str, int ch);
 
-### Prototype
-
-```c
-char *my_strchr(char *str,char ch);
-```
-
-### Implementation
-
-```c
-char *my_strchr(char *str,char ch)
+Implementation
+char *my_strchr(char *str, int ch)
 {
-    while(*str)
+    while (*str)
     {
-        if(*str==ch)
+        if (*str == ch)
             return str;
 
         str++;
     }
 
-    if(ch=='\0')
+    if (ch == '\0')
         return str;
 
     return NULL;
 }
-```
 
-### Example
+Example
+char s[] = "Computer";
 
-```c
-char s[]="Computer";
-
-printf("%s",my_strchr(s,'p'));
-```
+printf("%s", my_strchr(s, 'p'));
 
 Output
-
-```
 puter
-```
 
----
+9. strrchr()
+Purpose
 
-# 9. strrchr()
+Finds the last occurrence of a character in a string.
 
-### Purpose
-Finds last occurrence of a character.
+Prototype
+char *my_strrchr(char *str, int ch);
 
-### Prototype
-
-```c
-char *my_strrchr(char *str,char ch);
-```
-
-### Implementation
-
-```c
-char *my_strrchr(char *str,char ch)
+Implementation
+char *my_strrchr(char *str, int ch)
 {
-    char *last=NULL;
+    char *last = NULL;
 
-    while(*str)
+    while (*str)
     {
-        if(*str==ch)
-            last=str;
+        if (*str == ch)
+            last = str;
 
         str++;
     }
 
-    if(ch=='\0')
+    if (ch == '\0')
         return str;
 
     return last;
 }
-```
 
-### Example
+Example
+char s[] = "banana";
 
-```c
-char s[]="banana";
-
-printf("%s",my_strrchr(s,'a'));
-```
+printf("%s", my_strrchr(s, 'a'));
 
 Output
-
-```
 a
-```
 
----
+10. strstr()
+Purpose
 
-# 10. strstr()
+Finds the first occurrence of a substring.
 
-### Purpose
-Finds first occurrence of a substring.
+Prototype
+char *my_strstr(char *str, char *sub);
 
-### Prototype
-
-```c
-char *my_strstr(char *str,char *sub);
-```
-
-### Implementation
-
-```c
-char *my_strstr(char *str,char *sub)
+Implementation
+char *my_strstr(char *str, char *sub)
 {
-    int i,j;
+    int i, j;
 
-    for(i=0;str[i]!='\0';i++)
+    for (i = 0; str[i] != '\0'; i++)
     {
-        for(j=0;sub[j]!='\0';j++)
+        for (j = 0; sub[j] != '\0'; j++)
         {
-            if(str[i+j]!=sub[j])
+            if (str[i + j] != sub[j])
                 break;
         }
 
-        if(sub[j]=='\0')
+        if (sub[j] == '\0')
             return &str[i];
     }
 
     return NULL;
 }
-```
 
-### Example
+Example
+char s[] = "Embedded Systems";
 
-```c
-char s[]="Embedded Systems";
-
-printf("%s",my_strstr(s,"System"));
-```
+printf("%s", my_strstr(s, "System"));
 
 Output
-
-```
 Systems
-```
 
----
+Part 2 — Additional String Functions
 
-**End of Part 1**
+The following functions continue the string-function section:
 
-**Next (Part 2)** will include:
+strtok()
+strspn()
+strcspn()
+strpbrk()
+strdup()
+strrev()
+strupr()
+strlwr()
+Part 3 — Memory Functions
+19. memset()
+Purpose
 
-- `strtok()`
-- `strspn()`
-- `strcspn()`
-- `strpbrk()`
-- `strdup()`
-- `strrev()`
-- `strupr()`
-- `strlwr()`
-- `memset()`
-- `memcpy()`
-----------------------
----
+Fills a block of memory with a specified byte value.
 
-# 21. memmove()
+Prototype
+void *my_memset(void *ptr, int value, size_t n);
 
-### Purpose
+20. memcpy()
+Purpose
 
-Copies memory safely when source and destination memory areas overlap.
+Copies n bytes from one memory area to another.
 
-### Prototype
+Important
 
-```c
-void *my_memmove(void *dest,const void *src,int n);
-```
+memcpy() should not be used when the source and destination memory regions overlap.
 
-### Implementation
+Prototype
+void *my_memcpy(void *dest, const void *src, size_t n);
 
-```c
-void *my_memmove(void *dest,const void *src,int n)
+21. memmove()
+Purpose
+
+Copies memory safely when the source and destination memory areas overlap.
+
+Prototype
+void *my_memmove(void *dest, const void *src, size_t n);
+
+Implementation
+void *my_memmove(void *dest, const void *src, size_t n)
 {
     unsigned char *d = (unsigned char *)dest;
     const unsigned char *s = (const unsigned char *)src;
 
-    if(d == s)
+    if (d == s)
         return dest;
 
-    if(d < s)
+    if (d < s)
     {
-        // Copy forward
-        for(int i=0;i<n;i++)
-            d[i]=s[i];
+        /* Copy forward */
+        for (size_t i = 0; i < n; i++)
+            d[i] = s[i];
     }
     else
     {
-        // Copy backward
-        for(int i=n-1;i>=0;i--)
-            d[i]=s[i];
+        /* Copy backward */
+        for (size_t i = n; i > 0; i--)
+            d[i - 1] = s[i - 1];
     }
 
     return dest;
 }
-```
 
-### Example
+Example
+char str[] = "123456789";
 
-```c
-char str[]="123456789";
+my_memmove(str + 2, str, 5);
 
-my_memmove(str+2,str,5);
-
-printf("%s",str);
-```
+printf("%s", str);
 
 Output
-
-```
 121234589
-```
 
-### Difference between memcpy() and memmove()
+memcpy() vs memmove()
+Function	Overlapping Memory
+memcpy()	❌ Not safe
+memmove()	✅ Safe
+22. memcmp()
+Purpose
 
-| Function | Overlapping Memory |
-|----------|--------------------|
-| memcpy() | Not safe |
-| memmove() | Safe |
+Compares two blocks of memory byte by byte.
 
----
+Prototype
+int my_memcmp(const void *ptr1, const void *ptr2, size_t n);
 
-# 22. memcmp()
-
-### Purpose
-
-Compares two memory blocks.
-
-### Prototype
-
-```c
-int my_memcmp(const void *ptr1,const void *ptr2,int n);
-```
-
-### Implementation
-
-```c
-int my_memcmp(const void *ptr1,const void *ptr2,int n)
+Implementation
+int my_memcmp(const void *ptr1, const void *ptr2, size_t n)
 {
     const unsigned char *a = ptr1;
     const unsigned char *b = ptr2;
 
-    for(int i=0;i<n;i++)
+    for (size_t i = 0; i < n; i++)
     {
-        if(a[i] != b[i])
-            return a[i]-b[i];
+        if (a[i] != b[i])
+            return a[i] - b[i];
     }
 
     return 0;
 }
-```
 
-### Example
+Example
+char a[] = "ABC";
+char b[] = "ABC";
 
-```c
-char a[]="ABC";
-char b[]="ABC";
-
-printf("%d",my_memcmp(a,b,3));
-```
+printf("%d", my_memcmp(a, b, 3));
 
 Output
-
-```
 0
-```
 
----
+23. memchr()
+Purpose
 
-# 23. memchr()
+Searches for a byte in a block of memory.
 
-### Purpose
+Prototype
+void *my_memchr(const void *ptr, int value, size_t n);
 
-Searches for a character in a memory block.
-
-### Prototype
-
-```c
-void *my_memchr(const void *ptr,int value,int n);
-```
-
-### Implementation
-
-```c
-void *my_memchr(const void *ptr,int value,int n)
+Implementation
+void *my_memchr(const void *ptr, int value, size_t n)
 {
     const unsigned char *p = ptr;
 
-    for(int i=0;i<n;i++)
+    for (size_t i = 0; i < n; i++)
     {
-        if(p[i] == (unsigned char)value)
+        if (p[i] == (unsigned char)value)
             return (void *)&p[i];
     }
 
     return NULL;
 }
-```
 
-### Example
+Example
+char str[] = "Embedded";
 
-```c
-char str[]="Embedded";
+char *p = my_memchr(str, 'b', 8);
 
-char *p = my_memchr(str,'b',8);
-
-if(p)
-    printf("%s",p);
-```
+if (p)
+    printf("%s", p);
 
 Output
-
-```
 bedded
-```
 
----
+24. strerror()
+Purpose
 
-# 24. strerror()
+Returns an error message corresponding to an error number.
 
-### Purpose
-
-Returns error message string for an error number.
-
-### Prototype
-
-```c
+Prototype
 char *my_strerror(int errnum);
-```
 
-### Implementation
-
-```c
+Implementation
 char *my_strerror(int errnum)
 {
     static char *errors[] =
@@ -720,139 +545,155 @@ char *my_strerror(int errnum)
         "Invalid argument"
     };
 
-    int size = sizeof(errors)/sizeof(errors[0]);
+    int size = sizeof(errors) / sizeof(errors[0]);
 
-    if(errnum >= 0 && errnum < size)
+    if (errnum >= 0 && errnum < size)
         return errors[errnum];
 
     return "Unknown error";
 }
-```
 
-### Example
-
-```c
-printf("%s",my_strerror(2));
-```
+Example
+printf("%s", my_strerror(2));
 
 Output
-
-```
 File not found
-```
 
----
+Complete Function Summary
+#	Function	Purpose
+1	strlen()	Find string length
+2	strcpy()	Copy string
+3	strncpy()	Copy first n characters
+4	strcat()	Join strings
+5	strncat()	Join first n characters
+6	strcmp()	Compare strings
+7	strncmp()	Compare first n characters
+8	strchr()	Find first character
+9	strrchr()	Find last character
+10	strstr()	Find substring
+11	strtok()	Split string into tokens
+12	strspn()	Count accepted characters
+13	strcspn()	Count characters until a rejected character
+14	strpbrk()	Find first matching character
+15	strdup()	Duplicate a string
+16	strrev()	Reverse a string
+17	strupr()	Convert string to uppercase
+18	strlwr()	Convert string to lowercase
+19	memset()	Fill memory
+20	memcpy()	Copy memory
+21	memmove()	Safely copy overlapping memory
+22	memcmp()	Compare memory
+23	memchr()	Search memory
+24	strerror()	Return error message
+Time Complexity Summary
+Function	Time Complexity
+strlen()	O(n)
+strcpy()	O(n)
+strncpy()	O(n)
+strcat()	O(n + m)
+strncat()	O(n + m)
+strcmp()	O(n)
+strncmp()	O(n)
+strchr()	O(n)
+strrchr()	O(n)
+strstr()	O(n × m)
+strtok()	O(n)
+strspn()	O(n × m)
+strcspn()	O(n × m)
+strpbrk()	O(n × m)
+strdup()	O(n)
+strrev()	O(n)
+strupr()	O(n)
+strlwr()	O(n)
+memset()	O(n)
+memcpy()	O(n)
+memmove()	O(n)
+memcmp()	O(n)
+memchr()	O(n)
+strerror()	O(1)
 
-# Complete Function Summary
+Note: The exact complexity of library implementations can vary. The table above describes the straightforward implementations used for learning.
 
-| Function | Purpose |
-|----------|---------|
-| strlen() | Find string length |
-| strcpy() | Copy string |
-| strncpy() | Copy first n characters |
-| strcat() | Join strings |
-| strncat() | Join first n characters |
-| strcmp() | Compare strings |
-| strncmp() | Compare first n characters |
-| strchr() | Find first character |
-| strrchr() | Find last character |
-| strstr() | Find substring |
-| strtok() | Split string into tokens |
-| strspn() | Count accepted characters |
-| strcspn() | Count until rejected character |
-| strpbrk() | Find matching character |
-| strdup() | Duplicate string |
-| strrev() | Reverse string |
-| strupr() | Convert uppercase |
-| strlwr() | Convert lowercase |
-| memset() | Fill memory |
-| memcpy() | Copy memory |
-| memmove() | Safe memory copy |
-| memcmp() | Compare memory |
-| memchr() | Search memory |
-| strerror() | Error message |
+Standard C Functions
 
----
+The following functions are part of the C standard library:
 
-# Time Complexity Summary
-
-| Function | Time Complexity |
-|----------|----------------|
-| strlen() | O(n) |
-| strcpy() | O(n) |
-| strncpy() | O(n) |
-| strcat() | O(n+m) |
-| strncat() | O(n+m) |
-| strcmp() | O(n) |
-| strncmp() | O(n) |
-| strchr() | O(n) |
-| strrchr() | O(n) |
-| strstr() | O(n*m) |
-| strtok() | O(n) |
-| strspn() | O(n*m) |
-| strcspn() | O(n*m) |
-| strpbrk() | O(n*m) |
-| strdup() | O(n) |
-| strrev() | O(n) |
-| strupr() | O(n) |
-| strlwr() | O(n) |
-| memset() | O(n) |
-| memcpy() | O(n) |
-| memmove() | O(n) |
-| memcmp() | O(n) |
-| memchr() | O(n) |
-| strerror() | O(1) |
-
----
-
-# Notes
-
-## Standard Functions
-
-These are available in C standard library:
-
-- strlen
-- strcpy
-- strncpy
-- strcat
-- strncat
-- strcmp
-- strncmp
-- strchr
-- strrchr
-- strstr
-- strtok
-- strspn
-- strcspn
-- strpbrk
-- strerror
-- memset
-- memcpy
-- memmove
-- memcmp
-- memchr
-
-Header:
-
-```c
+strlen()
+strcpy()
+strncpy()
+strcat()
+strncat()
+strcmp()
+strncmp()
+strchr()
+strrchr()
+strstr()
+strtok()
+strspn()
+strcspn()
+strpbrk()
+strerror()
+memset()
+memcpy()
+memmove()
+memcmp()
+memchr()
+Header
 #include <string.h>
-```
 
----
+Non-Standard / Platform-Specific Functions
 
-## Non-Standard Functions
+These functions are not part of ISO C:
 
-These are compiler-dependent:
+strrev()
+strupr()
+strlwr()
 
-- strrev()
-- strupr()
-- strlwr()
-- strdup() *(POSIX, not ISO C)*
+strdup() is commonly available on POSIX systems, but it is not part of the ISO C standard.
 
----
+Important Learning Notes
+1. Use size_t for sizes
 
-# Final Note
+For functions dealing with string lengths or memory sizes, size_t is preferred over int.
 
-These implementations are written for learning.  
-Production code should usually use the optimized versions provided by the C standard library.
------------------------------------------------------------------------------------------------------------
+size_t len;
+size_t n;
+
+2. Always ensure enough destination memory
+
+For example:
+
+char src[] = "Hello";
+char dest[6];
+
+my_strcpy(dest, src);
+
+
+The destination needs space for:
+
+H e l l o \0
+
+
+which is 6 bytes.
+
+3. memcpy() and overlapping memory
+
+Do not use:
+
+my_memcpy(str + 2, str, 5);
+
+
+when the regions overlap.
+
+Use:
+
+my_memmove(str + 2, str, 5);
+
+
+instead.
+
+Final Note
+
+These implementations are intentionally simple and are designed for learning, interviews, and understanding how C string/memory functions work internally.
+
+For production applications, prefer the implementations provided by the C standard library because they are generally well-tested and optimized.
