@@ -1980,3 +1980,4 @@ new
 delete
 new[]
 delete[]
+```
