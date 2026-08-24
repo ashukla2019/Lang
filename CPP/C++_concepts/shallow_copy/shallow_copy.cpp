@@ -8,7 +8,11 @@ public:
     Student(int m) {
         marks = new int(m);
     }
-
+	Student(const Student& s) //deep copy, if not provided then code will try to call shallow copy and it will free twice.
+	{
+		marks = new int();
+		*marks = *s.marks;
+	}
     ~Student() {
         delete marks;
     }
