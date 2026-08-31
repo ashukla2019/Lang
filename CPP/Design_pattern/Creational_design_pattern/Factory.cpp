@@ -3,43 +3,43 @@
 
 using namespace std;
 
-class Button {
+class Pizza {
 public:
-    virtual void paint() = 0;
-    virtual ~Button() = default;
+    virtual void prepare() = 0;
+    virtual ~Pizza() = default;
 };
 
-class WindowsButton : public Button {
+class MargheritaPizza : public Pizza {
 public:
-    void paint() override {
-        cout << "Windows Button\n";
+    void prepare() override {
+        cout << "Preparing Margherita Pizza\n";
     }
 };
 
-class OSXButton : public Button {
+class PepperoniPizza : public Pizza {
 public:
-    void paint() override {
-        cout << "OSX Button\n";
+    void prepare() override {
+        cout << "Preparing Pepperoni Pizza\n";
     }
 };
 
-class ButtonFactory {
+class PizzaFactory {
 public:
-    static Button* createButton(string type) {
-        if (type == "Windows")
-            return new WindowsButton();
+    static Pizza* createPizza(string type) {
+        if (type == "Margherita")
+            return new MargheritaPizza();
 
-        if (type == "OSX")
-            return new OSXButton();
+        if (type == "Pepperoni")
+            return new PepperoniPizza();
 
         return nullptr;
     }
 };
 
 int main() {
-    Button* b1 = ButtonFactory::createButton("Windows");
-    b1->paint();
+    Pizza* p1 = PizzaFactory::createPizza("Margherita");
+    p1->prepare();
 
-    Button* b2 = ButtonFactory::createButton("OSX");
-    b2->paint();
+    Pizza* p2 = PizzaFactory::createPizza("Pepperoni");
+    p2->prepare();
 }
