@@ -1,71 +1,45 @@
-/*
-Factory Design pattern: 
-Factory method is a creational design pattern which solves the problem of creating product objects
-without specifying their concrete classes.
-Factory Method defines a method, which should be used for creating objects instead of 
-direct constructor call (new operator). Subclasses can override this method to change the
-class of objects that will be created.
-*/
-
 #include <iostream>
+#include <string>
 
-class Button 
-{
+using namespace std;
+
+class Button {
 public:
-        virtual void paint() = 0;
-};
- 
-class OSXButton: public Button
-{
-public:
-        void paint() 
-		{
-                std::cout << "OSX button \n";
-        }
-};
- 
-class WindowsButton: public Button  
-{
-public:
-        void paint() 
-		{
-                std::cout << "Windows button \n";
-        }
-};
- 
-class GUIFactory 
-{
-public:
-        virtual Button *createButton(char *) = 0;
+    virtual void paint() = 0;
+    virtual ~Button() = default;
 };
 
-class Factory: public GUIFactory 
-{    //Factory class
+class WindowsButton : public Button {
 public:
-        Button *createButton(char *type) 
-		{    //Factory method
-                if(strcmp(type,"Windows") == 0) 
-				{
-                        return new WindowsButton;
-                }
-                else if(strcmp(type,"OSX") == 0) 
-				{
-                        return new OSXButton;
-                }
-        }
+    void paint() override {
+        cout << "Windows Button\n";
+    }
 };
 
-int main()
-{
-        GUIFactory* guiFactory;
-        Button *btn;
+class OSXButton : public Button {
+public:
+    void paint() override {
+        cout << "OSX Button\n";
+    }
+};
 
-        guiFactory = new Factory;
+class ButtonFactory {
+public:
+    static Button* createButton(string type) {
+        if (type == "Windows")
+            return new WindowsButton();
 
-        btn = guiFactory->createButton("OSX");
-        btn -> paint();
-        btn = guiFactory->createButton("Windows");
-        btn -> paint();
+        if (type == "OSX")
+            return new OSXButton();
 
-        return 0;
+        return nullptr;
+    }
+};
+
+int main() {
+    Button* b1 = ButtonFactory::createButton("Windows");
+    b1->paint();
+
+    Button* b2 = ButtonFactory::createButton("OSX");
+    b2->paint();
 }
